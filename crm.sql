@@ -1,190 +1,197 @@
---Datos de usuario
-create table roles(
-  id int auto_increment primary key,
-  name text not null
-);
+-- phpMyAdmin SQL Dump
+-- version 4.0.10deb1
+-- http://www.phpmyadmin.net
+--
+-- Servidor: localhost
+-- Tiempo de generación: 12-04-2015 a las 14:26:43
+-- Versión del servidor: 5.5.41-0ubuntu0.14.04.1
+-- Versión de PHP: 5.5.9-1ubuntu4.7
 
-create table users(
-  id int auto_increment primary key,
-  name text not null,
-  last_name text not null,
-  password varchar(40) not null,
-  gender varchar(1) not null,
-  rol int not null,
-  foreign key (rol) references roles(id)
-);
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET time_zone = "+00:00";
 
---Campañas
-create table campaings(
-  id int auto_increment primary key,
-  created_by int not null,
-  name text not null,
-  date_start date not null,
-  date_end date not null,
-  status text not null,
-  target text,
-  description text not null,
-  frecuency int,
-  foreign key (created_by) references users(id)
-);
 
-create table emails(
-  id int auto_increment primary key,
-  created_by int not null,
-  campaing_id int not null,
-  date_send date,
-  subject text not null,
-  content text not null,
-  status text,
-  foreign key (created_by) references users(id),
-  foreign key (campaing_id) references campaings(id)
-);
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8 */;
 
---Productos
-create table features(
-  id int auto_increment primary key,
-  feature1 text,
-  feature2 text,
-  features text
-);
+--
+-- Base de datos: `crm`
+--
 
-create table products(
-  id int auto_increment primary key,
-  created_by int not null,
-  campaing_id int,
-  name text not null,
-  price double,
-  description text,
-  features int,
-  foreign key (created_by) references users(id),
-  foreign key (campaing_id) references campaings(id),
-  foreign key (features) references features(id)
-);
+-- --------------------------------------------------------
 
---Perfil del cliente
-create table jobs(
-  id int auto_increment primary key,
-  name text not null,
-  salary double
-);
+--
+-- Estructura de tabla para la tabla `campaings`
+--
 
-create table postcodes(
-  id int primary key,
-  place text not null,
-  city text not null,
-  entity text not null
-);
+CREATE TABLE IF NOT EXISTS `campaings` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `created_by` int(11) NOT NULL,
+  `name` text CHARACTER SET latin1 NOT NULL,
+  `date_start` date DEFAULT NULL,
+  `date_end` date DEFAULT NULL,
+  `status` text COMMENT 'Activa, Inactiva, Finalizada',
+  `target` text NOT NULL,
+  `description` text CHARACTER SET latin1 NOT NULL,
+  `duration` int(11) DEFAULT NULL,
+  `date_created` date NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `fk_campaings_1_idx` (`created_by`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Campañas' AUTO_INCREMENT=20 ;
 
-create table schools(
-  id int auto_increment primary key,
-  name text not null
-);
+--
+-- Volcado de datos para la tabla `campaings`
+--
 
-create table types_customers(
-  id int auto_increment primary key,
-  name text not null
-);
+INSERT INTO `campaings` (`id`, `created_by`, `name`, `date_start`, `date_end`, `status`, `target`, `description`, `duration`, `date_created`) VALUES
+(16, 4, 'Primavera - Verano', '2015-04-30', '2015-07-15', 'En espera', 'Rebajas del 50% en sandalias', 'Sandalias', 76, '2015-04-12'),
+(17, 4, 'Jovenes Emprendores', '2015-04-01', '2015-04-30', 'Activa', 'Atraer jovenes que busquen nuevos horizontes', 'Jovenes', 28, '2015-04-12'),
+(18, 4, 'Estrellas del universo', '2015-04-15', '2015-04-17', 'En espera', 'Toda joyeria para dama con un 5% de descuento', 'Joyas', 3, '2015-04-12'),
+(19, 4, 'Dias azules', '2015-02-01', '2015-02-10', 'Finalizada', 'Ofrecer a las chicas blusas de color azul', 'Azul ', 10, '2015-04-12');
 
-create table status_social(
-  id int auto_increment primary key,
-  name text not null
-);
+-- --------------------------------------------------------
 
-create table status_civil(
-  id int auto_increment primary key,
-  name text not null
-);
+--
+-- Estructura de tabla para la tabla `campaing_team`
+--
 
-create table customers(
-  id int auto_increment primary key,
-  name text not null,
-  last_name text not null,
-  birthday date,
-  gender varchar(1),
-  email text not null,
-  telephone varchar(10),
-  postcode int,
-  types int,
-  job int,
-  school int,
-  status_civil int,
-  sons int,
-  status_social int,
-  status text,
-  date_created date,
-  foreign key (postcode) references postcodes(id),
-  foreign key (types) references types_customers(id),
-  foreign key (job) references jobs(id),
-  foreign key (school) references schools(id),
-  foreign key (status_civil) references status_civil(id),
-  foreign key (status_social) references status_social(id)
-);
+CREATE TABLE IF NOT EXISTS `campaing_team` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `teams_id` int(11) NOT NULL,
+  `campaings_id` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `fk_teams_has_campaings_campaings1_idx` (`campaings_id`),
+  KEY `fk_teams_has_campaings_teams1_idx` (`teams_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
---Mercados
-create table teams(
-  id int auto_increment primary key,
-  created_by int not null,
-  name text,
-  description text,
-  status text not null,
-  date_created date,
-  foreign key (created_by) references users(id)
-);
+-- --------------------------------------------------------
 
-create table campaing_team(
-  id int auto_increment primary key,
-  campaing_id int not null,
-  team_id int not null,
-  foreign key (campaing_id) references campaings(id),
-  foreign key (team_id) references teams(id)
-);
+--
+-- Estructura de tabla para la tabla `customers`
+--
 
-create table customer_team(
-  id int auto_increment primary key,
-  customer_id int not null,
-  team_id int not null,
-  foreign key (customer_id) references customers(id),
-  foreign key (team_id) references teams(id)
-);
+CREATE TABLE IF NOT EXISTS `customers` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` text CHARACTER SET latin1 NOT NULL,
+  `last_name` text CHARACTER SET latin1 NOT NULL,
+  `birthday` date DEFAULT NULL,
+  `gender` varchar(1) NOT NULL,
+  `email` text CHARACTER SET latin1 NOT NULL,
+  `telephone` text,
+  `postcode` int(11) DEFAULT NULL,
+  `type` int(11) DEFAULT NULL,
+  `job` int(11) DEFAULT NULL,
+  `school` int(11) DEFAULT NULL,
+  `status_civil` int(11) DEFAULT NULL,
+  `sons` int(11) DEFAULT NULL,
+  `status_social` int(11) DEFAULT NULL,
+  `status` text NOT NULL,
+  `date_created` date DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `fk_customers_1_idx` (`job`),
+  KEY `fk_customers_2_idx` (`postcode`),
+  KEY `fk_customers_3_idx` (`school`),
+  KEY `fk_customers_4_idx` (`type`),
+  KEY `fk_customers_5_idx` (`status_civil`),
+  KEY `fk_customers_6_idx` (`status_social`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Clientes' AUTO_INCREMENT=1 ;
 
---Roles
-INSERT INTO roles (name) VALUES('Administrador');
-INSERT INTO roles (name) VALUES('Jefe de Marketing');
-INSERT INTO roles (name) VALUES('Promotor');
-INSERT INTO roles (name) VALUES('Agente de Ventas');
+-- --------------------------------------------------------
 
---Educación
-INSERT INTO schools (name) VALUES('Ninguna');
-INSERT INTO schools (name) VALUES('Primaria');
-INSERT INTO schools (name) VALUES('Secundaria');
-INSERT INTO schools (name) VALUES('Preparatoria o Bachillerato');
-INSERT INTO schools (name) VALUES('Licenciatura');
-INSERT INTO schools (name) VALUES('Maestria o Doctorado');
+--
+-- Estructura de tabla para la tabla `customer_team`
+--
 
---Estado civil
-INSERT INTO status_civil (name) VALUES('Soltero');
-INSERT INTO status_civil (name) VALUES('Unión Libre');
-INSERT INTO status_civil (name) VALUES('Casado');
-INSERT INTO status_civil (name) VALUES('Divorciado');
-INSERT INTO status_civil (name) VALUES('Viudo');
+CREATE TABLE IF NOT EXISTS `customer_team` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `team_id` int(11) NOT NULL,
+  `customer_id` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `fk_teams_has_customers_customers1_idx` (`customer_id`),
+  KEY `fk_teams_has_customers_teams1_idx` (`team_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
---Clase social
-INSERT INTO status_social (name) VALUES('Baja');
-INSERT INTO status_social (name) VALUES('Media');
-INSERT INTO status_social (name) VALUES('Alta');
+-- --------------------------------------------------------
 
---Ocupacion
-INSERT INTO jobs (name) VALUES('Estudiante');
-INSERT INTO jobs (name) VALUES('Labores del hogar');
-INSERT INTO jobs (name) VALUES('Profesionales por cuenta ajena');
-INSERT INTO jobs (name) VALUES('Profesionales por cuenta propia');
-INSERT INTO jobs (name) VALUES('Desempleado');
-INSERT INTO jobs (name) VALUES('Directivo');
-INSERT INTO jobs (name) VALUES('Cargos Intermedios');
-INSERT INTO jobs (name) VALUES('Otros');
+--
+-- Estructura de tabla para la tabla `emails`
+--
 
---Codigos postales 78000 - 79997
-INSERT INTO postcodes (id,place,city,entity) VALUES
+CREATE TABLE IF NOT EXISTS `emails` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `created_by` int(11) NOT NULL,
+  `campaings_id` int(11) NOT NULL,
+  `date_send` date DEFAULT NULL,
+  `subject` text CHARACTER SET latin1 NOT NULL,
+  `content` text CHARACTER SET latin1 NOT NULL,
+  `status` varchar(45) DEFAULT NULL COMMENT 'Enviado, En espera, Leido',
+  PRIMARY KEY (`id`),
+  KEY `fk_emails_1_idx` (`created_by`),
+  KEY `fk_emails_2_idx` (`campaings_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `features`
+--
+
+CREATE TABLE IF NOT EXISTS `features` (
+  `id` int(11) NOT NULL,
+  `feature1` text CHARACTER SET latin1,
+  `feature2` text CHARACTER SET latin1,
+  `feature3` text,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `jobs`
+--
+
+CREATE TABLE IF NOT EXISTS `jobs` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` text CHARACTER SET latin1 NOT NULL,
+  `salary` double DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=9 ;
+
+--
+-- Volcado de datos para la tabla `jobs`
+--
+
+INSERT INTO `jobs` (`id`, `name`, `salary`) VALUES
+(1, 'Estudiante', NULL),
+(2, 'Labores del hogar', NULL),
+(3, 'Profesionales por cuenta ajena', NULL),
+(4, 'Profesionales por cuenta propia', NULL),
+(5, 'Desempleado', NULL),
+(6, 'Directivo', NULL),
+(7, 'Cargos Intermedios', NULL),
+(8, 'Otros', NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `postcodes`
+--
+
+CREATE TABLE IF NOT EXISTS `postcodes` (
+  `id` int(11) NOT NULL,
+  `place` text CHARACTER SET latin1 NOT NULL,
+  `city` text CHARACTER SET latin1 NOT NULL,
+  `entity` text CHARACTER SET latin1 NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Volcado de datos para la tabla `postcodes`
+--
+
+INSERT INTO `postcodes` (`id`, `place`, `city`, `entity`) VALUES
 (78000, 'San Luis Potosí Centro', 'San Luis Potosí', 'San Luis Potosí'),
 (78008, 'Oficina Federal de Hacienda', 'San Luis Potosí', 'San Luis Potosí'),
 (78009, 'Palacio de Gobierno del Estado de San Luis Potosí', 'San Luis Potosí', 'San Luis Potosí'),
@@ -214,8 +221,7 @@ INSERT INTO postcodes (id,place,city,entity) VALUES
 (78145, 'Tecnológico II;Lomas del Campestre;Tecnológico III;Jacarandas INFONAVIT', 'San Luis Potosí', 'San Luis Potosí'),
 (78146, 'Tecnológico;Lomas del Camino;Lomas del Sol', 'San Luis Potosí', 'San Luis Potosí'),
 (78147, 'Camelinas;Los Molinos;San Humberto;San Alberto', 'San Luis Potosí', 'San Luis Potosí'),
-(78148, 'Jacarandas', 'San Luis Potosí', 'San Luis Potosí');
-INSERT INTO postcodes (id,place,city,entity) VALUES
+(78148, 'Jacarandas', 'San Luis Potosí', 'San Luis Potosí'),
 (78150, 'FOVISSSTE;Morales INFONAVIT;Las Piedras;Santa Lucía', 'San Luis Potosí', 'San Luis Potosí'),
 (78153, 'Arboledas del Campestre;Albino García;Privada San Carlos;Villa Campestre;Eucaliptos Campestre;Campestre de Golf;Campestre San Luis', 'San Luis Potosí', 'San Luis Potosí'),
 (78154, 'Lomas de Morales;Los Pirules;Verde Campestre;Nuevo Morales;Morales Campestre', 'San Luis Potosí', 'San Luis Potosí'),
@@ -255,8 +261,7 @@ INSERT INTO postcodes (id,place,city,entity) VALUES
 (78268, 'Prados de San Luis', 'San Luis Potosí', 'San Luis Potosí'),
 (78269, 'Tangamanga', 'San Luis Potosí', 'San Luis Potosí'),
 (78270, 'Burócrata;Jardín;Fundadores;Cuauhtémoc;Río Azul', 'San Luis Potosí', 'San Luis Potosí'),
-(78280, 'Benigno Arriaga;Jardines del Estadio;Del Real;Estadio;Alamitos;ISSSTE;Himno Nacional', 'San Luis Potosí', 'San Luis Potosí');
-INSERT INTO postcodes (id,place,city,entity) VALUES
+(78280, 'Benigno Arriaga;Jardines del Estadio;Del Real;Estadio;Alamitos;ISSSTE;Himno Nacional', 'San Luis Potosí', 'San Luis Potosí'),
 (78290, 'Universitaria;Viveros', 'San Luis Potosí', 'San Luis Potosí'),
 (78294, 'Garita de Jalisco;Colinas del Parque', 'San Luis Potosí', 'San Luis Potosí'),
 (78295, 'Alpes;Desarrollo del Pedregal;Sierra Azúl;Privadas del Pedregal', 'San Luis Potosí', 'San Luis Potosí'),
@@ -452,7 +457,8 @@ INSERT INTO postcodes (id,place,city,entity) VALUES
 (78634, 'Nicolás Mata;Cerritos de Bernal;La Esperanza (Hermanos de la Torre);La Independencia (Ernesto Muñoz);Rita Frías Gutiérrez;El Tepetate;El Colorado (Luz Muñoz);Rancho San José (Los Cuatillos);Peña Tercera;Los Pachones', 'Santo Domingo', 'San Luis Potosí'),
 (78635, 'José Dávila Castro (El Encino);Guanajuato;El Encino;San Antonio de los Garza;El Rosario;San Miguel;El Soyate (Loma del Soyate);San Francisco;El Carmen (El Papalote);La Tapona', 'Santo Domingo', 'San Luis Potosí'),
 (78636, 'José Villanueva;La Victoria;El Bozal;La Calandria;La Merced;Las Huertas;Hacienda el Indio;Nueva Rosita;El Gavilán;Alfonso García;Antonio López', 'Santo Domingo', 'San Luis Potosí'),
-(78637, 'El Matambo;La Yerbabuena;El Rodeo (Las Negritas);Las Vegas (San Agustín);El Castillo (El Salto de Contreras);El Relicario;Rodrigo Becerra', 'Santo Domingo', 'San Luis Potosí'),
+(78637, 'El Matambo;La Yerbabuena;El Rodeo (Las Negritas);Las Vegas (San Agustín);El Castillo (El Salto de Contreras);El Relicario;Rodrigo Becerra', 'Santo Domingo', 'San Luis Potosí');
+INSERT INTO `postcodes` (`id`, `place`, `city`, `entity`) VALUES
 (78638, 'El Jardín;Socorro de Dios;El Sentón (Santiago Moreno);La Coyotera (Adalberto Dávila);Santa Efigenia;El Refugio;Loma Bonita;San Matías;Rancho Cinco Hermanos (La Tapona);Santa María del Mezquite;San Nicolás;Abundancia;La Esperanza;Congregación de Santo Domingo;La Flor;La Tinaja;Morelos', 'Santo Domingo', 'San Luis Potosí'),
 (78639, 'Laguna la Cardona;La Rastrerita;San Martín (Jaime Esquivel Castro);La Botoncita;San Juan de Dios', 'Santo Domingo', 'San Luis Potosí'),
 (78640, 'El Mezquite Verde;El Rosalito (Laguna del Muerto);Santa Fe (Abel Rodríguez Quiroz);La Ventura (El Grullo);Potrero del Muerto;Santa Matilde;El Convento;El Lobo Grande;El Lobo Chico;Santa Cecilia (Mario Rodríguez Quiroz)', 'Santo Domingo', 'San Luis Potosí'),
@@ -558,8 +564,7 @@ INSERT INTO postcodes (id,place,city,entity) VALUES
 (78864, 'Santa Rita de Hernandez', 'Villa de Guadalupe', 'San Luis Potosí'),
 (78866, 'San Francisco', 'Villa de Guadalupe', 'San Luis Potosí'),
 (78868, 'Santa Teresa', 'Villa de Guadalupe', 'San Luis Potosí'),
-(78870, 'Guadalcázar;Cantarranas', 'Guadalcázar', 'San Luis Potosí');
-INSERT INTO postcodes (id,place,city,entity) VALUES
+(78870, 'Guadalcázar;Cantarranas', 'Guadalcázar', 'San Luis Potosí'),
 (78873, 'San Pedro', 'Guadalcázar', 'San Luis Potosí'),
 (78880, 'El Llano del Lobo;La Pedrera;Entronque de Matehuala (El Huizache);Los Amoles;El Rey del Camino;La Verdolaga;San José de las Flores;Crucero de Charco Cercado (El Parador);Charco Cercado;El Huizache;Colonia Menonita del Huizache;Cuajimalpa;San Juan sin Agua', 'Guadalcázar', 'San Luis Potosí'),
 (78883, 'El Refugio del Amparito;Presa de Guadalupe;Las Negritas;San Agustín;Santo Domingo;Progreso;San Antonio de Trojes', 'Guadalcázar', 'San Luis Potosí'),
@@ -889,7 +894,8 @@ INSERT INTO postcodes (id,place,city,entity) VALUES
 (79540, 'Zaragoza Centro', 'Zaragoza', 'San Luis Potosí'),
 (79543, 'El Conguito;La Barranca;El Pedregal', 'Zaragoza', 'San Luis Potosí'),
 (79544, 'La Sauceda', 'Zaragoza', 'San Luis Potosí'),
-(79545, 'Perpetuo Socorro;La Calera;La Lagunita', 'Zaragoza', 'San Luis Potosí'),
+(79545, 'Perpetuo Socorro;La Calera;La Lagunita', 'Zaragoza', 'San Luis Potosí');
+INSERT INTO `postcodes` (`id`, `place`, `city`, `entity`) VALUES
 (79546, 'La Calera;La Puerta del Arbolito;El Pame;El Potrero Nuevo;Santo Domingo;La Parada del Zarcido;El Arenal;Plan de San José;Rincón de Santa Eduwiges;Ángel Hernández;El Capulín;Emiliano Zapata (El Tepozán);Ninguno [Trituradora de Mármol];Arroyo Hondo;Autódromo Potosino [Pista de Carreras];Benito Cárdenas;El Cerrito;Esperanza Juárez Rocha;Jondablito;La Alberca (Eudocio de la Cruz Martínez);La Lagunita;San Rafael;Rincón de los Alicoches', 'Zaragoza', 'San Luis Potosí'),
 (79547, 'San José de Gómez;La Luz (Rodríguez Gaytán);Las Trojes;Valente Moreno Ponce;Xoconoxtle;Hacienda de la Morena;Tanque Prieto;Los Terreros;Rancho el Pituche;Los Calicantitos (Jorge del Fierro);Independencia (Patol);Corral de Palmas;Derramadero;José Natividad Silva;La Estancia;Paso Colorado;Tanque el Llano;Casas Blancas;Garrochitas;La Morena;Las Ánimas;Magdaleno de la Rosa;Campo de Tiro (Club de Tiro Ferrocarrilero);El Castillo;El Potrero de Rosario;La Tinaja;Ranchito de los Rivera;El Garabatillo;El Llano de Santa Isabel', 'Zaragoza', 'San Luis Potosí'),
 (79550, 'Los Dos Cerros;Potrerillo;Puerto del Jacal;Joya Honda;Salitrera;El Carrizal;El Recodo;El Puertecito de las Escobas;La Laguna', 'Zaragoza', 'San Luis Potosí'),
@@ -937,8 +943,7 @@ INSERT INTO postcodes (id,place,city,entity) VALUES
 (79616, 'León Franco;San Francisco;La Huerta;Victoria;Azahares', 'Rioverde', 'San Luis Potosí'),
 (79617, 'INFONAVIT Ojo de Agua;La Unión;El Porvenir;Del Valle;San Ángel;Los Sauces', 'Rioverde', 'San Luis Potosí'),
 (79618, 'San Rafael;La Piedad;Frontera;San José;Ferrocarrilero;El Golfo;Residencial Centenario;San Isidro;Del Sol', 'Rioverde', 'San Luis Potosí'),
-(79619, 'Las Arboledas;Los Naranjos;San Antonio', 'Rioverde', 'San Luis Potosí');
-INSERT INTO postcodes (id,place,city,entity) VALUES
+(79619, 'Las Arboledas;Los Naranjos;San Antonio', 'Rioverde', 'San Luis Potosí'),
 (79620, 'Isla de San Pablo;Isla de San Pablo III;La Pasadita;Accion Nacional', 'Rioverde', 'San Luis Potosí'),
 (79623, 'Pedregal de San Marcos;Santa Fe', 'Rioverde', 'San Luis Potosí'),
 (79624, 'Los Ángeles;Cofradía Grande;Santa Julia', 'Rioverde', 'San Luis Potosí'),
@@ -1174,3 +1179,231 @@ INSERT INTO postcodes (id,place,city,entity) VALUES
 (79995, 'Santa María Picula;Tezapotla;Zapotitla;Tixcuayuca;Tlalixco', 'Tamazunchale', 'San Luis Potosí'),
 (79996, 'Pemucho;Santiago;Coahuica', 'Tamazunchale', 'San Luis Potosí'),
 (79997, 'La Fortuna;Pahuayo San Francisco;Choteo;Tetlama;Texopis;Quinta Chilla;Pahuayo San Miguel;Ixtla', 'Tamazunchale', 'San Luis Potosí');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `products`
+--
+
+CREATE TABLE IF NOT EXISTS `products` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `created_by` int(11) NOT NULL,
+  `campaings_id` int(11) NOT NULL,
+  `name` text CHARACTER SET latin1 NOT NULL,
+  `price` double NOT NULL,
+  `description` text CHARACTER SET latin1,
+  `features` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `fk_products_1_idx` (`created_by`),
+  KEY `fk_products_2_idx` (`campaings_id`),
+  KEY `fk_products_3_idx` (`features`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Productos' AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `roles`
+--
+
+CREATE TABLE IF NOT EXISTS `roles` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` text,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=5 ;
+
+--
+-- Volcado de datos para la tabla `roles`
+--
+
+INSERT INTO `roles` (`id`, `name`) VALUES
+(1, 'Administrador'),
+(2, 'Jefe de Marketing'),
+(3, 'Promotor'),
+(4, 'Agente de Ventas');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `schools`
+--
+
+CREATE TABLE IF NOT EXISTS `schools` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` text,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=7 ;
+
+--
+-- Volcado de datos para la tabla `schools`
+--
+
+INSERT INTO `schools` (`id`, `name`) VALUES
+(1, 'Ninguna'),
+(2, 'Primaria'),
+(3, 'Secundaria'),
+(4, 'Preparatoria o Bachillerato'),
+(5, 'Licenciatura'),
+(6, 'Maestria o Doctorado');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `status_civil`
+--
+
+CREATE TABLE IF NOT EXISTS `status_civil` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` text CHARACTER SET latin1 NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=6 ;
+
+--
+-- Volcado de datos para la tabla `status_civil`
+--
+
+INSERT INTO `status_civil` (`id`, `name`) VALUES
+(1, 'Soltero'),
+(2, 'Unión Libre'),
+(3, 'Casado'),
+(4, 'Divorciado'),
+(5, 'Viudo');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `status_social`
+--
+
+CREATE TABLE IF NOT EXISTS `status_social` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` text,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=4 ;
+
+--
+-- Volcado de datos para la tabla `status_social`
+--
+
+INSERT INTO `status_social` (`id`, `name`) VALUES
+(1, 'Baja'),
+(2, 'Media'),
+(3, 'Alta');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `teams`
+--
+
+CREATE TABLE IF NOT EXISTS `teams` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `created_by` int(11) NOT NULL,
+  `name` text NOT NULL,
+  `description` text CHARACTER SET latin1,
+  `status` text COMMENT 'Objetivo, Activo, Inactivo',
+  `date_created` date DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `fk_teams_1_idx` (`created_by`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `types_customers`
+--
+
+CREATE TABLE IF NOT EXISTS `types_customers` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` text CHARACTER SET latin1 NOT NULL,
+  `description` varchar(45) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `users`
+--
+
+CREATE TABLE IF NOT EXISTS `users` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` text,
+  `last_name` text,
+  `email` text NOT NULL,
+  `password` varchar(45) NOT NULL,
+  `gender` varchar(1) CHARACTER SET latin1 NOT NULL,
+  `rol` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `fk_users_1_idx` (`rol`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=6 ;
+
+--
+-- Volcado de datos para la tabla `users`
+--
+
+INSERT INTO `users` (`id`, `name`, `last_name`, `email`, `password`, `gender`, `rol`) VALUES
+(2, 'Alfredo', 'Barrón Rodríguez', 'alfreedobarron@gmail.com', 'afec8e3faf8cc984cf3e0060e73fb945', 'H', 1),
+(3, 'Cruz Ulises', 'Larraga Ramirez', 'uliseslarraga@gmail.com', '043f53c3299dbbac1346ccbf1bf4cd90', 'H', 3),
+(4, 'Silvia', 'Gómez Hernández', 'silviagomez@gmail.com', 'e5cb7c411f1d9a67f68deff4a954cfbc', 'M', 2),
+(5, 'Victor Josue', 'Netro Gonzalez', 'jos_1990_@hotmail.com', 'c4f0f080c3f5992b3a4c03d04ace51a2', 'H', 4);
+
+--
+-- Restricciones para tablas volcadas
+--
+
+--
+-- Filtros para la tabla `campaing_team`
+--
+ALTER TABLE `campaing_team`
+  ADD CONSTRAINT `fk_campaing_team_1` FOREIGN KEY (`campaings_id`) REFERENCES `campaings` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `fk_teams_has_campaings_teams1` FOREIGN KEY (`teams_id`) REFERENCES `teams` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Filtros para la tabla `customers`
+--
+ALTER TABLE `customers`
+  ADD CONSTRAINT `fk_customers_1` FOREIGN KEY (`job`) REFERENCES `jobs` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `fk_customers_2` FOREIGN KEY (`postcode`) REFERENCES `postcodes` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `fk_customers_3` FOREIGN KEY (`school`) REFERENCES `schools` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `fk_customers_4` FOREIGN KEY (`type`) REFERENCES `types_customers` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `fk_customers_5` FOREIGN KEY (`status_civil`) REFERENCES `status_civil` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `fk_customers_6` FOREIGN KEY (`status_social`) REFERENCES `status_social` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Filtros para la tabla `customer_team`
+--
+ALTER TABLE `customer_team`
+  ADD CONSTRAINT `fk_customer_team_1` FOREIGN KEY (`customer_id`) REFERENCES `customers` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `fk_teams_has_customers_teams1` FOREIGN KEY (`team_id`) REFERENCES `teams` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Filtros para la tabla `emails`
+--
+ALTER TABLE `emails`
+  ADD CONSTRAINT `fk_emails_1` FOREIGN KEY (`created_by`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `fk_emails_2` FOREIGN KEY (`campaings_id`) REFERENCES `campaings` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Filtros para la tabla `products`
+--
+ALTER TABLE `products`
+  ADD CONSTRAINT `fk_products_1` FOREIGN KEY (`created_by`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `fk_products_2` FOREIGN KEY (`campaings_id`) REFERENCES `campaings` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `fk_products_3` FOREIGN KEY (`features`) REFERENCES `features` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Filtros para la tabla `teams`
+--
+ALTER TABLE `teams`
+  ADD CONSTRAINT `fk_teams_1` FOREIGN KEY (`created_by`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Filtros para la tabla `users`
+--
+ALTER TABLE `users`
+  ADD CONSTRAINT `fk_users_1` FOREIGN KEY (`rol`) REFERENCES `roles` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
