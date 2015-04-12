@@ -1,0 +1,49 @@
+/*! normalize.css v3.0.0 | MIT License | git.io/normalize */
+
+.page {
+  padding: 15px;
+}
+
+.page-form-ele h3 {
+  margin: 0;
+}
+
+.page-err {
+  width: 100%;
+  height: 100%;
+  background-color: #1f8dd1;
+}
+.page-err .err-status {
+  background-color: #f3f3f3;
+}
+.page-err .err-status h1 {
+  margin: 100px 0 -45px;
+  color: #1c7ebb;
+  font-size: 200px;
+}
+.page-err .err-message {
+  background-color: #1c7ebb;
+  padding: 24px;
+  text-transform: uppercase;
+}
+.page-err .err-message h2 {
+  font-size: 50px;
+  color: white;
+  font-weight: 300;
+}
+.page-err .err-body {
+  padding: 100px 10px 20px;
+}
+.page-err .btn-goback {
+  color: white;
+  background-color: transparent;
+  border-color: white;
+}
+.page-err .btn-goback:hover, .page-err .btn-goback:focus, .page-err .btn-goback:active, .page-err .btn-goback.active {
+  color: #1f8dd1;
+  background-color: white;
+}
+.open .page-err .btn-goback.dropdown-toggle {
+  color: #1f8dd1;
+  background-color: white;
+}

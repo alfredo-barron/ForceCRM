@@ -1,0 +1,83 @@
+<header class="main-header">
+  <!-- Logo -->
+  <a href="{{ urlFor('dashboard') }}" class="logo">Force <b>CRM</b></a>
+  <!-- Header Navbar: style can be found in header.less -->
+  <nav class="navbar navbar-static-top" role="navigation">
+    <!-- Sidebar toggle button-->
+    <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
+      <span class="sr-only">Toggle navigation</span>
+    </a>
+    <!-- Navbar Right Menu -->
+    <div class="navbar-custom-menu">
+      <ul class="nav navbar-nav">
+
+        <!-- User Account: style can be found in dropdown.less -->
+        <li class="dropdown user user-menu">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+            {% if role.name == "Administrador" %}
+          <img src="{{ urlFor('root') }}public/img/admin.png" class="user-image" alt="Administrador" />
+        {% elseif role.name == "Jefe de Marketing" and user.gender == "H" %}
+          <img src="{{ urlFor('root') }}public/img/jefe.png" class="user-image" alt="Jefe de Marketing" />
+        {% elseif role.name == "Jefe de Marketing" and user.gender == "M" %}
+          <img src="{{ urlFor('root') }}public/img/jefa.png" class="user-image" alt="Jefa de Marketing" />
+        {% elseif role.name == "Promotor" and user.gender == "H" %}
+          <img src="{{ urlFor('root') }}public/img/promotor.png" class="user-image" alt="Promotor" />
+        {% elseif role.name == "Promotor" and user.gender == "M" %}
+          <img src="{{ urlFor('root') }}public/img/promotora.png" class="user-image" alt="Promotora" />
+        {% elseif role.name == "Agente de Ventas" and user.gender == "H" %}
+          <img src="{{ urlFor('root') }}public/img/vendedor.png" class="user-image" alt="Agente de Ventas" />
+        {% elseif role.name == "Agente de Ventas" and user.gender == "M" %}
+          <img src="{{ urlFor('root') }}public/img/vendedora.png" class="user-image" alt="Agente de Ventas" />
+        {% endif %}
+            <span class="hidden-xs">{{ user.name ~ " " ~ user.last_name }}</span>
+          </a>
+          <ul class="dropdown-menu">
+            <!-- User image -->
+            <li class="user-header">
+              {% if role.name == "Administrador" %}
+                <img src="{{ urlFor('root') }}public/img/admin.png" class="img-circle" alt="Administrador" />
+              {% elseif role.name == "Jefe de Marketing" and user.gender == "H" %}
+                <img src="{{ urlFor('root') }}public/img/jefe.png" class="img-circle" alt="Jefe de Marketing" />
+              {% elseif role.name == "Jefe de Marketing" and user.gender == "M" %}
+                <img src="{{ urlFor('root') }}public/img/jefa.png" class="img-circle" alt="Jefa de Marketing" />
+              {% elseif role.name == "Promotor" and user.gender == "H" %}
+                <img src="{{ urlFor('root') }}public/img/promotor.png" class="img-circle" alt="Promotor" />
+              {% elseif role.name == "Promotor" and user.gender == "M" %}
+                <img src="{{ urlFor('root') }}public/img/promotora.png" class="img-circle" alt="Promotora" />
+              {% elseif role.name == "Agente de Ventas" and user.gender == "H" %}
+                <img src="{{ urlFor('root') }}public/img/vendedor.png" class="img-circle" alt="Agente de Ventas" />
+              {% elseif role.name == "Agente de Ventas" and user.gender == "M" %}
+                <img src="{{ urlFor('root') }}public/img/vendedora.png" class="img-circle" alt="Agente de Ventas" />
+              {% endif %}
+              <p>
+                {{ role.name }}
+                <small>{{ user.email }}</small>
+              </p>
+            </li>
+            <!-- Menu Body -->
+            <!--<li class="user-body">
+              <div class="col-xs-4 text-center">
+                <a href="#">Followers</a>
+              </div>
+              <div class="col-xs-4 text-center">
+                <a href="#">Sales</a>
+              </div>
+              <div class="col-xs-4 text-center">
+                <a href="#">Friends</a>
+              </div>
+            </li>-->
+            <!-- Menu Footer-->
+            <li class="user-footer">
+              <!--<div class="pull-left">
+                <a href="#" class="btn btn-default btn-flat">Profile</a>
+              </div>-->
+              <div class="pull-right">
+                <a href="{{ urlFor('logout') }}" class="btn btn-default btn-flat">Cerrar sesión</a>
+              </div>
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+  </nav>
+</header>

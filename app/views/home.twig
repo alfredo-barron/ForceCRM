@@ -1,0 +1,19 @@
+{% extends 'base.twig' %}
+{% block content %}
+  <div class="container">
+    <h1 class="text-center">Bienvenido a Hoenn!</h1>
+    <hr><hr>
+    <div align="center">
+      <img src="{{ urlFor('root') }}public/img/Treecko.png" alt="Treecko" class="img-rounded">
+      <img src="{{ urlFor('root') }}public/img/Torchic.png" alt="Torchic" class="img-rounded">
+      <img src="{{ urlFor('root') }}public/img/Mudkip.png" alt="Mudkip" class="img-rounded">
+    </div>
+  </div>
+<ul>
+{% for c in centros %}
+  <li> {{ c.nombre }} {{ c.id }} {{ c.password }} {{ c.regiones.nombre }} </li>
+{% else %}
+  <li>Nameless!</li>
+{% endfor %}
+</ul>
+{% endblock %}

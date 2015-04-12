@@ -1,0 +1,788 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+			[
+				"met",
+				"method	Attr"
+			],
+			[
+				"na",
+				"name	Attr"
+			],
+			[
+				"section",
+				"section	Section"
+			],
+			[
+				"sta",
+				"static"
+			],
+			[
+				"pr",
+				"private"
+			],
+			[
+				"fec",
+				"fetchObject"
+			],
+			[
+				"S",
+				"SELECT"
+			],
+			[
+				"con",
+				"conn3"
+			],
+			[
+				"db",
+				"dbpass"
+			],
+			[
+				"jso",
+				"json_encode"
+			],
+			[
+				"id_u",
+				"id_user"
+			],
+			[
+				"pas",
+				"password"
+			],
+			[
+				"u",
+				"user"
+			],
+			[
+				"id",
+				"id_user"
+			],
+			[
+				"row",
+				"rowCount"
+			],
+			[
+				"img",
+				"image"
+			],
+			[
+				"ba",
+				"background-color"
+			],
+			[
+				"conect",
+				"connected"
+			],
+			[
+				"ex",
+				"exit"
+			],
+			[
+				"lo",
+				"login_ES"
+			],
+			[
+				"fac",
+				"facebook_ES"
+			],
+			[
+				"fol",
+				"folder_ES"
+			],
+			[
+				"emai",
+				"email_ES"
+			],
+			[
+				"sex",
+				"sex_ES"
+			],
+			[
+				"img_",
+				"img_user_ES"
+			],
+			[
+				"location",
+				"location_ES"
+			],
+			[
+				"ape_",
+				"ape_mat_ES"
+			],
+			[
+				"nam",
+				"name_ES"
+			],
+			[
+				"conne",
+				"connected_ES"
+			],
+			[
+				"if",
+				"if	Twig : If"
+			],
+			[
+				"id_user_",
+				"id_user_ES"
+			],
+			[
+				"exe",
+				"execute"
+			],
+			[
+				"ar",
+				"array"
+			],
+			[
+				"pri",
+				"print_r"
+			],
+			[
+				"el",
+				"elseif	elseif …"
+			],
+			[
+				"fu",
+				"fun	function …"
+			],
+			[
+				"ape_m",
+				"ape_mat_ES"
+			],
+			[
+				"ape",
+				"ape_pat_ES"
+			],
+			[
+				"_",
+				"_SESSION"
+			],
+			[
+				"g",
+				"getcwd"
+			],
+			[
+				"foler",
+				"folder_user"
+			],
+			[
+				"file",
+				"file_index"
+			],
+			[
+				"fon",
+				"font-size"
+			],
+			[
+				"w",
+				"width	Attr"
+			],
+			[
+				"id_",
+				"id_user"
+			],
+			[
+				"fe",
+				"fetchObject"
+			],
+			[
+				"TAB",
+				"TABLA_DESCARGAR"
+			],
+			[
+				"ac",
+				"action	Attr"
+			],
+			[
+				"fun",
+				"function"
+			],
+			[
+				"pok",
+				"pokemon_a"
+			],
+			[
+				"id_e",
+				"id_entrenador_a"
+			],
+			[
+				"en",
+				"enfermera_entrada"
+			],
+			[
+				"no",
+				"nombre"
+			],
+			[
+				"n",
+				"nombre"
+			],
+			[
+				"ca",
+				"catalogo_tipos"
+			],
+			[
+				"ct",
+				"crt	ctr"
+			],
+			[
+				"user",
+				"user_add_id"
+			],
+			[
+				"gr",
+				"group_id"
+			],
+			[
+				"re",
+				"received_id"
+			],
+			[
+				"use",
+				"user_id"
+			],
+			[
+				"on",
+				"onclick	Attr"
+			],
+			[
+				"for",
+				"foreach	foreach …"
+			],
+			[
+				"arr",
+				"array"
+			],
+			[
+				"mysql_fe",
+				"mysql_fetch_assoc"
+			],
+			[
+				"cone",
+				"conection"
+			],
+			[
+				"mysql_nu",
+				"mysql_num_rows"
+			],
+			[
+				"cartas",
+				"cartas"
+			],
+			[
+				"car",
+				"cardplayer"
+			],
+			[
+				"cad",
+				"cardmazo1"
+			],
+			[
+				"sym",
+				"symbol"
+			],
+			[
+				"card",
+				"cardmazo"
+			],
+			[
+				"hr",
+				"href"
+			],
+			[
+				"else",
+				"else	Twig : Else"
+			],
+			[
+				"de",
+				"def	define(…, …)"
+			],
+			[
+				"num",
+				"numbers"
+			],
+			[
+				"m",
+				"mark	<mark>"
+			],
+			[
+				"set",
+				"setName"
+			],
+			[
+				"e",
+				"echo	echo \"…\""
+			]
+		]
+	},
+	"buffers":
+	[
+	],
+	"build_system": "",
+	"command_palette":
+	{
+		"height": 392.0,
+		"selected_items":
+		[
+			[
+				"ins",
+				"Package Control: Install Package"
+			],
+			[
+				"pac",
+				"Package Control: Install Package"
+			],
+			[
+				"insta",
+				"Package Control: Install Package"
+			],
+			[
+				"int",
+				"Package Control: Install Package"
+			],
+			[
+				"Package Control: ",
+				"Package Control: Remove Package"
+			],
+			[
+				"pack",
+				"Package Control: Install Package"
+			],
+			[
+				"package control install",
+				"Package Control: Install Package"
+			],
+			[
+				"Snippet: ",
+				"Snippet: untitled"
+			],
+			[
+				"packa",
+				"Package Control: Install Package"
+			]
+		],
+		"width": 593.0
+	},
+	"console":
+	{
+		"height": 129.0,
+		"history":
+		[
+			"import urllib.request,os,hashlib; h = '7183a2d3e96f11eeadd761d777e62404' + 'e330c659d4bb41d3bdf022e94cab3cd0'; pf = 'Package Control.sublime-package'; ipp = sublime.installed_packages_path(); urllib.request.install_opener( urllib.request.build_opener( urllib.request.ProxyHandler()) ); by = urllib.request.urlopen( 'http://sublime.wbond.net/' + pf.replace(' ', '%20')).read(); dh = hashlib.sha256(by).hexdigest(); print('Error validating download (got %s instead of %s), please try manual install' % (dh, h)) if dh != h else open(os.path.join( ipp, pf), 'wb' ).write(by)"
+		]
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"file_history":
+	[
+		"/var/www/pokemon-hoenn/app/views/home.twig",
+		"/home/alfredobarron/Documentos/WebDev/Pokemon/pokemon.sql",
+		"/var/www/pokemon-hoenn/app/controllers/user.controller.php",
+		"/var/www/pokemon-hoenn/index.php",
+		"/var/www/pokemon-hoenn/app/views/base.twig",
+		"/var/www/pokemon-hoenn/hoenn/index.php",
+		"/var/www/pokemon-hoenn/public/css/styles.css",
+		"/var/www/pokemon-hoenn/app/views/navbar.twig",
+		"/var/www/pokemon-hoenn/public/css/bootstrap.css",
+		"/var/www/HT/app/views/base.twig",
+		"/var/www/pokemon-hoenn/app/config.php",
+		"/var/www/pokemon-hoenn/public/css/cover.css",
+		"/var/www/pokemon-hoenn/app/models/Centros_Pokemon.php",
+		"/home/alfredobarron/Documentos/WebDev/HRaidTools/app/models/Elegant.php",
+		"/var/www/pokemon-hoenn/app/models/Elegant.php",
+		"/home/alfredobarron/Documentos/WebDev/strike-counter/README.md",
+		"/home/alfredobarron/Documentos/WebDev/Pokemon/index.php",
+		"/var/www/bitacora/app/config.php",
+		"/home/alfredobarron/Documentos/WebDev/Pokemon/app/vars.inc.php",
+		"/home/alfredobarron/Documentos/WebDev/pokemon-hoenn/README.md",
+		"/home/alfredobarron/Documentos/Latex/Trabajos Escolares/Curso de Latex/intro.tex",
+		"/var/www/Janko/index.php",
+		"/var/www/Janko/views/ver.php",
+		"/var/www/Proyecto/index.php",
+		"/var/www/Janko/views/index.php",
+		"/var/www/Proyecto/pui.php",
+		"/home/alfredobarron/.gitconfig",
+		"/media/alfredobarron/F694F61A94F5DD55/# Simple log list",
+		"/home/alfredobarron/Documentos/WebDev/php-getting-started/views/database.twig",
+		"/home/alfredobarron/Documentos/WebDev/php-getting-started/views/index.twig",
+		"/home/alfredobarron/Documentos/WebDev/php-getting-started/web/index.php",
+		"/var/www/Migracion/migracion.php",
+		"/var/www/Migracion/BD.class.php",
+		"/home/alfredobarron/Documentos/WebDev/php-getting-started/composer.json",
+		"/home/alfredobarron/Documentos/Ingenieria en Tecnologias de la Informacion y Comunicaciones/1° Semestre/Fundamentos de Programacion/Programacion/profe.cpp",
+		"/home/alfredobarron/Documentos/Ingenieria en Tecnologias de la Informacion y Comunicaciones/1° Semestre/Fundamentos de Programacion/Programacion/Cafe.cpp",
+		"/home/alfredobarron/Documentos/Ingenieria en Tecnologias de la Informacion y Comunicaciones/1° Semestre/Fundamentos de Programacion/Programacion/Ejemplo11.cpp",
+		"/home/alfredobarron/Documentos/Ingenieria en Tecnologias de la Informacion y Comunicaciones/1° Semestre/Fundamentos de Programacion/Programacion/Base de Datos.txt",
+		"/home/alfredobarron/Documentos/Ingenieria en Tecnologias de la Informacion y Comunicaciones/1° Semestre/Fundamentos de Programacion/Programacion/Gato.txt",
+		"/home/alfredobarron/Documentos/Latex/Trabajos Escolares/Desarrollo de Aplicaciones para Dispositivos Moviles/reporte.tex",
+		"/home/alfredobarron/Documentos/Latex/Trabajos Escolares/Negocios Electronicos/mapa.tex",
+		"/home/alfredobarron/Documentos/Latex/Trabajos Escolares/Negocios Electronicos/tarea1.tex",
+		"/home/alfredobarron/workspace/Grafo/src/Grafo.java",
+		"/home/alfredobarron/workspace/Grafo/src/Nodo.java",
+		"/var/www/pokemon/hoenn/agregar_catalogopokemon.php",
+		"/var/www/pokemon/hoenn/DB.php",
+		"/var/www/Pkmn/pokemon.sql",
+		"/home/alfredobarron/Documentos/Proyecto BDD/Base de Datos/centrospokemon.sql",
+		"/home/alfredobarron/Documentos/Latex/Trabajos Escolares/Sistemas Operativos II/SO3.tex",
+		"/home/alfredobarron/Documentos/Latex/Trabajos Escolares/Taller de Investigacion II/portada.tex",
+		"/var/www/api/index.php",
+		"/var/www/api/db.php",
+		"/home/alfredobarron/Documentos/Latex/Trabajos Escolares/Asesorias/minted.sty",
+		"/home/alfredobarron/Documentos/Latex/Trabajos Escolares/Asesorias/fundamentos.tex",
+		"/home/alfredobarron/Documentos/Latex/Trabajos Escolares/Asesorias/U2.tex",
+		"/home/alfredobarron/Documentos/Latex/Trabajos Escolares/Asesorias/j2deme.sty",
+		"/home/alfredobarron/Documentos/Latex/Slides/U2.tex",
+		"/home/alfredobarron/Documentos/Latex/Trabajos Escolares/Asesorias/fundamentos.log",
+		"/home/alfredobarron/Documentos/Latex/Slides/j2deme.sty",
+		"/var/www/NenekES/index.php",
+		"/home/alfredobarron/Documentos/Latex/Trabajos Escolares/Taller de Investigacion II/expo.tex",
+		"/var/www/pokemon/hoenn/consultapokemon.php",
+		"/var/www/NenekES/app/views/base.twig",
+		"/var/www/NenekES/app/views/index.dashboard.twig",
+		"/var/www/NenekES/app/views/index.twig",
+		"/home/alfredobarron/Documentos/Latex/Trabajos Escolares/Redes Emergentes/RE2.tex",
+		"/home/alfredobarron/Documentos/WebDev/CPV/index.php",
+		"/home/alfredobarron/Documentos/Latex/Trabajos Escolares/Taller de Investigacion II/ensayo.tex",
+		"/home/alfredobarron/Documentos/Latex/Trabajos Escolares/Sistemas Operativos II/SO2.tex",
+		"/home/alfredobarron/Documentos/Latex/Presentaciones/presentation_1.tex",
+		"/var/www/ES/words.php",
+		"/var/www/ES/images_index.php",
+		"/var/www/SAAC/visorpdf.php",
+		"/var/www/ES/composer.json",
+		"/var/www/ES/css/bootstrap.css",
+		"/home/alfredobarron/Documentos/WebDev/CPV/arrays.php",
+		"/var/www/HT/index.php",
+		"/var/www/HT/app/controllers/user.controller.php",
+		"/var/www/NenekES/app/views/navbar.twig",
+		"/var/www/NenekES/app/views/index.public.twig",
+		"/var/www/bitacora/index.php",
+		"/var/www/ES/img/img_muestra.png",
+		"/var/www/ES/index.php",
+		"/var/www/ES/css/galery.css",
+		"/home/alfredobarron/Documentos/WebDev/NenekES/index.php",
+		"/home/alfredobarron/Documentos/WebDev/NenekES/app/views/base.twig",
+		"/home/alfredobarron/Documentos/WebDev/NenekES/app/views/index.twig",
+		"/var/www/movil/reporte.html",
+		"/home/alfredobarron/Documentos/WebDev/NenekES/app/views/navbar.twig",
+		"/home/alfredobarron/Documentos/WebDev/NenekES/app/views/index.dashboard.twig",
+		"/var/www/ES/profile.php",
+		"/home/alfredobarron/Documentos/WebDev/NenekES/app/views/index.public.twig",
+		"/home/alfredobarron/Documentos/WebDev/NenekES/app/views/nabvar.public.twig",
+		"/home/alfredobarron/.cache/.fr-xKSQNx/ContactsList/AndroidManifest.xml",
+		"/var/www/HT/app/config.php",
+		"/home/alfredobarron/.cache/.fr-9DKlHQ/ContactsList/src/com/example/android/contactslist/ui/ContactsListActivity.java",
+		"/home/alfredobarron/.cache/.fr-NWNq4U/ContactsList/res/layout/activity_main.xml",
+		"/home/alfredobarron/Documentos/WebDev/Migracion/SAAC/index.php",
+		"/var/www/Migracion/SAAC/class/BD.class.php",
+		"/home/alfredobarron/Documentos/Latex/Trabajos Escolares/Taller de Investigacion II/taller.tex",
+		"/home/alfredobarron/.cache/.fr-ruBcQv/res/values/styles_example.xml",
+		"/home/alfredobarron/Documentos/Latex/Trabajos Escolares/Sistemas Operativos II/SO2.pdf",
+		"/media/alfredobarron/CC5A29455A292DA0/Freddy y Jhosue/examen.txt",
+		"/var/www/Migracion/ES/index.php",
+		"/var/www/Migracion/ES/index2.php",
+		"/home/alfredobarron/Documentos/Latex/Trabajos Escolares/Sistemas Operativos II/dinamica.tex",
+		"/home/alfredobarron/Documentos/Latex/Trabajos Escolares/Negocios Electronicos/tarea1.pdf",
+		"/var/www/movil/acerca.html",
+		"/var/www/movil/lineadeltiempo.html",
+		"/var/www/movil/index.html",
+		"/var/www/movil/impress/index.html",
+		"/var/www/movil/css/impress-demo.css",
+		"/var/www/movil/tecnologiasemergentes.html",
+		"/var/www/movil/tarea1.html",
+		"/var/www/ES/register_ES.php",
+		"/var/www/SAAC/function.php",
+		"/var/www/Migracion/ES/class/BD.class.php",
+		"/home/alfredobarron/Documentos/WebDev/Migracion/bd.sql",
+		"/home/alfredobarron/Documentos/WebDev/Migracion/ES/index2.php",
+		"/home/alfredobarron/Documentos/WebDev/Migracion/ES/class/BD.class.php",
+		"/home/alfredobarron/AndroidStudioProjects/MyFirstApp/app/src/main/AndroidManifest.xml",
+		"/home/alfredobarron/Descargas/login.php",
+		"/home/alfredobarron/AndroidStudioProjects/MyFirstApp/app/src/main/java/com/example/alfredobarron/myfirstapp/MainActivity.java",
+		"/home/alfredobarron/AndroidStudioProjects/MyFirstApp/app/src/main/java/com/example/alfredobarron/myfirstapp/DisplayMessageActivity.java",
+		"/home/alfredobarron/AndroidStudioProjects/MyFirstApp/app/src/main/res/layout/fragment_display_message.xml",
+		"/var/www/ES/menu.php",
+		"/var/www/pokemon/hoenn/pokemon.php",
+		"/home/alfredobarron/Documentos/WebDev/Migracion/migracion.php"
+	],
+	"find":
+	{
+		"height": 32.0
+	},
+	"find_in_files":
+	{
+		"height": 0.0,
+		"where_history":
+		[
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": false,
+		"find_history":
+		[
+			"images",
+			"=\"./images",
+			"./images",
+			"langCookie",
+			"lang",
+			"nombre",
+			"email",
+			"user",
+			"username",
+			"DATABASE_URL",
+			"imagenes_entrenador",
+			"imagenes_pokemon",
+			"maquinas",
+			"camas",
+			"habitaciones",
+			"0)",
+			"0",
+			"1)",
+			"1",
+			"0)",
+			",1,1,",
+			"',1,1,75",
+			",1,1,",
+			"pokemon",
+			"0)",
+			"1)",
+			"9",
+			"1),(",
+			"1)",
+			"entrenadores",
+			"1)",
+			"0)",
+			"ayudantes",
+			"1)",
+			"0)",
+			"3",
+			"0),(",
+			"0)",
+			"3",
+			"0),(",
+			"0)",
+			"enfermeras",
+			"evoluciones",
+			"habilidades",
+			"catalogo_estatus",
+			"1)",
+			"0)",
+			"0",
+			"catalogo_habilidades",
+			"catalogo_tipos",
+			"centros_pokemon",
+			"regiones",
+			"ensayo",
+			"U2",
+			"dimen",
+			"pgf",
+			"U2",
+			"\\newdimen",
+			"\\newdimen\\pgfdecorationsegmentlength",
+			"U2",
+			"expo",
+			"rows",
+			"SO3",
+			"preview-image",
+			"20",
+			"glyphicon",
+			"class=\"span2 \"",
+			"new_publication",
+			"Ka kaniy jún i ja'úbláb ka dhuchan ti nének",
+			"li",
+			"taller",
+			"Introduccón",
+			"Conceptos básicos de procesos y procesadores",
+			"SO3",
+			"picture",
+			"SO3",
+			"Expo.Tesis",
+			"dinamica",
+			"__DIR__ . \"",
+			" \\begin{itemize}",
+			"\\begin{itemize}",
+			"SO2",
+			"reporte",
+			"via",
+			"vía",
+			"picture",
+			"figure",
+			"emulador",
+			"listing",
+			"verbatim",
+			"taller",
+			"tarea1",
+			"110992",
+			"itemize",
+			"rightarrow",
+			"SO",
+			"SO2",
+			"section",
+			"Section",
+			"section",
+			"presentation_1",
+			"padecimiento",
+			"domicilio",
+			"clientmsg",
+			"InsertMsg",
+			"redundancia",
+			"message",
+			"enumerate",
+			"facebook",
+			"prueba",
+			"_catalogo",
+			"pokemon",
+			"habitacion",
+			"mis_archivos",
+			"t’ojlabil",
+			"U t’ojlabil",
+			"received",
+			"integer",
+			"folderProfiles",
+			"110992",
+			"\n     $db = new DB(\"root\",\"110992\",\"localhost\",\"centrospokemon\");",
+			"110992",
+			"distributor",
+			"row",
+			" $",
+			"C",
+			"'numero','color'",
+			"PLAYER"
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": false,
+		"replace_history":
+		[
+		],
+		"reverse": false,
+		"show_context": true,
+		"use_buffer2": true,
+		"whole_word": false,
+		"wrap": true
+	},
+	"groups":
+	[
+		{
+			"sheets":
+			[
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 32.0
+	},
+	"input":
+	{
+		"height": 41.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"output.find_results":
+	{
+		"height": 0.0
+	},
+	"project": "index.sublime-project",
+	"replace":
+	{
+		"height": 60.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"selected_items":
+		[
+			[
+				"commen",
+				"www/red-social/comments_texts.php"
+			],
+			[
+				"pos",
+				"www/webchat/post.php"
+			],
+			[
+				"notif",
+				"www/red-social/notification.php"
+			],
+			[
+				"base_f",
+				"www/red-social/facebook/base_facebook.php"
+			],
+			[
+				"face",
+				"www/red-social/facebook/facebook.php"
+			],
+			[
+				"commo",
+				"www/cenenek/common.php"
+			],
+			[
+				"friends",
+				"www/red-social/friends.php"
+			]
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 0.0,
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_symbol":
+	{
+		"height": 0.0,
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"selected_group": 0,
+	"settings":
+	{
+	},
+	"show_minimap": true,
+	"show_open_files": false,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 252.0,
+	"status_bar_visible": true,
+	"template_settings":
+	{
+	}
+}

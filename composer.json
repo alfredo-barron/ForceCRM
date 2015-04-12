@@ -1,0 +1,24 @@
+{
+  "name": "alfredo-barron/Pokemon",
+  "description": "Project Pokemon Distributed Database and Programming Mobile",
+  "license": "MIT",
+  "authors": [
+      {
+          "name": "Alfredo Barrón Rodríguez",
+          "email": "alfreedobarron@gmail.com"
+      }
+  ],
+  "minimum-stability": "stable",
+  "require": {
+    "php": ">=5.4.0",
+    "slim/slim": "2.*",
+    "slim/views": "0.1.*",
+    "twig/twig": "1.*",
+    "illuminate/database": "*",
+    "illuminate/validation": "*",
+    "raulfraile/ladybug": "~1.0",
+    "symfony/yaml": "~2.1",
+    "mrrio/shellwrap": "*",
+    "hashids/hashids": "dev-master"
+  }
+}

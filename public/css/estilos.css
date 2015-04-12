@@ -1,0 +1,108 @@
+
+h1{
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-weight: 500;
+  line-height: 1.1;
+  color: inherit;
+}
+
+a {
+  color: white;
+  text-decoration: none;
+}
+
+a:hover,
+a:focus {
+  color: #2a6496;
+  text-decoration: underline;
+}
+
+a:focus {
+  outline: thin dotted #333;
+  outline: 5px auto -webkit-focus-ring-color;
+  outline-offset: -2px;
+}
+
+#kanto #jotho #sinnoh #hoenn #almia{
+  display: inline;
+  padding: .2em .6em .3em;
+  font-size: 75%;
+  font-weight: bold;
+  line-height: 1;
+  color: #ffffff;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: baseline;
+  border-radius: .25em;
+}
+
+#kanto {
+  background-color: #999999;
+  position:absolute;
+		top: 300px;
+		left: 585px;
+}
+
+#poke1 {
+  position:absolute;
+    top: 310px;
+    left: 545px;
+}
+
+#jotho {
+	background-color: #808080;
+	position:absolute;
+		top: 290px;
+		left: 436px;
+}
+
+#poke2 {
+  position:absolute;
+    top: 300px;
+    left: 395px;
+}
+
+#sinnoh {
+	background-color: #428bca;
+	position:absolute;
+		top: 120px;
+		left: 845px;
+}
+
+#poke3 {
+  position:absolute;
+    top: 130px;
+    left: 805px;
+}
+
+#hoenn {
+	background-color: #d9534f;
+	position:absolute;
+		top: 405px;
+		left: 255px;
+}
+
+#poke4 {
+  position:absolute;
+    top: 415px;
+    left: 215px;
+}
+
+#almia {
+	background-color: #5cb85c;
+	position:absolute;
+		top: 210px;
+    left: 845px;
+}
+
+#poke5 {
+  position:absolute;
+    top: 220px;
+    left: 805px;
+}
+
+#pokemon{
+	position:absolute;
+		top: 460px;
+		left: 620px;
+}
