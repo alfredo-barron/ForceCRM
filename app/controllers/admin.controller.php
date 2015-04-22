@@ -14,6 +14,31 @@ $app->group('/u/0/clientes', $auth($app), function() use($app){
     $app->render('newcustomer.twig',$data);
   })->name('new-customer');
 
+  $app->post('/nuevo', function() use($app){
+    $post = (object) $app->request()->post();
+    $customer = new Customer();
+    $customer->name = $post->name;
+    $customer->last_name = $post->last_name;
+    $customer->birthday = $post->birthday;
+    $customer->gender = $post->gender;
+    $customer->email = $post->email;
+    $customer->telephone = trim($post->telephone);
+    $customer->street = $post->street;
+    $customer->number = $post->number;
+    $customer->postcode = $post->postcode;
+    $customer->place = $post->place;
+    $customer->city = $post->city;
+    $customer->entity = $post->entity;
+    $customer->job = $post->job;
+    $customer->school = $post->school;
+    $customer->status_civil = $post->status_civil;
+    $customer->sons = $post->sons;
+    $customer->save();
+    $success = "Cliente dado de alta";
+    $app->flash('success', $success);
+    $app->redirect($app->urlFor('new-customer'));
+  })->name('customer-post');
+
   $app->get('', function() use($app) {
     $data = array();
     $id = $_SESSION['id'];

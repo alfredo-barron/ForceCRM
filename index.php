@@ -119,11 +119,11 @@ $app->get('/u/0', $auth($app), function() use($app){
   $data['role'] = Role::where('id',$data['user']->rol)->first();
   $data['count_cus'] = Customer::count();
   $data['count_cam'] = Campaing::count();
-  $data['men'] = Customer::whereGender('H')->count();
-  $data['women'] = Customer::whereGender('M')->count();
+  $data['men'] = Customer::where('gender','=','H')->count();
+  $data['women'] = Customer::where('gender','=','M')->count();
   $data['customers'] = Customer::all();
   foreach ($data['customers'] as $customer) {
-    $age = date('Y-m-d') - $customer->birthday;
+    $age = date('now') - $customer->birthday;
   }
   $app->render('index.twig',$data);
 })->name('dashboard');

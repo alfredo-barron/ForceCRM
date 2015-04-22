@@ -43,7 +43,7 @@
             <span class="info-box-icon bg-blue"><i class="ion ion-ios-star-outline"></i></span>
             <div class="info-box-content">
               <span class="info-box-text">Clientes</span>
-              <span class="info-box-number">41,410</span>
+              <span class="info-box-number">0</span>
             </div><!-- /.info-box-content -->
           </div><!-- /.info-box -->
         </div><!-- /.col -->
@@ -56,7 +56,7 @@
             <span class="info-box-icon bg-green"><i class="ion ion-ios-cart-outline"></i></span>
             <div class="info-box-content">
               <span class="info-box-text">Ventas</span>
-              <span class="info-box-number">760</span>
+              <span class="info-box-number">0</span>
             </div><!-- /.info-box-content -->
           </div><!-- /.info-box -->
         </div><!-- /.col -->
@@ -492,13 +492,8 @@
 {% endblock %}
 {% block js %}
     <script type="text/javascript">
-      {% if men == 0 or women == 0 %}
-        var men = 0;
-        var women = 0;
-      {% else %}
-        var men = {{ men|escape('js') }};
-        var women = {{ women|escape('js') }};
-      {% endif %}
+      var men = {{ men|escape('js') }};
+      var women = {{ women|escape('js') }};
     </script>
     <script src="{{ urlFor('root') }}public/plugins/chartjs/Chart.min.js"></script>
     <script src="{{ urlFor('root') }}public/css/dist/js/demo.js"></script>
