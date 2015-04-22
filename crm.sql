@@ -3,9 +3,9 @@
 -- http://www.phpmyadmin.net
 --
 -- Servidor: localhost
--- Tiempo de generación: 12-04-2015 a las 14:26:43
--- Versión del servidor: 5.5.41-0ubuntu0.14.04.1
--- Versión de PHP: 5.5.9-1ubuntu4.7
+-- Tiempo de generación: 22-04-2015 a las 10:04:41
+-- Versión del servidor: 5.5.43-0ubuntu0.14.04.1
+-- Versión de PHP: 5.5.9-1ubuntu4.9
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -29,12 +29,12 @@ SET time_zone = "+00:00";
 CREATE TABLE IF NOT EXISTS `campaings` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `created_by` int(11) NOT NULL,
-  `name` text CHARACTER SET latin1 NOT NULL,
+  `name` text NOT NULL,
   `date_start` date DEFAULT NULL,
   `date_end` date DEFAULT NULL,
   `status` text COMMENT 'Activa, Inactiva, Finalizada',
   `target` text NOT NULL,
-  `description` text CHARACTER SET latin1 NOT NULL,
+  `description` text NOT NULL,
   `duration` int(11) DEFAULT NULL,
   `date_created` date NOT NULL,
   PRIMARY KEY (`id`),
@@ -74,13 +74,18 @@ CREATE TABLE IF NOT EXISTS `campaing_team` (
 
 CREATE TABLE IF NOT EXISTS `customers` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` text CHARACTER SET latin1 NOT NULL,
-  `last_name` text CHARACTER SET latin1 NOT NULL,
+  `name` text NOT NULL,
+  `last_name` text NOT NULL,
   `birthday` date DEFAULT NULL,
   `gender` varchar(1) NOT NULL,
-  `email` text CHARACTER SET latin1 NOT NULL,
+  `email` text NOT NULL,
   `telephone` text,
+  `street` text NOT NULL,
+  `number` int(11) NOT NULL,
   `postcode` int(11) DEFAULT NULL,
+  `place` text NOT NULL,
+  `city` text NOT NULL,
+  `entity` text NOT NULL,
   `type` int(11) DEFAULT NULL,
   `job` int(11) DEFAULT NULL,
   `school` int(11) DEFAULT NULL,
@@ -88,7 +93,7 @@ CREATE TABLE IF NOT EXISTS `customers` (
   `sons` int(11) DEFAULT NULL,
   `status_social` int(11) DEFAULT NULL,
   `status` text NOT NULL,
-  `date_created` date DEFAULT NULL,
+  `date_created` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   KEY `fk_customers_1_idx` (`job`),
   KEY `fk_customers_2_idx` (`postcode`),
@@ -96,7 +101,15 @@ CREATE TABLE IF NOT EXISTS `customers` (
   KEY `fk_customers_4_idx` (`type`),
   KEY `fk_customers_5_idx` (`status_civil`),
   KEY `fk_customers_6_idx` (`status_social`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Clientes' AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Clientes' AUTO_INCREMENT=3 ;
+
+--
+-- Volcado de datos para la tabla `customers`
+--
+
+INSERT INTO `customers` (`id`, `name`, `last_name`, `birthday`, `gender`, `email`, `telephone`, `street`, `number`, `postcode`, `place`, `city`, `entity`, `type`, `job`, `school`, `status_civil`, `sons`, `status_social`, `status`, `date_created`) VALUES
+(1, 'Alfredo', 'Barrón Rodríguez', '1992-09-11', 'H', 'alfreedobarron@gmail.com', '4813918309', 'Magnolia', 412, 79020, 'Guadalupe', 'Ciudad Valles', 'San Luis Potosí', NULL, 1, 4, 1, 0, NULL, '', '2015-04-22 05:12:33'),
+(2, 'Alberto', 'Guerrero Vazquez', '1993-04-29', 'H', 'betho182@gmail.com', '4811216418', 'Diana', 201, 79068, 'Del Carmen', 'Ciudad Valles', 'San Luis Potosí', NULL, 1, 4, 1, 1, NULL, '', '2015-04-22 05:39:31');
 
 -- --------------------------------------------------------
 
@@ -157,7 +170,7 @@ CREATE TABLE IF NOT EXISTS `jobs` (
   `name` text CHARACTER SET latin1 NOT NULL,
   `salary` double DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=9 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=13 ;
 
 --
 -- Volcado de datos para la tabla `jobs`
@@ -171,7 +184,11 @@ INSERT INTO `jobs` (`id`, `name`, `salary`) VALUES
 (5, 'Desempleado', NULL),
 (6, 'Directivo', NULL),
 (7, 'Cargos Intermedios', NULL),
-(8, 'Otros', NULL);
+(8, 'Trabajadores de gobierno', NULL),
+(9, 'Trabajadores de educación', NULL),
+(10, 'Trabajadores de salud', NULL),
+(11, 'Fuerzas armadas', NULL),
+(12, 'Otros', NULL);
 
 -- --------------------------------------------------------
 
@@ -1318,7 +1335,16 @@ CREATE TABLE IF NOT EXISTS `types_customers` (
   `name` text CHARACTER SET latin1 NOT NULL,
   `description` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=4 ;
+
+--
+-- Volcado de datos para la tabla `types_customers`
+--
+
+INSERT INTO `types_customers` (`id`, `name`, `description`) VALUES
+(1, 'A', NULL),
+(2, 'B', NULL),
+(3, 'C', NULL);
 
 -- --------------------------------------------------------
 

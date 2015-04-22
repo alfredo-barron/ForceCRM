@@ -1,0 +1,94 @@
+{% extends 'base.twig' %}
+{% block title %}
+    <title>{{ title }} | Campañas</title>
+{% endblock %}
+{% block css %}
+    <link href="{{ urlFor('root') }}public/plugins/datatables/dataTables.bootstrap.css" rel="stylesheet" type="text/css" />
+{% endblock %}
+{% block content %}
+<div class="wrapper">
+  {% include 'navbar.twig' %}
+  {% include 'sidebar.twig' %}
+  <div class="content-wrapper">
+    <section class="content-header">
+          <h1>
+            Campañas
+            <small>activas</small>
+          </h1>
+          <ol class="breadcrumb">
+            <li><a href="{{ urlFor('dashboard') }}"><i class="fa fa-dashboard"></i> Force <b>CRM</b></a></li>
+            <li>Lista de campañas</li>
+            <li class="active">Activas</li>
+          </ol>
+        </section>
+         <!-- Main content -->
+    <section class="content">
+      <!-- Info boxes -->
+      <div class="row">
+        <div class="col-md-12">
+
+    <div class="box">
+            <div class="box-header">
+              <h3 class="box-title">Lista de campañas activas</h3>
+            </div><!-- /.box-header -->
+            <div class="box-body">
+              <table id="example1" class="table table-bordered table-striped">
+                <thead>
+                  <tr>
+                    <th>Nombre</th>
+                    <th>Objetivo</th>
+                    <th>Descripción</th>
+                    <th>Inicio</th>
+                    <th>Fin</th>
+                    <th>Duración</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {% for c in campaings %}
+                    <tr>
+                      <td>{{ c.name }}</td>
+                      <td>{{ c.target }}</td>
+                      <td>{{ c.description }}</td>
+                      <td>{{ c.date_start }}</td>
+                      <td>{{ c.date_end }}</td>
+                      <td>{{ c.duration }}</td>
+                    </tr>
+                  {% endfor %}
+                </tbody>
+                <tfoot>
+                  <tr>
+                    <th>Nombre</th>
+                    <th>Objetivo</th>
+                    <th>Descripción</th>
+                    <th>Inicio</th>
+                    <th>Fin</th>
+                    <th>Duración</th>
+                  </tr>
+                </tfoot>
+              </table>
+            </div><!-- /.box-body -->
+          </div><!-- /.box -->
+        </div><!-- /.col -->
+      </div><!-- /.row -->
+    </section><!-- /.content -->
+  </div><!-- /.content-wrapper -->
+</div>
+{% endblock %}
+{% block js %}
+  <script src="{{ urlFor('root')}}public/plugins/datatables/jquery.dataTables.js" type="text/javascript"></script>
+  <script src="{{ urlFor('root')}}public/plugins/datatables/dataTables.bootstrap.js" type="text/javascript"></script>
+  <script type="text/javascript">
+      $(function () {
+        $("#example1").dataTable();
+        $('#example2').dataTable({
+          "bPaginate": true,
+          "bLengthChange": false,
+          "bFilter": false,
+          "bSort": true,
+          "bInfo": true,
+          "bAutoWidth": false
+        });
+      });
+    </script>
+    <script src="{{ urlFor('root') }}public/css/dist/js/demo.js"></script>
+{% endblock %}

@@ -119,6 +119,33 @@ $app->group('/u/0/campanas', $auth($app), function() use($app){
     $app->redirect($app->urlFor('new-campaing'));
   })->name('campaing-post');
 
+  $app->get('/activas', function() use($app) {
+    $data = array();
+    $id = $_SESSION['id'];
+    $data['user'] = User::where('id',$id)->first();
+    $data['role'] = Role::where('id',$data['user']->rol)->first();
+    $data['campaings'] = Campaing::where('status','Activa')->get();
+    $app->render('campaings.activas.twig',$data);
+  })->name('campaings-activas');
+
+  $app->get('/espera', function() use($app) {
+    $data = array();
+    $id = $_SESSION['id'];
+    $data['user'] = User::where('id',$id)->first();
+    $data['role'] = Role::where('id',$data['user']->rol)->first();
+    $data['campaings'] = Campaing::where('status','En espera')->get();
+    $app->render('campaings.esperas.twig',$data);
+  })->name('campaings-esperas');
+
+  $app->get('/terminadas', function() use($app) {
+    $data = array();
+    $id = $_SESSION['id'];
+    $data['user'] = User::where('id',$id)->first();
+    $data['role'] = Role::where('id',$data['user']->rol)->first();
+    $data['campaings'] = Campaing::where('status','Finalizada')->get();
+    $app->render('campaings.finalizadas.twig',$data);
+  })->name('campaings-finalizadas');
+
 });
 
 $app->group('/u/0/email', $auth($app), function() use($app){
