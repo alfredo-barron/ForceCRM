@@ -153,6 +153,11 @@ INSERT INTO roles (name) VALUES('Jefe de Marketing');
 INSERT INTO roles (name) VALUES('Promotor');
 INSERT INTO roles (name) VALUES('Agente de Ventas');
 
+--Tipos de clientes
+INSERT INTO types_customers (name) VALUES('A');
+INSERT INTO types_customers (name) VALUES('B');
+INSERT INTO types_customers (name) VALUES('C');
+
 --Educación
 INSERT INTO schools (name) VALUES('Ninguna');
 INSERT INTO schools (name) VALUES('Primaria');
@@ -180,7 +185,11 @@ INSERT INTO jobs (name) VALUES('Profesionales por cuenta ajena');
 INSERT INTO jobs (name) VALUES('Profesionales por cuenta propia');
 INSERT INTO jobs (name) VALUES('Desempleado');
 INSERT INTO jobs (name) VALUES('Directivo');
-INSERT INTO jobs (name) VALUES('Cargos Intermedios');
+INSERT INTO jobs (name) VALUES('Cargos intermedios');
+INSERT INTO jobs (name) VALUES('Trabajadores de gobierno');
+INSERT INTO jobs (name) VALUES('Trabajadores de educación');
+INSERT INTO jobs (name) VALUES('Trabajadores de salud');
+INSERT INTO jobs (name) VALUES('Fuerzas armadas');
 INSERT INTO jobs (name) VALUES('Otros');
 
 --Codigos postales 78000 - 79997
@@ -1174,3 +1183,42 @@ INSERT INTO postcodes (id,place,city,entity) VALUES
 (79995, 'Santa María Picula;Tezapotla;Zapotitla;Tixcuayuca;Tlalixco', 'Tamazunchale', 'San Luis Potosí'),
 (79996, 'Pemucho;Santiago;Coahuica', 'Tamazunchale', 'San Luis Potosí'),
 (79997, 'La Fortuna;Pahuayo San Francisco;Choteo;Tetlama;Texopis;Quinta Chilla;Pahuayo San Miguel;Ixtla', 'Tamazunchale', 'San Luis Potosí');
+
+
+name: nombre del cliente
+last_name: apellidos del cliente (2 apellidos)
+birthday: fecha de nacimiento formato (YYYY-MM-DD) Año - Mes - Dia. Ejemplo (1992-09-11)
+gender: sexo hombre o mujer 'H' o 'M'
+email: correo electronico del cliente
+telephone: telefono del cliente Casa o Celular (Celular recomendación)
+postcode: codigo postal del 78000 al 79997
+job: ocupación del cliente (Lista)
+  1. Estudiante
+  2. Labores del hogar
+  3. Profesionales por cuenta ajena
+  4. Profesionales por cuenta propia
+  5. Desempleado
+  6. Directivo
+  7. Cargos intermedios
+  8. Trabajadores de gobierno
+  9. Trabajadores de educación
+  10. Trabajadores de salud
+  11. Fuerzas armadas
+  12. Otros
+school: educación del cliente
+  1. Ninguna
+  2. Primaria
+  3. Secundaria
+  4. Preparatoria o Bachillerato
+  5. Licenciatura
+  6. Maestria o Doctorado
+status_civil: estado civil del cliente
+  1. Soltero
+  2. Unión Libre
+  3. Casado
+  4. Divorciado
+  5. Viudo
+sons: numero de hijos del 0 al 10
+
+
+INSERT INTO customers(name,last_name,birthday,gender,email,telephone,postcode,job,school,status_civil,sons) VALUES('Alfredo','Barrón Rodríguez',1992-09-11,'H','alfreedobarron@gmail.com','4813918309',79020,1,4,1,0);

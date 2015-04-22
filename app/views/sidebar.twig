@@ -58,11 +58,11 @@
         </a>
         <ul class="treeview-menu">
           {% if role.name == "Administrador" or role.name == "Jefe de Marketing" %}
-          <li><a href="#"><i class="fa fa-circle-o"></i> Nuevo cliente</a></li>
+          <li><a href="{{ urlFor('new-customer') }}"><i class="fa fa-user-plus"></i> Nuevo cliente</a></li>
           {% endif %}
           <li class="treeview">
             <a href="#">
-              <i class="fa fa-circle-o"></i> Lista de clientes
+              <i class="fa fa-list"></i> Lista de clientes
               <i class="fa fa-angle-left pull-right"></i>
             </a>
             <ul class="treeview-menu">
@@ -79,11 +79,11 @@
           <i class="fa fa-angle-left pull-right"></i>
           <ul class="treeview-menu">
             {% if role.name == "Administrador" or role.name == "Jefe de Marketing" %}
-            <li><a href="{{ urlFor('new-market') }}"><i class="fa fa-circle-o"></i> Identificar un mercado</a></li>
+            <li><a href="{{ urlFor('new-market') }}"><i class="fa fa-filter"></i> Identificar un mercado</a></li>
             {% endif %}
             <li class="treeview">
               <a href="#">
-                <i class="fa fa-circle-o"></i> Lista de mercados
+                <i class="fa fa-list"></i> Lista de mercados
                 <i class="fa fa-angle-left pull-right"></i>
               </a>
               <ul class="treeview-menu">
@@ -103,11 +103,11 @@
         </a>
         <ul class="treeview-menu">
           {% if role.name == "Administrador" or role.name == "Jefe de Marketing" %}
-            <li><a href="{{ urlFor('new-campaing') }}"><i class="fa fa-circle-o"></i> Crear nueva campaña</a></li>
+            <li><a href="{{ urlFor('new-campaing') }}"><i class="fa fa-bell"></i> Crear nueva campaña</a></li>
           {% endif %}
           <li class="treeview">
             <a href="#">
-              <i class="fa fa-circle-o"></i> Lista de camapañas
+              <i class="fa fa-list"></i> Lista de campañas
               <i class="fa fa-angle-left pull-right"></i>
             </a>
             <ul class="treeview-menu">
@@ -126,9 +126,9 @@
         </a>
         <ul class="treeview-menu">
           {% if role.name == "Jefe de Marketing" %}
-          <li><a href="{{ urlFor('new-email') }}"><i class="fa fa-circle-o"></i> Redactar</a></li>
+          <li><a href="{{ urlFor('new-email') }}"><i class="fa fa-pencil"></i> Redactar</a></li>
           {% endif %}
-          <li><a href="{{ urlFor('email') }}"><i class="fa fa-circle-o"></i> Enviados</a></li>
+          <li><a href="{{ urlFor('email') }}"><i class="fa fa-check"></i> Enviados</a></li>
         </ul>
       </li>
       <li class="treeview">
@@ -138,60 +138,21 @@
         </a>
         <ul class="treeview-menu">
           {% if role.name == "Jefe de Marketing" %}
-          <li><a href="#"><i class="fa fa-circle-o"></i> Nuevo producto</a></li>
+          <li><a href="#"><i class="fa fa-plus"></i> Nuevo producto</a></li>
           {% endif %}
         </ul>
       </li>
-      <!--<li>
-        <a href="pages/calendar.html">
-          <i class="fa fa-calendar"></i> <span>Calendar</span>
-          <small class="label pull-right bg-red">3</small>
-        </a>
-      </li>
-      <li>
-        <a href="pages/mailbox/mailbox.html">
-          <i class="fa fa-envelope"></i> <span>Mailbox</span>
-          <small class="label pull-right bg-yellow">12</small>
-        </a>
-      </li>
+      {% if role.name == "Administrador" %}
       <li class="treeview">
         <a href="#">
-          <i class="fa fa-folder"></i> <span>Examples</span>
+          <i class="fa fa-briefcase"></i> <span>Personal</span>
           <i class="fa fa-angle-left pull-right"></i>
         </a>
         <ul class="treeview-menu">
-          <li><a href="pages/examples/invoice.html"><i class="fa fa-circle-o"></i> Invoice</a></li>
-          <li><a href="pages/examples/login.html"><i class="fa fa-circle-o"></i> Login</a></li>
-          <li><a href="pages/examples/register.html"><i class="fa fa-circle-o"></i> Register</a></li>
-          <li><a href="pages/examples/lockscreen.html"><i class="fa fa-circle-o"></i> Lockscreen</a></li>
-          <li><a href="pages/examples/404.html"><i class="fa fa-circle-o"></i> 404 Error</a></li>
-          <li><a href="pages/examples/500.html"><i class="fa fa-circle-o"></i> 500 Error</a></li>
-          <li><a href="pages/examples/blank.html"><i class="fa fa-circle-o"></i> Blank Page</a></li>
+          <li><a href="{{ urlFor('personal') }}"><i class="fa fa-list"></i> Ver personal</a></li>
         </ul>
       </li>
-      <li class="treeview">
-        <a href="#">
-          <i class="fa fa-share"></i> <span>Multilevel</span>
-          <i class="fa fa-angle-left pull-right"></i>
-        </a>
-        <ul class="treeview-menu">
-          <li><a href="#"><i class="fa fa-circle-o"></i> Level One</a></li>
-          <li>
-            <a href="#"><i class="fa fa-circle-o"></i> Level One <i class="fa fa-angle-left pull-right"></i></a>
-            <ul class="treeview-menu">
-              <li><a href="#"><i class="fa fa-circle-o"></i> Level Two</a></li>
-              <li>
-                <a href="#"><i class="fa fa-circle-o"></i> Level Two <i class="fa fa-angle-left pull-right"></i></a>
-                <ul class="treeview-menu">
-                  <li><a href="#"><i class="fa fa-circle-o"></i> Level Three</a></li>
-                  <li><a href="#"><i class="fa fa-circle-o"></i> Level Three</a></li>
-                </ul>
-              </li>
-            </ul>
-          </li>
-          <li><a href="#"><i class="fa fa-circle-o"></i> Level One</a></li>
-        </ul>
-      </li>
+      {% endif %}
     </ul>
   </section>
   <!-- /.sidebar -->

@@ -319,19 +319,44 @@
 	},
 	"buffers":
 	[
+		{
+			"file": "index.php",
+			"settings":
+			{
+				"buffer_size": 4127,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "/home/alfredobarron/.config/sublime-text-3/Packages/User/Preferences.sublime-settings",
+			"settings":
+			{
+				"buffer_size": 137,
+				"line_ending": "Unix"
+			}
+		}
 	],
 	"build_system": "",
+	"build_system_choices":
+	[
+	],
+	"build_varint": "",
 	"command_palette":
 	{
 		"height": 392.0,
+		"last_filter": "pac",
 		"selected_items":
 		[
 			[
-				"ins",
+				"pac",
 				"Package Control: Install Package"
 			],
 			[
-				"pac",
+				"",
+				"Package Control: Install Package"
+			],
+			[
+				"ins",
 				"Package Control: Install Package"
 			],
 			[
@@ -363,13 +388,14 @@
 				"Package Control: Install Package"
 			]
 		],
-		"width": 593.0
+		"width": 449.0
 	},
 	"console":
 	{
 		"height": 129.0,
 		"history":
 		[
+			"import urllib.request,os,hashlib; h = 'eb2297e1a458f27d836c04bb0cbaf282' + 'd0e7a3098092775ccb37ca9d6b2e4b7d'; pf = 'Package Control.sublime-package'; ipp = sublime.installed_packages_path(); urllib.request.install_opener( urllib.request.build_opener( urllib.request.ProxyHandler()) ); by = urllib.request.urlopen( 'http://packagecontrol.io/' + pf.replace(' ', '%20')).read(); dh = hashlib.sha256(by).hexdigest(); print('Error validating download (got %s instead of %s), please try manual install' % (dh, h)) if dh != h else open(os.path.join( ipp, pf), 'wb' ).write(by) ",
 			"import urllib.request,os,hashlib; h = '7183a2d3e96f11eeadd761d777e62404' + 'e330c659d4bb41d3bdf022e94cab3cd0'; pf = 'Package Control.sublime-package'; ipp = sublime.installed_packages_path(); urllib.request.install_opener( urllib.request.build_opener( urllib.request.ProxyHandler()) ); by = urllib.request.urlopen( 'http://sublime.wbond.net/' + pf.replace(' ', '%20')).read(); dh = hashlib.sha256(by).hexdigest(); print('Error validating download (got %s instead of %s), please try manual install' % (dh, h)) if dh != h else open(os.path.join( ipp, pf), 'wb' ).write(by)"
 		]
 	},
@@ -384,6 +410,9 @@
 	},
 	"file_history":
 	[
+		"/home/alfredobarron/Documentos/Webdev/ForceCRM/index.sublime-workspace",
+		"/home/alfredobarron/.config/sublime-text-3/Packages/User/Preferences.sublime-settings",
+		"/home/alfredobarron/.config/sublime-text-3/Packages/Default/Preferences.sublime-settings",
 		"/var/www/pokemon-hoenn/app/views/home.twig",
 		"/home/alfredobarron/Documentos/WebDev/Pokemon/pokemon.sql",
 		"/var/www/pokemon-hoenn/app/controllers/user.controller.php",
@@ -508,14 +537,11 @@
 		"/home/alfredobarron/Descargas/login.php",
 		"/home/alfredobarron/AndroidStudioProjects/MyFirstApp/app/src/main/java/com/example/alfredobarron/myfirstapp/MainActivity.java",
 		"/home/alfredobarron/AndroidStudioProjects/MyFirstApp/app/src/main/java/com/example/alfredobarron/myfirstapp/DisplayMessageActivity.java",
-		"/home/alfredobarron/AndroidStudioProjects/MyFirstApp/app/src/main/res/layout/fragment_display_message.xml",
-		"/var/www/ES/menu.php",
-		"/var/www/pokemon/hoenn/pokemon.php",
-		"/home/alfredobarron/Documentos/WebDev/Migracion/migracion.php"
+		"/home/alfredobarron/AndroidStudioProjects/MyFirstApp/app/src/main/res/layout/fragment_display_message.xml"
 	],
 	"find":
 	{
-		"height": 32.0
+		"height": 25.0
 	},
 	"find_in_files":
 	{
@@ -674,14 +700,73 @@
 	"groups":
 	[
 		{
+			"selected": 0,
 			"sheets":
 			[
+				{
+					"buffer": 0,
+					"file": "index.php",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 4127,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/PHP/PHP.tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "/home/alfredobarron/.config/sublime-text-3/Packages/User/Preferences.sublime-settings",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 137,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								67,
+								67
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JSON.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
+					"type": "text"
+				}
 			]
 		}
 	],
 	"incremental_find":
 	{
-		"height": 32.0
+		"height": 25.0
 	},
 	"input":
 	{
@@ -714,15 +799,17 @@
 	{
 		"height": 0.0
 	},
+	"pinned_build_system": "",
 	"project": "index.sublime-project",
 	"replace":
 	{
-		"height": 60.0
+		"height": 46.0
 	},
 	"save_all_on_build": true,
 	"select_file":
 	{
 		"height": 0.0,
+		"last_filter": "",
 		"selected_items":
 		[
 			[
@@ -759,6 +846,7 @@
 	"select_project":
 	{
 		"height": 0.0,
+		"last_filter": "",
 		"selected_items":
 		[
 		],
@@ -767,6 +855,7 @@
 	"select_symbol":
 	{
 		"height": 0.0,
+		"last_filter": "",
 		"selected_items":
 		[
 		],

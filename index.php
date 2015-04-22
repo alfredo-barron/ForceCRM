@@ -1,4 +1,5 @@
 <?php
+
 session_cache_limiter(false);
 @session_start();
 date_default_timezone_set('America/Mexico_City');
@@ -116,7 +117,8 @@ $app->get('/u/0', $auth($app), function() use($app){
   $id = $_SESSION['id'];
   $data['user'] = User::where('id',$id)->first();
   $data['role'] = Role::where('id',$data['user']->rol)->first();
-  $data['count'] = Customer::count();
+  $data['count_cus'] = Customer::count();
+  $data['count_cam'] = Campaing::count();
   $data['men'] = Customer::whereGender('H')->count();
   $data['women'] = Customer::whereGender('M')->count();
   $data['customers'] = Customer::all();

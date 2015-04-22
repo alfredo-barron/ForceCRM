@@ -2,6 +2,18 @@
 
 $app->group('/u/0/clientes', $auth($app), function() use($app){
 
+  $app->get('/nuevo', function() use($app) {
+    $data = array();
+    $id = $_SESSION['id'];
+    $data['user'] = User::where('id',$id)->first();
+    $data['role'] = Role::where('id',$data['user']->rol)->first();
+    $data['postcodes'] = Postcode::all();
+    $data['jobs'] = Job::all();
+    $data['schools'] = School::all();
+    $data['status_civil'] = Status_Civil::all();
+    $app->render('newcustomer.twig',$data);
+  })->name('new-customer');
+
   $app->get('', function() use($app) {
     $data = array();
     $id = $_SESSION['id'];
@@ -94,7 +106,7 @@ $app->group('/u/0/email', $auth($app), function() use($app){
     $app->render('email.twig',$data);
   })->name('email');
 
-  $app->get('/new', function() use($app) {
+  $app->get('/nuevo', function() use($app) {
     $data = array();
     $id = $_SESSION['id'];
     $data['user'] = User::where('id',$id)->first();
@@ -103,5 +115,23 @@ $app->group('/u/0/email', $auth($app), function() use($app){
   })->name('new-email');
 
 });
+
+$app->group('/u/0/personal', $auth($app), function() use($app){
+
+  $app->get('', function() use($app) {
+    $data = array();
+    $id = $_SESSION['id'];
+    $data['user'] = User::where('id',$id)->first();
+    $data['role'] = Role::where('id',$data['user']->rol)->first();
+    $data['users'] = User::with('rol')->get();
+    $app->render('personal.twig',$data);
+  })->name('personal');
+
+});
+
+$app->get('/postcode.json/:id', function($id) use($app){
+    $postcode = Postcode::where('id',$id)->first();
+    echo $postcode->toJson();
+  });
 
  ?>

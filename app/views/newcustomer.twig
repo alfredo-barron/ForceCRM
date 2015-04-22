@@ -1,0 +1,208 @@
+{% extends 'base.twig' %}
+{% block title %}
+    <title>{{ title }} | Clientes</title>
+{% endblock %}
+{% block css %}
+    <link href="{{ urlFor('root') }}public/plugins/datatables/dataTables.bootstrap.css" rel="stylesheet" type="text/css" />
+{% endblock %}
+{% block content %}
+<div class="wrapper">
+  {% include 'navbar.twig' %}
+  {% include 'sidebar.twig' %}
+  <div class="content-wrapper">
+    <section class="content-header">
+          <h1>
+            Cliente
+            <small>nuevo</small>
+          </h1>
+          <ol class="breadcrumb">
+            <li><a href="{{ urlFor('dashboard') }}"><i class="fa fa-dashboard"></i> Force <b>CRM</b></a></li>
+            <li><a href="#">Clientes</a></li>
+            <li class="active">Nuevo</li>
+          </ol>
+        </section>
+        {% if flash.success is not empty %}
+          <div class="col-md-offset-8 col-md-4">
+            <div class="box-body">
+              <div class="alert alert-success alert-dismissable">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                <h4><i class="icon fa fa-check"></i>Exito!</h4>
+                {{ flash.success }}
+              </div>
+            </div>
+          </div>
+        {% endif %}
+         <!-- Main content -->
+    <section class="content">
+      <!-- Info boxes -->
+      <div class="row">
+        <div class="col-md-1"></div>
+        <div class="col-md-10">
+          <div class="box box-primary">
+            <div class="box-header with-border">
+              <h3 class="box-title">Datos del cliente</h3>
+            </div><!-- /.box-header -->
+            <form action="{{ urlFor('campaing-post') }}" method="post">
+            <div class="box-body">
+              <div class="row">
+                <div class="col-md-6">
+                   <label>Nombre(s):</label>
+                  <div class="input-group form-group has-feedback">
+                    <span class="input-group-addon"><i class="fa fa-user"></i></span><input type="text" name="name" id="name" class="form-control" placeholder="Nombre(s)" required>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <label>Apellidos:</label>
+                  <div class="input-group form-group has-feedback">
+                    <span class="input-group-addon"><i class="fa fa-user"></i></span><input type="text" name="last_name" id="last_name" class="form-control" placeholder="Apellidos" required>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-6">
+                  <label>Fecha de nacimiento:</label>
+                  <div class="input-group form-group has-feedback">
+                    <span class="input-group-addon"><i class="fa fa-calendar"></i></span><input type="text" name="birthday" id="birthday" class="form-control" placeholder="" required data-inputmask="'alias': 'dd/mm/yyyy'" data-mask>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <label>Sexo:</label>
+                  <div class="input-group form-group has-feedback">
+                    <span class="input-group-addon"><i class="fa fa-venus-mars"></i></span><select name="gender" id="gender" class="form-control">
+                      <option value="0">Seleciona una opción...</option>
+                      <option value="H">Hombre</option>
+                      <option value="M">Mujer</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-6">
+                   <label>Email:</label>
+                  <div class="input-group form-group has-feedback">
+                    <span class="input-group-addon"><i class="fa fa-envelope"></i></span><input type="email" name="email" id="email" class="form-control" placeholder="Correo electrónico" required>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <label>Telefono:</label>
+                   <div class="input-group form-group has-feedback">
+                    <span class="input-group-addon"><i class="fa fa-phone"></i></span><input type="text" name="telephone" id="telephone" class="form-control" placeholder="" required data-inputmask='"mask": "(999) 999-9999"' data-mask>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-6">
+                  <label>Código postal:</label>
+                   <div class="input-group form-group has-feedback">
+                    <span class="input-group-addon"><i class="fa fa-location-arrow"></i></span><select name="postcode" id="postcode" class="form-control">
+                      <option value="0">Seleciona una opción...</option>
+                      {% for p in postcodes %}
+                        <option value="{{ p.id }}">{{ p.id }}</option>
+                      {% endfor %}
+                    </select>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <label>Colonia:</label>
+                  <div class="input-group form-group has-feedback">
+                    <span class="input-group-addon"><i class="fa fa-location-arrow"></i></span><select name="place" id="place" class="form-control"></select>
+                  </div>
+                </div>
+
+              </div>
+              <div class="row">
+                <div class="col-md-6">
+                   <label>Municipio:</label>
+                    <div class="input-group form-group has-feedback">
+                    <span class="input-group-addon"><i class="fa fa-location-arrow"></i></span><input type="text" name="city" id="city" class="form-control" placeholder="Municipio" required disabled="true">
+                  </div>
+                </div>
+                <div class="col-md-6">
+                   <label>Estado:</label>
+                  <div class="input-group form-group has-feedback">
+                    <span class="input-group-addon"><i class="fa fa-location-arrow"></i></span><input type="text" name="entity" id="entity" class="form-control" placeholder="Estado" required disabled="true">
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-6">
+                  <label>Ocupación:</label>
+                  <div class="input-group form-group has-feedback">
+                    <span class="input-group-addon"><i class="fa fa-briefcase"></i></span><select name="job" id="job" class="form-control">
+                      <option value="0">Seleciona una opción...</option>
+                      {% for j in jobs %}
+                          <option value="{{ j.id }}">{{ j.name }}</option>
+                      {% endfor %}
+                    </select>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                   <label>Educación:</label>
+                  <div class="input-group form-group has-feedback">
+                    <span class="input-group-addon"><i class="fa fa-graduation-cap"></i></span><select name="school" id="school" class="form-control">
+                      <option value="0">Seleciona una opción...</option>
+                      {% for s in schools %}
+                        <option value="{{ s.id }}">{{ s.name }}</option>
+                      {% endfor %}
+                    </select>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-6">
+                  <label>Estado civil:</label>
+                  <div class="input-group form-group has-feedback">
+                    <span class="input-group-addon"><i class="fa fa-gavel"></i></span><select name="status_civil" id="status_civil" class="form-control">
+                      <option value="0">Seleciona una opción...</option>
+                      {% for c in status_civil %}
+                          <option value="{{ c.id }}">{{ c.name }}</option>
+                      {% endfor %}
+                    </select>
+                  </div>
+                </div>
+              </div>
+            <div class="box-footer">
+              <div class="pull-right">
+                <button class="btn btn-default"><i class="fa fa-times"></i> Cancelar</button>
+                <button type="submit" class="btn btn-primary"><i class="fa fa-plus"></i> Crear</button>
+              </form>
+              </div>
+              <br>
+            </div><!-- /.box-footer -->
+          </div><!-- /. box -->
+        </div><!-- /.col -->
+      </div><!-- /.row -->
+    </section><!-- /.content -->
+  </div><!-- /.content-wrapper -->
+</div>
+{% endblock %}
+{% block js %}
+  <script src="{{ urlFor('root')}}public/plugins/daterangepicker/daterangepicker.js" type="text/javascript"></script>
+  <script src="{{ urlFor('root')}}public/plugins/input-mask/jquery.inputmask.js" type="text/javascript"></script>
+  <script src="{{ urlFor('root')}}public/plugins/input-mask/jquery.inputmask.date.extensions.js" type="text/javascript"></script>
+  <script src="{{ urlFor('root')}}public/plugins/input-mask/jquery.inputmask.extensions.js" type="text/javascript"></script>
+    <script type="text/javascript">
+      $(function () {
+        $("#datemask").inputmask("dd/mm/yyyy", {"placeholder": "dd/mm/yyyy"});
+        $("[data-mask]").inputmask();
+        //Date range picker
+        $('#reservation').daterangepicker();
+        //Date range picker with time picker
+        $('#reservationtime').daterangepicker({timePicker: true, timePickerIncrement: 30, format: 'MM/DD/YYYY h:mm A'});
+
+        $('#postcode').change(function(event){
+        var sn = $("#postcode option:selected");
+        $('#place').html('');
+          $.getJSON("{{ urlFor('root') }}postcode.json/"+sn.val(), function(postcode){
+            var myArray = postcode.place.split(";");
+            for(var i=0;i<myArray.length;i++){
+                $('#place').append("<option value=\""+myArray[i]+"\">"+myArray[i]+"</option>");
+            }
+            $('input#city').val(postcode.city);
+            $('input#entity').val(postcode.entity);
+          });
+      });
+    });
+      </script>
+    <script src="{{ urlFor('root') }}public/css/dist/js/demo.js"></script>
+{% endblock %}

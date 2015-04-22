@@ -25,18 +25,24 @@
       <div class="row">
         <div class="col-md-3 col-sm-6 col-xs-12">
           <div class="info-box">
-            <span class="info-box-icon bg-aqua"><i class="ion ion-ios-gear-outline"></i></span>
+            <span class="info-box-icon bg-aqua"><i class="ion ion-speakerphone"></i></span>
             <div class="info-box-content">
-              <span class="info-box-text">CPU Trafico</span>
-              <span class="info-box-number">90<small>%</small></span>
+              <span class="info-box-text">Campañas</span>
+              <span class="info-box-number">
+                 {% if count_cam == 0 %}
+                  0
+                {% else %}
+                  {{ count_cam }}
+                {% endif %}
+              </span>
             </div><!-- /.info-box-content -->
           </div><!-- /.info-box -->
         </div><!-- /.col -->
         <div class="col-md-3 col-sm-6 col-xs-12">
           <div class="info-box">
-            <span class="info-box-icon bg-blue"><i class="fa fa-facebook"></i></span>
+            <span class="info-box-icon bg-blue"><i class="ion ion-ios-star-outline"></i></span>
             <div class="info-box-content">
-              <span class="info-box-text">Me gusta</span>
+              <span class="info-box-text">Clientes</span>
               <span class="info-box-number">41,410</span>
             </div><!-- /.info-box-content -->
           </div><!-- /.info-box -->
@@ -58,12 +64,12 @@
           <div class="info-box">
             <span class="info-box-icon bg-yellow"><i class="ion ion-ios-people-outline"></i></span>
             <div class="info-box-content">
-              <span class="info-box-text">Nuevos clientes</span>
+              <span class="info-box-text">Contactos</span>
               <span class="info-box-number">
-                {% if count == 0 %}
+                {% if count_cus == 0 %}
                   0
                 {% else %}
-                  {{ count }}
+                  {{ count_cus }}
                 {% endif %}
               </span>
             </div><!-- /.info-box-content -->

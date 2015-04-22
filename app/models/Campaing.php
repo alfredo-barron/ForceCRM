@@ -1,6 +1,6 @@
 <?php
 class Campaing extends Elegant {
-  //protected $table = 'roles';
+  //protected $table = 'campaing';
   protected $rules = array(
   );
   public $timestamps = false;
