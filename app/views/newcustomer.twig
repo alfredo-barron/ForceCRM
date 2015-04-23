@@ -11,16 +11,23 @@
   {% include 'sidebar.twig' %}
   <div class="content-wrapper">
     <section class="content-header">
-          <h1>
-            Cliente
-            <small>nuevo</small>
-          </h1>
+          {% if customer.id is defined %}
+          <h1><a href="{{ urlFor('customers') }}"><i class="fa fa-arrow-left fa-1x"></i></a>Cliente <small>actualizar</small></h1>
           <ol class="breadcrumb">
             <li><a href="{{ urlFor('dashboard') }}"><i class="fa fa-dashboard"></i> Force <b>CRM</b></a></li>
-            <li><a href="#">Clientes</a></li>
-            <li class="active">Nuevo</li>
+            <li><a href="{{ urlFor('customers') }}">Clientes</a></li>
+            <li class="active">Actualizar</li>
           </ol>
+          {% else %}
+            <h1><a href="{{ urlFor('customers') }}"><i class="fa fa-arrow-left fa-1x"></i></a> Cliente <small>nuevo</small></h1>
+            <ol class="breadcrumb">
+              <li><a href="{{ urlFor('dashboard') }}"><i class="fa fa-dashboard"></i> Force <b>CRM</b></a></li>
+              <li><a href="{{ urlFor('customers') }}">Clientes</a></li>
+              <li class="active">Nuevo</li>
+            </ol>
+          {% endif %}
         </section>
+        <!--Editar esto-->
         {% if flash.success is not empty %}
           <div class="col-md-offset-8 col-md-4">
             <div class="box-body">
@@ -43,18 +50,33 @@
               <h3 class="box-title">Datos del cliente</h3>
             </div><!-- /.box-header -->
             <form action="{{ urlFor('customer-post') }}" method="post">
+            {% if customer.id is defined %}
+              <input type="hidden" id="id" name="id" value="{{ customer.id }}">
+            {% else %}
+              <input type="hidden" id="id" name="id" value="">
+            {% endif %}
             <div class="box-body">
               <div class="row">
                 <div class="col-md-6">
                    <label>Nombre(s):</label>
                   <div class="input-group form-group has-feedback">
-                    <span class="input-group-addon"><i class="fa fa-user"></i></span><input type="text" name="name" id="name" class="form-control" placeholder="Nombre(s)" required>
+                    <span class="input-group-addon"><i class="fa fa-user"></i></span>
+                    {% if customer.name is defined %}
+                      <input type="text" name="name" id="name" class="form-control" value="{{ customer.name }}" required>
+                    {% else %}
+                      <input type="text" name="name" id="name" class="form-control" placeholder="Nombre(s)" required>
+                    {% endif %}
                   </div>
                 </div>
                 <div class="col-md-6">
                   <label>Apellidos:</label>
                   <div class="input-group form-group has-feedback">
-                    <span class="input-group-addon"><i class="fa fa-user"></i></span><input type="text" name="last_name" id="last_name" class="form-control" placeholder="Apellidos" required>
+                    <span class="input-group-addon"><i class="fa fa-user"></i></span>
+                    {% if customer.last_name is defined %}
+                      <input type="text" name="last_name" id="last_name" class="form-control" value="{{ customer.last_name }}" required>
+                    {% else %}
+                      <input type="text" name="last_name" id="last_name" class="form-control" placeholder="Apellidos" required>
+                    {% endif %}
                   </div>
                 </div>
               </div>
@@ -62,14 +84,30 @@
                 <div class="col-md-6">
                   <label>Fecha de nacimiento:</label>
                   <div class="input-group form-group has-feedback">
-                    <span class="input-group-addon"><i class="fa fa-calendar"></i></span><input type="date" name="birthday" id="birthday" class="form-control" placeholder="" required data-inputmask="'alias': 'dd/mm/yyyy'" data-mask>
+                    <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                    {% if customer.birthday is defined %}
+                      <input type="date" name="birthday1" id="birthday1" class="form-control" value="{{ customer.birthday }}">
+                    {% else %}
+                      <input type="text" name="birthday" id="birthday" class="form-control" placeholder="" required data-inputmask="'alias': 'dd-mm-yyyy'" data-mask>
+                    {% endif %}
                   </div>
                 </div>
                 <div class="col-md-6">
                   <label>Sexo:</label>
                   <div class="input-group form-group has-feedback">
-                    <span class="input-group-addon"><i class="fa fa-venus-mars"></i></span><select name="gender" id="gender" class="form-control">
-                      <option value="0">Seleciona una opción...</option>
+                    <span class="input-group-addon"><i class="fa fa-venus-mars"></i></span>
+                    <select name="gender" id="gender" class="form-control">
+                    {% if customer.gender is defined %}
+                      <option value="{{ customer.gender }}">
+                        {% if customer.gender == "H" %}
+                          Hombre
+                        {% else %}
+                          Mujer
+                        {% endif %}
+                      </option>
+                    {% else %}
+                        <option value="0">Seleciona una opción...</option>
+                    {% endif %}
                       <option value="H">Hombre</option>
                       <option value="M">Mujer</option>
                     </select>
@@ -80,13 +118,23 @@
                 <div class="col-md-6">
                    <label>Email:</label>
                   <div class="input-group form-group has-feedback">
-                    <span class="input-group-addon"><i class="fa fa-envelope"></i></span><input type="email" name="email" id="email" class="form-control" placeholder="Correo electrónico" required>
+                    <span class="input-group-addon"><i class="fa fa-envelope"></i></span>
+                    {% if customer.email is defined %}
+                      <input type="email" name="email" id="email" class="form-control" value="{{ customer.email }}" required>
+                    {% else %}
+                      <input type="email" name="email" id="email" class="form-control" placeholder="Correo electrónico" required>
+                    {% endif %}
                   </div>
                 </div>
                 <div class="col-md-6">
                   <label>Telefono:</label>
                    <div class="input-group form-group has-feedback">
-                    <span class="input-group-addon"><i class="fa fa-phone"></i></span><input type="text" name="telephone" id="telephone" class="form-control" placeholder="" required data-inputmask='"mask": "999 999 9999"' data-mask>
+                    <span class="input-group-addon"><i class="fa fa-phone"></i></span>
+                    {% if customer.telephone is defined %}
+                    <input type="text" name="telephone1" id="telephone1" class="form-control" value="{{ customer.telephone }}" required>
+                    {% else %}
+                    <input type="text" name="telephone" id="telephone" class="form-control" placeholder="" required data-inputmask='"mask": "999 999 9999"' data-mask>
+                    {% endif %}
                   </div>
                 </div>
               </div>
@@ -97,13 +145,23 @@
                 <div class="col-md-6">
                    <label>Calle:</label>
                   <div class="input-group form-group has-feedback">
-                    <span class="input-group-addon"><i class="fa fa-road"></i></span><input type="text" name="street" id="street" class="form-control" placeholder="Calle" required>
+                    <span class="input-group-addon"><i class="fa fa-road"></i></span>
+                    {% if customer.street is defined %}
+                      <input type="text" name="street" id="street" class="form-control" value="{{ customer.street }}" required>
+                    {% else %}
+                      <input type="text" name="street" id="street" class="form-control" placeholder="Calle" required>
+                    {% endif %}
                   </div>
                 </div>
                 <div class="col-md-6">
                   <label>Número:</label>
                    <div class="input-group form-group has-feedback">
-                    <span class="input-group-addon"><i class="fa fa-sort"></i></span><input type="number" name="number" id="number" class="form-control" placeholder="###" required>
+                    <span class="input-group-addon"><i class="fa fa-sort"></i></span>
+                    {% if customer.number is defined %}
+                    <input type="number" name="number" id="number" class="form-control" value="{{ customer.number }}" required>
+                    {% else %}
+                    <input type="number" name="number" id="number" class="form-control" placeholder="###" required>
+                    {% endif %}
                   </div>
                 </div>
               </div>
@@ -112,7 +170,11 @@
                   <label>Código postal:</label>
                    <div class="input-group form-group has-feedback">
                     <span class="input-group-addon"><i class="fa fa-location-arrow"></i></span><select name="postcode" id="postcode" class="form-control">
-                      <option value="0">Seleciona una opción...</option>
+                      {% if customer.postcode is defined %}
+                        <option value="{{ customer.postcode }}">{{ customer.postcode }}</option>
+                      {% else %}
+                        <option value="0">Seleciona una opción...</option>
+                      {% endif %}
                       {% for p in postcodes %}
                         <option value="{{ p.id }}">{{ p.id }}</option>
                       {% endfor %}
@@ -122,7 +184,11 @@
                 <div class="col-md-6">
                   <label>Colonia:</label>
                   <div class="input-group form-group has-feedback">
-                    <span class="input-group-addon"><i class="fa fa-location-arrow"></i></span><select name="place" id="place" class="form-control"></select>
+                    <span class="input-group-addon"><i class="fa fa-location-arrow"></i></span><select name="place" id="place" class="form-control">
+                      {% if customer.place is defined %}
+                        <option value="{{ customer.place }}">{{ customer.place }}</option>
+                      {% endif %}
+                    </select>
                   </div>
                 </div>
 
@@ -131,13 +197,23 @@
                 <div class="col-md-6">
                    <label>Municipio:</label>
                     <div class="input-group form-group has-feedback">
-                    <span class="input-group-addon"><i class="fa fa-location-arrow"></i></span><input type="text" name="city" id="city" class="form-control" placeholder="Municipio" required>
+                    <span class="input-group-addon"><i class="fa fa-location-arrow"></i></span>
+                    {% if customer.city is defined %}
+                      <input type="text" name="city" id="city" class="form-control" value="{{ customer.city }}" required>
+                    {% else %}
+                      <input type="text" name="city" id="city" class="form-control" placeholder="Municipio" required>
+                    {% endif %}
                   </div>
                 </div>
                 <div class="col-md-6">
                    <label>Estado:</label>
                   <div class="input-group form-group has-feedback">
-                    <span class="input-group-addon"><i class="fa fa-location-arrow"></i></span><input type="text" name="entity" id="entity" class="form-control" placeholder="Estado" required>
+                    <span class="input-group-addon"><i class="fa fa-location-arrow"></i></span>
+                    {% if customer.entity is defined %}
+                      <input type="text" name="entity" id="entity" class="form-control" value="{{ customer.entity }}" required>
+                    {% else %}
+                      <input type="text" name="entity" id="entity" class="form-control" placeholder="Estado" required>
+                    {% endif %}
                   </div>
                 </div>
               </div>
@@ -149,7 +225,11 @@
                   <label>Ocupación:</label>
                   <div class="input-group form-group has-feedback">
                     <span class="input-group-addon"><i class="fa fa-briefcase"></i></span><select name="job" id="job" class="form-control">
-                      <option value="0">Seleciona una opción...</option>
+                      {% if customer.job is defined %}
+                        <option value="{{ customer.job }}">{{ job.name }}</option>
+                      {% else %}
+                        <option value="0">Seleciona una opción...</option>
+                      {% endif %}
                       {% for j in jobs %}
                           <option value="{{ j.id }}">{{ j.name }}</option>
                       {% endfor %}
@@ -160,7 +240,11 @@
                    <label>Educación:</label>
                   <div class="input-group form-group has-feedback">
                     <span class="input-group-addon"><i class="fa fa-graduation-cap"></i></span><select name="school" id="school" class="form-control">
-                      <option value="0">Seleciona una opción...</option>
+                      {% if customer.school is defined %}
+                        <option value="{{ customer.school }}">{{ school.name }}</option>
+                      {% else %}
+                        <option value="0">Seleciona una opción...</option>
+                      {% endif %}
                       {% for s in schools %}
                         <option value="{{ s.id }}">{{ s.name }}</option>
                       {% endfor %}
@@ -173,7 +257,11 @@
                   <label>Estado civil:</label>
                   <div class="input-group form-group has-feedback">
                     <span class="input-group-addon"><i class="fa fa-gavel"></i></span><select name="status_civil" id="status_civil" class="form-control">
-                      <option value="0">Seleciona una opción...</option>
+                      {% if customer.status_civil is defined %}
+                        <option value="{{ customer.status_civil }}">{{ status_civil1.name }}</option>
+                      {% else %}
+                        <option value="0">Seleciona una opción...</option>
+                      {% endif %}
                       {% for c in status_civil %}
                           <option value="{{ c.id }}">{{ c.name }}</option>
                       {% endfor %}
@@ -183,13 +271,22 @@
                 <div class="col-md-6">
                   <label>Número de hijos:</label>
                    <div class="input-group form-group has-feedback">
-                    <span class="input-group-addon"><i class="fa fa-sort"></i></span><input type="number" name="sons" id="sons" class="form-control" placeholder="0" required>
+                    <span class="input-group-addon"><i class="fa fa-sort"></i></span>
+                    {% if customer.sons is defined %}
+                      <input type="number" name="sons" id="sons" class="form-control" value="{{ customer.sons }}" required>
+                    {% else %}
+                      <input type="number" name="sons" id="sons" class="form-control" value="0" required>
+                    {% endif %}
                 </div>
               </div>
             <div class="box-footer">
               <div class="pull-right">
-                <button class="btn btn-default"><i class="fa fa-times"></i> Cancelar</button>
-                <button type="submit" class="btn btn-primary"><i class="fa fa-plus"></i> Crear</button>
+                <a href="{{ urlFor('customers') }}" class="btn btn-default"><i class="fa fa-times"></i> Cancelar</a>
+                {% if customer.id is defined %}
+                  <button type="submit" class="btn btn-primary"><i class="fa fa-edit"></i> Actualizar</button>
+                {% else %}
+                  <button type="submit" class="btn btn-primary"><i class="fa fa-plus"></i> Crear</button>
+                {% endif %}
               </form>
               </div>
               <br>
@@ -199,6 +296,9 @@
       </div><!-- /.row -->
     </section><!-- /.content -->
   </div><!-- /.content-wrapper -->
+  <footer class="main-footer">
+    <strong>Copyright &copy; {{ "now"|date("Y") }} </strong> Todos los derechos reservados.
+  </footer>
 </div>
 {% endblock %}
 {% block js %}
@@ -208,7 +308,7 @@
   <script src="{{ urlFor('root')}}public/plugins/input-mask/jquery.inputmask.extensions.js" type="text/javascript"></script>
     <script type="text/javascript">
       $(function () {
-        $("#datemask").inputmask("dd/mm/yyyy", {"placeholder": "dd/mm/yyyy"});
+        $("#datemask").inputmask("dd-mm-yyyy", {"placeholder": "dd-mm-yyyy"});
         $("[data-mask]").inputmask();
         //Date range picker
         $('#reservation').daterangepicker();

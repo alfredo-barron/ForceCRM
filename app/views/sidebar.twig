@@ -57,18 +57,16 @@
           <span>Clientes</span> <i class="fa fa-angle-left pull-right"></i>
         </a>
         <ul class="treeview-menu">
-          {% if role.name == "Administrador" or role.name == "Jefe de Marketing" %}
           <li><a href="{{ urlFor('new-customer') }}"><i class="fa fa-user-plus"></i> Nuevo cliente</a></li>
-          {% endif %}
+          <li><a href="{{ urlFor('customers') }}"><i class="fa fa-user"></i> Contactos</a></li>
           <li class="treeview">
             <a href="#">
               <i class="fa fa-list"></i> Lista de clientes
               <i class="fa fa-angle-left pull-right"></i>
             </a>
             <ul class="treeview-menu">
-              <li><a href="{{ urlFor('customers') }}"><i class="fa fa-asterisk"></i> Clientes</a></li>
-              <li><a href="{{ urlFor('customer-potencial') }}"><i class="fa fa-asterisk"></i> Potenciales</a></li>
-              <li><a href="{{ urlFor('customer-actual') }}"><i class="fa fa-asterisk"></i> Actuales</a></li>
+              <li><a href="{{ urlFor('customer-potencial') }}"><i class="fa fa-diamond"></i> Potenciales</a></li>
+              <li><a href="{{ urlFor('customer-actual') }}"><i class="fa fa-star"></i> Actuales</a></li>
             </ul>
           </li>
         </ul>
@@ -103,17 +101,17 @@
         </a>
         <ul class="treeview-menu">
           {% if role.name == "Administrador" or role.name == "Jefe de Marketing" %}
-            <li><a href="{{ urlFor('new-campaing') }}"><i class="fa fa-bell"></i> Crear nueva campaña</a></li>
+            <li><a href="{{ urlFor('new-campaing') }}"><i class="fa fa-plus"></i> Crear nueva campaña</a></li>
           {% endif %}
+          <li><a href="{{ urlFor('campaings-activas') }}"><i class="fa fa-bell"></i> Campañas</a></li>
           <li class="treeview">
             <a href="#">
               <i class="fa fa-list"></i> Lista de campañas
               <i class="fa fa-angle-left pull-right"></i>
             </a>
             <ul class="treeview-menu">
-              <li><a href="{{ urlFor('campaings-activas') }}"><i class="fa fa-asterisk"></i> Activas</a></li>
-              <li><a href="{{ urlFor('campaings-esperas') }}"><i class="fa fa-asterisk"></i> En espera</a></li>
-              <li><a href="{{ urlFor('campaings-finalizadas') }}"><i class="fa fa-asterisk"></i> Finalizadas</a></li>
+              <li><a href="{{ urlFor('campaings-esperas') }}"><i class="fa fa-spinner"></i> En espera</a></li>
+              <li><a href="{{ urlFor('campaings-finalizadas') }}"><i class="fa fa-eject"></i> Finalizadas</a></li>
             </ul>
           </li>
         </ul>
@@ -140,16 +138,17 @@
           {% if role.name == "Jefe de Marketing" %}
           <li><a href="#"><i class="fa fa-plus"></i> Nuevo producto</a></li>
           {% endif %}
+          <li><a href="#"><i class="fa fa-list"></i> Lista de productos</a></li>
         </ul>
       </li>
       {% if role.name == "Administrador" %}
       <li class="treeview">
         <a href="#">
-          <i class="fa fa-briefcase"></i> <span>Personal</span>
+          <i class="fa fa-briefcase"></i> <span>Panel de usuarios</span>
           <i class="fa fa-angle-left pull-right"></i>
         </a>
         <ul class="treeview-menu">
-          <li><a href="{{ urlFor('personal') }}"><i class="fa fa-list"></i> Ver personal</a></li>
+          <li><a href="{{ urlFor('personal') }}"><i class="fa fa-list"></i> Lista de usuarios</a></li>
         </ul>
       </li>
       {% endif %}

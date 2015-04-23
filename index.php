@@ -141,7 +141,7 @@ $app->get('/dbd', function() use($app){
 $app->get('/cubo', function() use($app){
   $data['customers'] = Customer::all();
   $data['users'] = User::all();
-  $data['postcodes'] = Postcode::all();
+  $data['campaings'] = Campaing::all();
   $app->render('cubo.twig',$data);
 })->name('cubo');
 

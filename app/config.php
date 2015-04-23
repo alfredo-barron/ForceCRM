@@ -26,7 +26,18 @@ $app->configureMode('development', function () use ($app) {
   $app->config(array('log.enabled' => false, 'debug' => true));
 });
 
-$app->notFound(function () use ($app) { $app->render('404.twig'); });
+$app->notFound(function () use ($app) {
+  if (isset($_SESSION['id'])) {
+    $data = array();
+    $id = $_SESSION['id'];
+    $data['user'] = User::where('id',$id)->first();
+    $data['role'] = Role::where('id',$data['user']->rol)->first();
+    $app->render('404.twig',$data);
+  } else {
+    $app->render('404.public.twig');
+  }
+
+});
 
 $rootUri = $app->request()->getRootUri();
 $assetUri = $rootUri;

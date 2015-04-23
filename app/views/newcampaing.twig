@@ -11,15 +11,21 @@
   {% include 'sidebar.twig' %}
   <div class="content-wrapper">
     <section class="content-header">
-          <h1>
-            Campaña
-            <small>nueva</small>
-          </h1>
+        {% if campaing.id is defined %}
+          <h1>Campaña <small>actualizar</small></h1>
+          <ol class="breadcrumb">
+            <li><a href="{{ urlFor('dashboard') }}"><i class="fa fa-dashboard"></i> Force <b>CRM</b></a></li>
+            <li><a href="#">Campañas</a></li>
+            <li class="active">Actualizar</li>
+          </ol>
+        {% else %}
+          <h1>Campaña <small>nueva</small></h1>
           <ol class="breadcrumb">
             <li><a href="{{ urlFor('dashboard') }}"><i class="fa fa-dashboard"></i> Force <b>CRM</b></a></li>
             <li><a href="#">Campañas</a></li>
             <li class="active">Nueva</li>
           </ol>
+        {% endif %}
         </section>
         {% if flash.success is not empty %}
           <div class="col-md-offset-8 col-md-4">
@@ -79,6 +85,9 @@
       </div><!-- /.row -->
     </section><!-- /.content -->
   </div><!-- /.content-wrapper -->
+  <footer class="main-footer">
+    <strong>Copyright &copy; {{ "now"|date("Y") }} </strong> Todos los derechos reservados.
+  </footer>
 </div>
 {% endblock %}
 {% block js %}

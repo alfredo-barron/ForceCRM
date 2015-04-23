@@ -1,0 +1,29 @@
+{% extends 'base.twig' %}
+{% block title %}
+    <title>{{ title }} | Página no encontrada</title>
+{% endblock %}
+{% block content %}
+  <body class="login-page">
+    <div class="login-box">
+      <div class="error-page">
+      <h2 class="headline text-yellow"> 404</h2>
+      <div class="error-content">
+        <h3><i class="fa fa-warning text-yellow"></i> Oops! Página no encontrada.</h3>
+        <p>
+          No pudimos encontrar la página que estabas buscando.
+          Mientras tanto, puedes <a href='{{ urlFor('dashboard') }}'>volver al inicio</a>.
+        </p>
+      </div><!-- /.error-content -->
+      </div><!-- /.error-page -->
+       <div class="row">
+          <div class="col-md-4"></div>
+          <div class="col-md-8 text-center">
+            <img src="{{ urlFor('root') }}public/img/marketing.png" class="img-responsive img-circle">
+          </div>
+        </div>
+        </div>
+    </div>
+
+  </body>
+{% endblock %}
+

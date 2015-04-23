@@ -14,30 +14,84 @@ $app->group('/u/0/clientes', $auth($app), function() use($app){
     $app->render('newcustomer.twig',$data);
   })->name('new-customer');
 
+  $app->get('/actualizar(/:id_c)', function($id_c) use($app) {
+    $data = array();
+    $id = $_SESSION['id'];
+    $data['user'] = User::where('id',$id)->first();
+    $data['role'] = Role::where('id',$data['user']->rol)->first();
+    $data['customer'] = Customer::where('id',$id_c)->first();
+    $data['job'] = Job::where('id',$data['customer']->job)->first();
+    $data['school'] = School::where('id',$data['customer']->school)->first();
+    $data['status_civil1'] = Status_Civil::where('id',$data['customer']->status_civil)->first();
+    $data['postcodes'] = Postcode::all();
+    $data['jobs'] = Job::all();
+    $data['schools'] = School::all();
+    $data['status_civil'] = Status_Civil::all();
+    $app->render('newcustomer.twig',$data);
+  })->name('edit-customer');
+
   $app->post('/nuevo', function() use($app){
     $post = (object) $app->request()->post();
-    $customer = new Customer();
-    $customer->name = $post->name;
-    $customer->last_name = $post->last_name;
-    $customer->birthday = $post->birthday;
-    $customer->gender = $post->gender;
-    $customer->email = $post->email;
-    $customer->telephone = trim($post->telephone);
-    $customer->street = $post->street;
-    $customer->number = $post->number;
-    $customer->postcode = $post->postcode;
-    $customer->place = $post->place;
-    $customer->city = $post->city;
-    $customer->entity = $post->entity;
-    $customer->job = $post->job;
-    $customer->school = $post->school;
-    $customer->status_civil = $post->status_civil;
-    $customer->sons = $post->sons;
-    $customer->save();
-    $success = "Cliente dado de alta";
-    $app->flash('success', $success);
-    $app->redirect($app->urlFor('new-customer'));
+    $id = (isset($post->id) and !empty($post->id)) ? $post->id : 0;
+    if($id != 0){
+      $customer = Customer::where('id',$id)->first();
+      $customer->name = $post->name;
+      $customer->last_name = $post->last_name;
+      $customer->birthday = $post->birthday1;
+      $customer->gender = $post->gender;
+      $customer->email = $post->email;
+      $customer->telephone = trim($post->telephone1);
+      $customer->street = $post->street;
+      $customer->number = $post->number;
+      $customer->postcode = $post->postcode;
+      $customer->place = $post->place;
+      $customer->city = $post->city;
+      $customer->entity = $post->entity;
+      $customer->job = $post->job;
+      $customer->school = $post->school;
+      $customer->status_civil = $post->status_civil;
+      $customer->sons = $post->sons;
+      $customer->save();
+      $app->redirect($app->urlFor('customers'));
+    }else{
+      $customer = new Customer();
+      $customer->name = $post->name;
+      $customer->last_name = $post->last_name;
+      $customer->birthday = $post->birthday;
+      $customer->gender = $post->gender;
+      $customer->email = $post->email;
+      $customer->telephone = trim($post->telephone);
+      $customer->street = $post->street;
+      $customer->number = $post->number;
+      $customer->postcode = $post->postcode;
+      $customer->place = $post->place;
+      $customer->city = $post->city;
+      $customer->entity = $post->entity;
+      $customer->job = $post->job;
+      $customer->school = $post->school;
+      $customer->status_civil = $post->status_civil;
+      $customer->sons = $post->sons;
+      $customer->save();
+      $success = "Cliente dado de alta";
+      $app->flash('success', $success);
+      $app->redirect($app->urlFor('new-customer'));
+    }
   })->name('customer-post');
+
+  $app->get('/perfil(/:id_c)', function($id_c) use($app) {
+    if ($id_c == null) {
+      $app->redirect($app->urlFor('customers'));
+    }
+    $data = array();
+    $id = $_SESSION['id'];
+    $data['user'] = User::where('id',$id)->first();
+    $data['role'] = Role::where('id',$data['user']->rol)->first();
+    $data['customer'] = Customer::where('id',$id_c)->first();
+    $data['job'] = Job::where('id',$data['customer']->job)->first();
+    $data['school'] = School::where('id',$data['customer']->school)->first();
+    $data['status_civil'] = Status_Civil::where('id',$data['customer']->status_civil)->first();
+    $app->render('customer.profile.twig',$data);
+  })->name('profile-customer');
 
   $app->get('', function() use($app) {
     $data = array();
