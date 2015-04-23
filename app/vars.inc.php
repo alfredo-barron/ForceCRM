@@ -8,7 +8,7 @@ if(getenv('DATABASE_URL') != false){
   $port = $dbopts['port'];
   $user = $dbopts['user'];
   $pass = $dbopts['pass'];
-  define('DB_DRIVER', 'mysql');//mysql,pgsql
+  define('DB_DRIVER', 'pgsql');//mysql,pgsql
   define('DB_HOST', $host);
   define('DB_PORT', $port);
   define('DB_DATABASE', $path);
