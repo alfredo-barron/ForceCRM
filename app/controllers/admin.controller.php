@@ -173,7 +173,7 @@ $app->group('/u/0/campanas', $auth($app), function() use($app){
     $app->redirect($app->urlFor('new-campaing'));
   })->name('campaing-post');
 
-  $app->get('/activas', function() use($app) {
+  $app->get('', function() use($app) {
     $data = array();
     $id = $_SESSION['id'];
     $data['user'] = User::where('id',$id)->first();
