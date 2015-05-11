@@ -240,4 +240,25 @@ $app->get('/postcode.json/:id', function($id) use($app){
     echo $postcode->toJson();
   });
 
+$app->post('/u/checkcampaing', function() use($app){
+    $campaings = Campaing::all();
+    foreach ($campaings as $c) {
+      $campaing = Campaing::where('id',$c->id)->first();
+      $date_now = strtotime(date("d-m-Y"));
+      $date_start = strtotime($c->date_start);
+      $date_end = strtotime($c->date_end);
+      $campaing->id = $c->id;
+      if ($date_start <= $date_now and $date_end >= $date_now) {
+        $campaing->status = "Activa";
+      } else if($date_start > $date_now) {
+        $campaing->status = "En espera";
+      } else if ($date_end < $date_now) {
+        $campaing->status = "Finalizada";
+      }
+      $duration = $date_end - $date_start;
+      $campaing->duration = intval($duration/60/60/24) + 1;
+      $campaing->save();
+    }
+  });
+
  ?>

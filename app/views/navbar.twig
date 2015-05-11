@@ -30,7 +30,7 @@
         {% elseif role.name == "Agente de Ventas" and user.gender == "M" %}
           <img src="{{ urlFor('root') }}public/img/vendedora.png" class="user-image" alt="Agente de Ventas" />
         {% endif %}
-            <span class="hidden-xs">{{ user.name ~ " " ~ user.last_name }}</span>
+            <span class="hidden-xs">{{ user.name ~ " " ~ user.last_name }} <i class="fa fa-chevron-down"></i></span>
           </a>
           <ul class="dropdown-menu">
             <!-- User image -->

@@ -57,7 +57,9 @@
           <span>Clientes</span> <i class="fa fa-angle-left pull-right"></i>
         </a>
         <ul class="treeview-menu">
+          {% if role.name == "Jefe de Marketing" or role.name == "Promotor" %}
           <li><a href="{{ urlFor('new-customer') }}"><i class="fa fa-user-plus"></i> Nuevo cliente</a></li>
+          {% endif %}
           <li><a href="{{ urlFor('customers') }}"><i class="fa fa-user"></i> Contactos</a></li>
           <li class="treeview">
             <a href="#">
@@ -76,7 +78,7 @@
           <i class="fa fa-group"></i> <span>Mercados</span>
           <i class="fa fa-angle-left pull-right"></i>
           <ul class="treeview-menu">
-            {% if role.name == "Administrador" or role.name == "Jefe de Marketing" %}
+            {% if role.name == "Jefe de Marketing" %}
             <li><a href="{{ urlFor('new-market') }}"><i class="fa fa-filter"></i> Identificar un mercado</a></li>
             {% endif %}
             <li class="treeview">
@@ -100,7 +102,7 @@
           <i class="fa fa-angle-left pull-right"></i>
         </a>
         <ul class="treeview-menu">
-          {% if role.name == "Administrador" or role.name == "Jefe de Marketing" %}
+          {% if role.name == "Jefe de Marketing" %}
             <li><a href="{{ urlFor('new-campaing') }}"><i class="fa fa-plus"></i> Crear nueva campaña</a></li>
           {% endif %}
           <li><a href="{{ urlFor('campaings-activas') }}"><i class="fa fa-bell"></i> Campañas</a></li>
@@ -148,7 +150,8 @@
           <i class="fa fa-angle-left pull-right"></i>
         </a>
         <ul class="treeview-menu">
-          <li><a href="{{ urlFor('personal') }}"><i class="fa fa-list"></i> Lista de usuarios</a></li>
+          <li><a href="#"><i class="fa fa-user-plus"></i> Nuevo miembro</a></li>
+          <li><a href="{{ urlFor('personal') }}"><i class="fa fa-list"></i> Lista de miembros</a></li>
         </ul>
       </li>
       {% endif %}

@@ -1,6 +1,6 @@
 <?php
 
-Técnica: Segementación.
+Técnica: Segmentación.
 
 Tipo de Cliente:
 Si (Ventas == 0) es Potencial/Contacto
