@@ -9,11 +9,11 @@ include_once 'app/vars.inc.php';
 include_once APP_FOLDER.'config.php';
 
 //Load all the models
-include_once MODELS_FOLDER."Elegant.php";
-foreach(glob(MODELS_FOLDER.'*.php') as $model) {
-  if($model != "Elegant.php")
-    include_once $model;
-}
+//include_once MODELS_FOLDER."Elegant.php";
+//foreach(glob(MODELS_FOLDER.'*.php') as $model) {
+//  if($model != "Elegant.php")
+//    include_once $model;
+//}
 
 $auth = function ($app) {
   return function () use ($app) {
@@ -34,15 +34,19 @@ $app->hook('slim.before.dispatch', function() use ($app) {
   $app->view()->appendData(array('user' => $user));
 });
 
-$app->get('/', function() use($app){
-   if (!isset($_SESSION['id'])) {
-      $data = array();
-      $data['roles'] = Role::where('id','<>',1)->get();
-      $data['rols'] = Role::all();
-      $app->render('index.public.twig',$data);
-    } else {
-      $app->redirect($app->urlFor('dashboard'));
-    }
+$app->get('/', function() use($app,$db){
+  if (!isset($_SESSION['id'])) {
+    $data = array();
+    $st = $db->prepare("SELECT * FROM roles WHERE id <> 1");
+    $st->execute();
+    $data['roles'] = $st->fetchAll();
+    $st = $db->prepare("SELECT * FROM roles");
+    $st->execute();
+    $data['rols'] = $st->fetchAll();
+    $app->render('index.public.twig',$data);
+  } else {
+    $app->redirect($app->urlFor('dashboard'));
+  }
 })->name('root');
 
 $app->get('/site', function() use($app){
@@ -52,79 +56,88 @@ $app->get('/site', function() use($app){
       $app->render('sitioweb.twig');
     }
 })->name('site');
-
+/*
 $app->get('/lock', function() use($app){
   $app->render('lockscreen.twig');
 })->name('lock');
-
-$app->post('/registro', function() use($app){
+*/
+$app->post('/registro', function() use($app,$db){
   $post = (object) $app->request()->post();
-  $user = new User();
-  $user->name = $post->name;
-  $user->last_name = $post->last_name;
-  $user->email = $post->email;
-  $user->password = md5($post->password);
-  $user->gender = $post->gender;
-  $user->rol = $post->rol;
-  $user->save();
-  $success = "Eres un nuevo miembro";
-  $app->flash('success', $success);
-  $app->redirect($app->urlFor('root'));
+  $name = $post->name;
+  $last_name = $post->last_name;
+  $email = $post->email;
+  $password = md5($post->password);
+  $gender = $post->gender;
+  $rol = $post->rol;
+  $st = $db->prepare("INSERT INTO users (name,last_name,email,password,gender,rol) VALUES (?,?,?,?,?,?)");
+  $user = $st->execute(array($name,$last_name,$email,$password,$gender,$rol));
+  if ($user) {
+    $success = "Eres un nuevo miembro";
+    $app->flash('success', $success);
+    $app->redirect($app->urlFor('root'));
+  }
 })->name('register-post');
 
-$app->post('/login', function() use($app){
+$app->post('/login', function() use($app,$db){
   $post = (object) $app->request()->post();
   $api = $post->api;
   $email = $post->email;
   $password = md5($post->password);
   $rol = $post->rol;
   if($email == "" || $password == "") {
-    $error = "Ingrese todos los datos";
+    echo "vacio";
   } else {
-    $user = User::with('rol')->where('email',$email)->first();
-    if (!is_null($user)) {
+    $st = $db->prepare("SELECT * FROM users WHERE email = ?");
+    $st->setFetchMode(PDO::FETCH_OBJ);
+    $st->execute(array($email));
+    if ($user = $st->fetch()) {
       if ($user->password == $password) {
         if ($user->rol == $rol) {
           if ($api == 1) {
             echo $user->toJson();
-            exit();
           }
           else {
             $_SESSION['id'] = $user->id;
-            $app->redirect($app->urlFor('dashboard'));
+             echo "ok";
           }
         }
         else {
-          $role = Role::where('id',$rol)->first();
-          $error = "Usted no es ".$role->name;
+          echo "rol";
         }
       }
       else {
-        $error = "Contraseña incorrecta";
+        echo "password";
       }
     }
     else {
-      $error = $email." este miembro no existe";
+      echo "user";
     }
   }
-  $app->flash('error', $error);
-  $app->redirect($app->urlFor('root'));
 })->name('login-post');
 
-$app->get('/u/0', $auth($app), function() use($app){
+$app->get('/u/0', $auth($app), function() use($app,$db){
   $data = array();
-  $ages = array();
   $id = $_SESSION['id'];
-  $data['user'] = User::where('id',$id)->first();
-  $data['role'] = Role::where('id',$data['user']->rol)->first();
-  $data['count_cus'] = Customer::count();
-  $data['count_cam'] = Campaing::count();
-  $data['men'] = Customer::where('gender','=','H')->count();
-  $data['women'] = Customer::where('gender','=','M')->count();
-  $data['customers'] = Customer::all();
-  foreach ($data['customers'] as $customer) {
-    $age = date('now') - $customer->birthday;
-  }
+  $st = $db->prepare("SELECT users.id, users.name, users.last_name, users.email, users.gender, roles.name AS rol FROM users,roles WHERE users.id = ? AND users.rol = roles.id");
+  $st->setFetchMode(PDO::FETCH_OBJ);
+  $st->execute(array($id));
+  $data['user'] = $st->fetch();
+  $st = $db->prepare("SELECT * FROM customers");
+  $st->execute();
+  $data['count_cus'] = $st->rowCount();
+  $st = $db->prepare("SELECT * FROM campaings");
+  $st->execute();
+  $data['count_cam'] = $st->rowCount();
+  $st = $db->prepare("SELECT * FROM customers WHERE gender = 'H'");
+  $st->execute();
+  $data['men'] = $st->rowCount();
+  $st = $db->prepare("SELECT * FROM customers WHERE gender = 'M'");
+  $st->execute();
+  $data['women'] = $st->rowCount();
+  //$data['customers'] = Customer::all();
+  //foreach ($data['customers'] as $customer) {
+  //  $age = date('now') - $customer->birthday;
+  //}
   $app->render('index.twig',$data);
 })->name('dashboard');
 
@@ -133,7 +146,7 @@ $app->get('/logout', function() use($app){
   $app->view()->setData('user', null);
   $app->redirect($app->urlFor('root'));
 })->name('logout');
-
+/*
 $app->get('/dbd', function() use($app){
   $app->render('dictionary.twig');
 })->name('dbd');
@@ -144,7 +157,7 @@ $app->get('/cubo', function() use($app){
   $data['campaings'] = Campaing::all();
   $app->render('cubo.twig',$data);
 })->name('cubo');
-
+*/
 //Load all the controllers
 foreach(glob(CONTROLLERS_FOLDER.'*.php') as $router) {
   include_once $router;

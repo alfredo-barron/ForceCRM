@@ -5,24 +5,24 @@
     <!-- Sidebar user panel -->
     <div class="user-panel">
       <div class="pull-left image">
-        {% if role.name == "Administrador" %}
+        {% if user.rol == "Administrador" %}
           <img src="{{ urlFor('root') }}public/img/admin.png" class="img-circle" alt="Administrador" />
-        {% elseif role.name == "Jefe de Marketing" and user.gender == "H" %}
+        {% elseif user.rol == "Jefe de Marketing" and user.gender == "H" %}
           <img src="{{ urlFor('root') }}public/img/jefe.png" class="img-circle" alt="Jefe de Marketing" />
-        {% elseif role.name == "Jefe de Marketing" and user.gender == "M" %}
+        {% elseif user.rol == "Jefe de Marketing" and user.gender == "M" %}
           <img src="{{ urlFor('root') }}public/img/jefa.png" class="img-circle" alt="Jefa de Marketing" />
-        {% elseif role.name == "Promotor" and user.gender == "H" %}
+        {% elseif user.rol == "Promotor" and user.gender == "H" %}
           <img src="{{ urlFor('root') }}public/img/promotor.png" class="img-circle" alt="Promotor" />
-        {% elseif role.name == "Promotor" and user.gender == "M" %}
+        {% elseif user.rol == "Promotor" and user.gender == "M" %}
           <img src="{{ urlFor('root') }}public/img/promotora.png" class="img-circle" alt="Promotora" />
-        {% elseif role.name == "Agente de Ventas" and user.gender == "H" %}
+        {% elseif user.rol == "Agente de Ventas" and user.gender == "H" %}
           <img src="{{ urlFor('root') }}public/img/vendedor.png" class="img-circle" alt="Agente de Ventas" />
-        {% elseif role.name == "Agente de Ventas" and user.gender == "M" %}
+        {% elseif user.rol == "Agente de Ventas" and user.gender == "M" %}
           <img src="{{ urlFor('root') }}public/img/vendedora.png" class="img-circle" alt="Agente de Ventas" />
         {% endif %}
       </div>
       <div class="pull-left info">
-        <p>{{ role.name }}</p>
+        <p>{{ user.rol }}</p>
 
         <a href="#"><i class="fa fa-circle text-success"></i> En línea</a>
       </div>
@@ -57,7 +57,7 @@
           <span>Clientes</span> <i class="fa fa-angle-left pull-right"></i>
         </a>
         <ul class="treeview-menu">
-          {% if role.name == "Jefe de Marketing" or role.name == "Promotor" %}
+          {% if user.rol == "Jefe de Marketing" or user.rol == "Promotor" %}
           <li><a href="{{ urlFor('new-customer') }}"><i class="fa fa-user-plus"></i> Nuevo cliente</a></li>
           {% endif %}
           <li><a href="{{ urlFor('customers') }}"><i class="fa fa-user"></i> Contactos</a></li>
@@ -78,7 +78,7 @@
           <i class="fa fa-group"></i> <span>Mercados</span>
           <i class="fa fa-angle-left pull-right"></i>
           <ul class="treeview-menu">
-            {% if role.name == "Jefe de Marketing" %}
+            {% if user.rol == "Jefe de Marketing" %}
             <li><a href="{{ urlFor('new-market') }}"><i class="fa fa-filter"></i> Identificar un mercado</a></li>
             {% endif %}
             <li class="treeview">
@@ -102,7 +102,7 @@
           <i class="fa fa-angle-left pull-right"></i>
         </a>
         <ul class="treeview-menu">
-          {% if role.name == "Jefe de Marketing" %}
+          {% if user.rol == "Jefe de Marketing" %}
             <li><a href="{{ urlFor('new-campaing') }}"><i class="fa fa-plus"></i> Crear nueva campaña</a></li>
           {% endif %}
           <li><a href="{{ urlFor('campaings-activas') }}"><i class="fa fa-bell"></i> Campañas</a></li>
@@ -125,7 +125,7 @@
           <i class="fa fa-angle-left pull-right"></i>
         </a>
         <ul class="treeview-menu">
-          {% if role.name == "Jefe de Marketing" %}
+          {% if user.rol == "Jefe de Marketing" %}
           <li><a href="{{ urlFor('new-email') }}"><i class="fa fa-pencil"></i> Redactar</a></li>
           {% endif %}
           <li><a href="{{ urlFor('email') }}"><i class="fa fa-check"></i> Enviados</a></li>
@@ -137,13 +137,13 @@
           <i class="fa fa-angle-left pull-right"></i>
         </a>
         <ul class="treeview-menu">
-          {% if role.name == "Jefe de Marketing" %}
+          {% if user.rol == "Jefe de Marketing" %}
           <li><a href="#"><i class="fa fa-plus"></i> Nuevo producto</a></li>
           {% endif %}
           <li><a href="#"><i class="fa fa-list"></i> Lista de productos</a></li>
         </ul>
       </li>
-      {% if role.name == "Administrador" %}
+      {% if user.rol == "Administrador" %}
       <li class="treeview">
         <a href="#">
           <i class="fa fa-briefcase"></i> <span>Panel de usuarios</span>

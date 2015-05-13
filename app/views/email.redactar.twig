@@ -3,8 +3,8 @@
     <title>{{ title }} | Emails</title>
 {% endblock %}
 {% block css %}
-  <link href="{{ urlFor('root') }}public/plugins/iCheck/flat/blue.css" rel="stylesheet" type="text/css" />
-  <link href="{{ urlFor('root') }}public/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css" rel="stylesheet" type="text/css" />
+  <link href="{{ urlFor('root') }}public/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css" rel="stylesheet" type="text/css" >
+  <link href="{{ urlFor('root') }}public/plugins/timepicker/bootstrap-timepicker.min.css" rel="stylesheet"/>
 {% endblock %}
 {% block content %}
 <div class="wrapper">
@@ -24,6 +24,17 @@
     </ol>
   </section>
   <!-- Main content -->
+  {% if flash.success is not empty %}
+          <div class="col-md-offset-8 col-md-4">
+            <div class="box-body">
+              <div class="alert alert-success alert-dismissable">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                <h4><i class="icon fa fa-check"></i>Exito!</h4>
+                {{ flash.success }}
+              </div>
+            </div>
+          </div>
+        {% endif %}
   <section class="content">
     <div class="row">
        <div class="col-md-12">
@@ -31,32 +42,50 @@
           <div class="box-header with-border">
             <h3 class="box-title">Redactar nuevo email</h3>
           </div><!-- /.box-header -->
+          <form action="{{ urlFor('email-post') }}" method="post">
           <div class="box-body">
-            <div class="form-group">
-              <input class="form-control" placeholder="Para:"/>
+          <label>Campaña:</label>
+          <div class="input-group form-group has-feedback">
+            <span class="input-group-addon"><i class="fa fa-bullhorn"></i></span>
+            <select name="campaing_id" id="campaing_id" class="form-control">
+              <option value="0">Selecciona campaña...</option>
+              {% for c in campaings %}
+                  <option value="{{ c.id }}">{{ c.name }}</option>
+              {% endfor %}
+            </select>
+          </div>
+             <label>Fecha y hora de envio: </label>
+            <div class="row">
+              <div class="col-md-6">
+                <div class="input-group form-group has-feedback">
+                  <span class="input-group-addon"><i class="fa fa-calendar"></i></span><input class="form-control pull-right" id="date" name="date" placeholder="Fecha:">
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="bootstrap-timepicker">
+                  <div class="input-group form-group has-feedback">
+                    <span class="input-group-addon"><i class="fa fa-clock-o"></i></span><input class="form-control timepicker" id="hour" name="hour" placeholder="Hora:">
+                  </div>
+                </div>
+              </div>
             </div>
             <div class="form-group">
-              <input class="form-control" placeholder="Asunto:"/>
+               <label>Asunto:</label>
+              <input class="form-control" id="subject" name="subject" placeholder="Asunto:">
             </div>
             <div class="form-group">
-              <textarea id="compose-textarea" class="form-control" style="height: 300px" placeholder="Escribir email...">
+              <textarea id="compose-textarea" id="content" name="content" class="form-control" style="height: 300px" placeholder="Escribir email...">
 
               </textarea>
-            </div>
-            <div class="form-group">
-              <div class="btn btn-default btn-file">
-                <i class="fa fa-paperclip"></i> Attachment
-                <input type="file" name="attachment"/>
-              </div>
-              <p class="help-block">Max. 32MB</p>
             </div>
           </div><!-- /.box-body -->
           <div class="box-footer">
             <div class="pull-right">
-              <button class="btn btn-default"><i class="fa fa-pencil"></i> Draft</button>
-              <button type="submit" class="btn btn-primary"><i class="fa fa-envelope-o"></i> Send</button>
+              <button class="btn btn-default"><i class="fa fa-times"></i> Cancelar</button>
+              <button type="submit" class="btn btn-primary"><i class="fa fa-archive"></i> Archivar</button>
+              </form>
             </div>
-            <button class="btn btn-default"><i class="fa fa-times"></i> Discard</button>
+            <br><br>
           </div><!-- /.box-footer -->
         </div><!-- /. box -->
       </div><!-- /.col -->
@@ -70,10 +99,21 @@
 {% block js %}
   <script src="{{ urlFor('root') }}public/css/dist/js/demo.js"></script>
   <script src="{{ urlFor('root') }}public/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js" type="text/javascript"></script>
+  <script src="{{ urlFor('root')}}public/plugins/daterangepicker/datepicker.js" type="text/javascript"></script>
+  <script src="{{ urlFor('root')}}public/plugins/timepicker/bootstrap-timepicker.min.js" type="text/javascript"></script>
   <script>
     $(function () {
       //Add text editor
       $("#compose-textarea").wysihtml5();
+
+      $('#date').daterangepicker();
+
+      $("#hour").timepicker({
+          showInputs: false
+        });
+    });
+    $(document).ready(function() {
+
     });
   </script>
   <script src="{{ urlFor('root') }}public/css/dist/js/demo.js"></script>

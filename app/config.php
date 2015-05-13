@@ -26,7 +26,7 @@ $app->configureMode('development', function () use ($app) {
   $app->config(array('log.enabled' => false, 'debug' => true));
 });
 
-$app->notFound(function () use ($app) {
+/*$app->notFound(function () use ($app) {
   if (isset($_SESSION['id'])) {
     $data = array();
     $id = $_SESSION['id'];
@@ -37,7 +37,7 @@ $app->notFound(function () use ($app) {
     $app->render('404.public.twig');
   }
 
-});
+});*/
 
 $rootUri = $app->request()->getRootUri();
 $assetUri = $rootUri;
@@ -56,7 +56,7 @@ $app->view()->appendData(array(
 ));
 
 //$app->view()->appendData(array('navbar' => $navbar));
-
+/*
 use Illuminate\Database\Capsule\Manager as Capsule;
 $capsule = new Capsule;
 $capsule->addConnection(array(
@@ -72,4 +72,13 @@ $capsule->addConnection(array(
 $capsule->bootEloquent();
 $capsule->setAsGlobal();
 $app->db = $capsule->connection();
+*/
+
+try {
+  $db = new PDO(DB_DRIVER.':host='.DB_HOST.';dbname='.DB_DATABASE.';charset='.DB_CHARSET, DB_USERNAME, DB_PASSWORD);
+  } catch (PDOException $e) {
+    echo $e;
+}
+
+
 ?>

@@ -85,10 +85,10 @@
                   <label>Fecha de nacimiento:</label>
                   <div class="input-group form-group has-feedback">
                     <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-                    {% if customer.birthday is defined %}
-                      <input type="date" name="birthday1" id="birthday1" class="form-control" value="{{ customer.birthday }}">
+                    {% if customer.birthdate is defined %}
+                      <input type="date" name="birthdate1" id="birthdate1" class="form-control" value="{{ customer.birthdate }}">
                     {% else %}
-                      <input type="text" name="birthday" id="birthday" class="form-control" placeholder="" required data-inputmask="'alias': 'dd-mm-yyyy'" data-mask>
+                      <input type="text" name="birthdate" id="birthdate" class="form-control" placeholder="" required>
                     {% endif %}
                   </div>
                 </div>
@@ -147,9 +147,9 @@
                   <div class="input-group form-group has-feedback">
                     <span class="input-group-addon"><i class="fa fa-road"></i></span>
                     {% if customer.street is defined %}
-                      <input type="text" name="street" id="street" class="form-control" value="{{ customer.street }}" required>
+                      <input type="text" name="street" id="street" class="form-control" value="{{ customer.street }}">
                     {% else %}
-                      <input type="text" name="street" id="street" class="form-control" placeholder="Calle" required>
+                      <input type="text" name="street" id="street" class="form-control" placeholder="Calle">
                     {% endif %}
                   </div>
                 </div>
@@ -158,9 +158,9 @@
                    <div class="input-group form-group has-feedback">
                     <span class="input-group-addon"><i class="fa fa-sort"></i></span>
                     {% if customer.number is defined %}
-                    <input type="number" name="number" id="number" class="form-control" value="{{ customer.number }}" required>
+                    <input type="number" name="number" id="number" class="form-control" value="{{ customer.number }}">
                     {% else %}
-                    <input type="number" name="number" id="number" class="form-control" placeholder="###" required>
+                    <input type="number" name="number" id="number" class="form-control" placeholder="###">
                     {% endif %}
                   </div>
                 </div>
@@ -306,14 +306,13 @@
   <script src="{{ urlFor('root')}}public/plugins/input-mask/jquery.inputmask.js" type="text/javascript"></script>
   <script src="{{ urlFor('root')}}public/plugins/input-mask/jquery.inputmask.date.extensions.js" type="text/javascript"></script>
   <script src="{{ urlFor('root')}}public/plugins/input-mask/jquery.inputmask.extensions.js" type="text/javascript"></script>
+   <script src="{{ urlFor('root')}}public/plugins/daterangepicker/datepicker.js" type="text/javascript"></script>
     <script type="text/javascript">
       $(function () {
-        $("#datemask").inputmask("dd-mm-yyyy", {"placeholder": "dd-mm-yyyy"});
+        //$("#datemask").inputmask("dd-mm-yyyy", {"placeholder": "dd-mm-yyyy"});
         $("[data-mask]").inputmask();
         //Date range picker
-        $('#reservation').daterangepicker();
-        //Date range picker with time picker
-        $('#reservationtime').daterangepicker({timePicker: true, timePickerIncrement: 30, format: 'MM/DD/YYYY h:mm A'});
+        $('#birthdate').daterangepicker();
 
         $('#postcode').change(function(event){
         var sn = $("#postcode option:selected");

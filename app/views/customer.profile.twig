@@ -55,7 +55,7 @@
                     <dt>Estado: </dt><dd>{{ customer.entity }}</dd>
                     <hr>
                     <dt>Género: </dt><dd>{% if customer.gender == "H" %}Hombre{% else %}Mujer{% endif %}</dd>
-                    <dt>Fecha de nacimiento: </dt><dd>{{ customer.birthday|date('d') }} - {{ customer.birthday|date('m') }} - {{ customer.birthday|date('Y') }} {% if customer.birthday|date('d') == "now"|date("d") and customer.birthday|date('m') == "now"|date("m") %}  <i class="fa fa-birthday-cake" data-toggle="tooltip" title="Hoy cumpleaños"></i> {% endif %}</dd>
+                    <dt>Fecha de nacimiento: </dt><dd>{{ customer.birthdate|date('d') }} - {{ customer.birthdate|date('m') }} - {{ customer.birthdate|date('Y') }} {% if customer.birthdate|date('d') == "now"|date("d") and customer.birthdate|date('m') == "now"|date("m") %}  <i class="fa fa-birthday-cake" data-toggle="tooltip" title="Hoy cumpleaños"></i> {% endif %}</dd>
                     <dt>Ocupación: </dt><dd>{{ job.name }}</dd>
                     <dt>Educación: </dt><dd>{{ school.name }}</dd>
                     <dt>Estado civil: </dt><dd>{{ status_civil.name }}</dd>

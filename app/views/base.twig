@@ -16,6 +16,7 @@
   <link rel="stylesheet" href="{{ urlFor('root') }}public/plugins/morris/morris.css">
   <link rel="stylesheet" href="{{ urlFor('root') }}public/plugins/jvectormap/jquery-jvectormap-1.2.2.css">
   <link rel="stylesheet" href="{{ urlFor('root') }}public/plugins/daterangepicker/daterangepicker-bs3.css">
+  <link rel="stylesheet" href="{{ urlFor('root') }}public/plugins/growl/jquery.growl.css">
   {% block css %}{% endblock %}
 </head>
 <body class="skin-blue layout-boxed">
@@ -32,6 +33,14 @@
     <script src="{{ urlFor('root') }}public/plugins/datepicker/bootstrap-datepicker.js"></script>
     <script src="{{ urlFor('root') }}public/plugins/iCheck/icheck.min.js"></script>
     <script src="{{ urlFor('root') }}public/plugins/slimScroll/jquery.slimscroll.min.js"></script>
+    <script src="{{ urlFor('root') }}public/plugins/growl/jquery.growl.js"></script>
+    <script>
+    $(document).ready(function() {
+      $(this).bind("contextmenu", function(e) {
+      e.preventDefault();
+    });
+    });
+    </script>
   {% block js %}{% endblock %}
 </body>
 </html>
