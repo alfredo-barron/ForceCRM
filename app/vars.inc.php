@@ -14,8 +14,13 @@ if(getenv('DATABASE_URL') != false){
   define('DB_DATABASE', $path);
   define('DB_USERNAME', $user);
   define('DB_PASSWORD', $pass);
-  define('DB_CHARSET', 'utf8');
   define('DB_PREFIX', '');
+
+  try {
+  $db = new PDO(DB_DRIVER.':host='.DB_HOST.';dbname='.DB_DATABASE, DB_USERNAME, DB_PASSWORD);
+  } catch (PDOException $e) {
+    echo $e;
+}
 } else {
   define('DB_DRIVER', 'mysql');//mysql,pgsql
   define('DB_HOST', '127.0.0.1');
@@ -25,6 +30,12 @@ if(getenv('DATABASE_URL') != false){
   define('DB_PASSWORD', 'root');
   define('DB_CHARSET', 'utf8');
   define('DB_PREFIX', '');
+
+  try {
+  $db = new PDO(DB_DRIVER.':host='.DB_HOST.';dbname='.DB_DATABASE.';charset='.DB_CHARSET, DB_USERNAME, DB_PASSWORD);
+  } catch (PDOException $e) {
+    echo $e;
+}
 }
 
 // Slim Vars

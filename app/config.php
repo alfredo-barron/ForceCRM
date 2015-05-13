@@ -74,11 +74,5 @@ $capsule->setAsGlobal();
 $app->db = $capsule->connection();
 */
 
-try {
-  $db = new PDO(DB_DRIVER.':host='.DB_HOST.';dbname='.DB_DATABASE.';charset='.DB_CHARSET, DB_USERNAME, DB_PASSWORD);
-  } catch (PDOException $e) {
-    echo $e;
-}
-
 
 ?>
