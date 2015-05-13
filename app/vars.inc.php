@@ -14,6 +14,7 @@ if(getenv('DATABASE_URL') != false){
   define('DB_DATABASE', $path);
   define('DB_USERNAME', $user);
   define('DB_PASSWORD', $pass);
+  define('DB_CHARSET', 'utf8');
   define('DB_PREFIX', '');
 } else {
   define('DB_DRIVER', 'mysql');//mysql,pgsql
@@ -22,6 +23,7 @@ if(getenv('DATABASE_URL') != false){
   define('DB_DATABASE', 'crm');
   define('DB_USERNAME', 'root');
   define('DB_PASSWORD', 'root');
+  define('DB_CHARSET', 'utf8');
   define('DB_PREFIX', '');
 }
 
@@ -45,5 +47,5 @@ define('VIEWS_FOLDER', APP_FOLDER.'views/');
 define('CONTROLLERS_FOLDER', APP_FOLDER.'controllers/');
 define('COOKIE_NAME', COOKIE_PREFIX);
 define('DB_COLLATION', 'utf8_general_ci');
-define('DB_CHARSET', 'utf8');
+
 ?>
