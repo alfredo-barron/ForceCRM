@@ -195,7 +195,7 @@ $app->get('/envios', function() use($app){
 
   $mail->isHTML(true);                                  // Set email format to HTML
 
-  $mail->Subject = 'Prueba de envio';
+  $mail->Subject = 'CRM';
   $mail->Body    = 'This is the HTML message body <b>in bold!</b>';
   $mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
 
