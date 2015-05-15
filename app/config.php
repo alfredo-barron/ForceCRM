@@ -26,18 +26,20 @@ $app->configureMode('development', function () use ($app) {
   $app->config(array('log.enabled' => false, 'debug' => true));
 });
 
-/*$app->notFound(function () use ($app) {
+$app->notFound(function () use ($app) {
   if (isset($_SESSION['id'])) {
     $data = array();
     $id = $_SESSION['id'];
-    $data['user'] = User::where('id',$id)->first();
-    $data['role'] = Role::where('id',$data['user']->rol)->first();
+    $st = $db->prepare("SELECT users.id, users.name, users.last_name, users.email, users.gender, roles.name AS rol FROM users,roles WHERE users.id = ? AND users.rol = roles.id");
+    $st->setFetchMode(PDO::FETCH_OBJ);
+    $st->execute(array($id));
+    $data['user'] = $st->fetch();
     $app->render('404.twig',$data);
   } else {
     $app->render('404.public.twig');
   }
 
-});*/
+});
 
 $rootUri = $app->request()->getRootUri();
 $assetUri = $rootUri;

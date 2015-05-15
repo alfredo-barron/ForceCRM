@@ -19,6 +19,7 @@
     "raulfraile/ladybug": "~1.0",
     "symfony/yaml": "~2.1",
     "mrrio/shellwrap": "*",
-    "hashids/hashids": "dev-master"
+    "hashids/hashids": "dev-master",
+    "phpmailer/phpmailer": "~5.2"
   }
 }

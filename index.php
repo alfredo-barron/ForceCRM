@@ -15,6 +15,9 @@ include_once APP_FOLDER.'config.php';
 //    include_once $model;
 //}
 
+//forcecrm.notification@gmail.com
+//crm900123
+
 $auth = function ($app) {
   return function () use ($app) {
     if (!isset($_SESSION['id'])) {
@@ -146,11 +149,66 @@ $app->get('/logout', function() use($app){
   $app->view()->setData('user', null);
   $app->redirect($app->urlFor('root'));
 })->name('logout');
-/*
+
 $app->get('/dbd', function() use($app){
   $app->render('dictionary.twig');
 })->name('dbd');
 
+$app->get('/excel', function() use($app){
+  require('public/php-excel-reader/excel_reader2.php');
+  require('public/SpreadsheetReader.php');
+  $Reader = new SpreadsheetReader('public/correos.xlsx');
+    foreach ($Reader as $Row) {
+      $last_name = $Row[1];
+      $birthdate = $Row[2];
+      $gender = $Row[3];
+      $email = $Row[4];
+      $telephone = $Row[5];
+      $street = $Row[7];
+      $number = $Row[8];
+      echo "INSERT INTO customers (name,last_name,birthdate,gender,email,telephone,street,number,postcode,sons) VALUES('".$Row[0]."','".$Row[1]."',".$Row[3].",'".$Row[4]."','".$Row[5]."','".$Row[7]."','".$Row[8]."','".$Row[9]."',".$Row[15].")<br>";
+    }
+});
+
+$app->get('/envios', function() use($app){
+
+  require 'vendor/phpmailer/phpmailer/PHPMailerAutoload.php';
+
+  $mail = new PHPMailer;
+
+  //$mail->SMTPDebug = 3;                               // Enable verbose debug output
+
+  $mail->isSMTP();                                      // Set mailer to use SMTP
+  $mail->Host = 'smtp.gmail.com';                       // Specify main and backup SMTP servers
+  $mail->SMTPAuth = true;                               // Enable SMTP authentication
+  $mail->Username = 'forcecrm.notification@gmail.com';                 // SMTP username
+  $mail->Password = 'crm900123';                           // SMTP password
+  $mail->SMTPSecure = 'tls';                            // Enable TLS encryption, `ssl` also accepted
+  $mail->Port = 25;                                    // TCP port to connect to
+
+  $mail->From = 'forcecrm.notification@gmail.com';
+  $mail->FromName = 'Force CRM';
+  $mail->addAddress('alfreedobarron@gmail.com', 'Alfredo Barrón');     // Add a recipient
+  $mail->addAddress('uliseslarraga@gmail.com');                             // Name is optional
+  $mail->addReplyTo('forcecrm.notification@gmail.com', 'Contacto');
+  //$mail->addCC('alfreedobarron@example.com');
+  $mail->addBCC('forcecrm.notification@gmail.com');
+
+  $mail->isHTML(true);                                  // Set email format to HTML
+
+  $mail->Subject = 'Prueba de envio';
+  $mail->Body    = 'This is the HTML message body <b>in bold!</b>';
+  $mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
+
+  if(!$mail->send()) {
+      echo 'Message could not be sent.';
+      echo 'Mailer Error: ' . $mail->ErrorInfo;
+  } else {
+      echo 'Message has been sent';
+  }
+});
+
+/*
 $app->get('/cubo', function() use($app){
   $data['customers'] = Customer::all();
   $data['users'] = User::all();
