@@ -188,8 +188,7 @@ $app->get('/envios', function() use($app){
 
   $mail->From = 'forcecrm.notification@gmail.com';
   $mail->FromName = 'Force CRM';
-  $mail->addAddress('alfreedobarron@gmail.com', 'Alfredo Barrón');     // Add a recipient
-  $mail->addAddress('uliseslarraga@gmail.com');                             // Name is optional
+  $mail->addAddress('alfreedobarron@gmail.com', 'Alfredo Barron');     // Add a recipient Name is optional
   $mail->addReplyTo('forcecrm.notification@gmail.com', 'Contacto');
   //$mail->addCC('alfreedobarron@example.com');
   $mail->addBCC('forcecrm.notification@gmail.com');
