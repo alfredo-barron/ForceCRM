@@ -1,0 +1,298 @@
+{% extends 'base.twig' %}
+{% block title %}
+    <title>{{ title }} | Productos</title>
+{% endblock %}
+{% block css %}
+    <link href="{{ urlFor('root') }}public/plugins/datepicker/datepicker.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="{{ urlFor('root') }}/public/css/bootstrapValidator.min.css">
+{% endblock %}
+{% block content %}
+<div class="wrapper">
+  {% include 'navbar.twig' %}
+  {% include 'sidebar.twig' %}
+  <div class="content-wrapper">
+    <section class="content-header">
+          {% if customer.id is defined %}
+          <h1><a href="{{ urlFor('customers') }}"><i class="fa fa-arrow-left fa-1x"></i></a>Producto <small>actualizar</small></h1>
+          <ol class="breadcrumb">
+            <li><a href="{{ urlFor('dashboard') }}"><i class="fa fa-dashboard"></i> Force <b>CRM</b></a></li>
+            <li><a href="{{ urlFor('customers') }}">Productos</a></li>
+            <li class="active">Actualizar</li>
+          </ol>
+          {% else %}
+            <h1><a href="{{ urlFor('products') }}"><i class="fa fa-arrow-left fa-1x"></i></a> Producto <small>nuevo</small></h1>
+            <ol class="breadcrumb">
+              <li><a href="{{ urlFor('dashboard') }}"><i class="fa fa-dashboard"></i> Force <b>CRM</b></a></li>
+              <li><a href="{{ urlFor('products') }}">Producto</a></li>
+              <li class="active">Nuevo</li>
+            </ol>
+          {% endif %}
+        </section>
+         <!-- Main content -->
+    <section class="content">
+      <!-- Info boxes -->
+      <div class="row">
+        <div class="col-md-1"></div>
+        <div class="col-md-10">
+          <div class="box box-primary">
+            <div class="box-header with-border">
+              <h3 class="box-title">Datos del producto</h3>
+            </div><!-- /.box-header -->
+            <form id="productForm" name="productForm"
+              data-bv-feedbackicons-valid="glyphicon glyphicon-ok"
+              data-bv-feedbackicons-invalid="glyphicon glyphicon-remove"
+              data-bv-feedbackicons-validating="glyphicon glyphicon-refresh">
+                {% if product.id is defined %}
+                  <input type="hidden" id="id" name="id" value="{{ product.id }}">
+                {% else %}
+                  <input type="hidden" id="id" name="id" value="">
+                {% endif %}
+                <div class="box-body">
+                  <div class="row">
+                    <div class="col-md-2"></div>
+                    <div class="form-group col-md-8">
+                      {% if product.name is defined %}
+                        <label class="control-label">Nombre</label>
+                      {% else %}
+                        <label class="control-label">Nombre*</label>
+                      {% endif %}
+                      <div class="input-group">
+                        <span class="input-group-addon"><i class="fa fa-barcode"></i></span>
+                        {% if product.name is defined %}
+                          <input type="text" name="name" id="name" class="form-control" value="{{ product.name }}">
+                        {% else %}
+                          <input type="text" name="name" id="name" class="form-control" placeholder="Nombre" data-bv-notempty="true" required data-bv-notempty-message="Este campo es obligatorio" autocomplete="off">
+                        {% endif %}
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-2"></div>
+                    <div class="form-group col-md-4">
+                      {% if product.market is defined %}
+                        <label class="control-label">Marca</label>
+                      {% else %}
+                        <label class="control-label">Marca*</label>
+                      {% endif %}
+                        <div class="input-group">
+                          <span class="input-group-addon"><i class="fa fa-tag"></i></span>
+                          {% if product.market is defined %}
+                            <input type="text" name="market" id="market" class="form-control" value="{{ product.market }}">
+                          {% else %}
+                            <input type="text" name="market" id="market" class="form-control" placeholder="Marca" data-bv-notempty="true" required data-bv-notempty-message="Este campo es obligatorio" autocomplete="off">
+                          {% endif %}
+                        </div>
+                      </div>
+                    <div class="form-group col-md-4">
+                      {% if product.model is defined %}
+                        <label class="control-label">Modelo</label>
+                      {% else %}
+                        <label class="control-label">Modelo*</label>
+                      {% endif %}
+                      <div class="input-group">
+                        <span class="input-group-addon"><i class="fa fa-dot-circle-o"></i></span>
+                        {% if product.model is defined %}
+                          <input type="text" name="model" id="model" class="form-control" value="{{ product.model }}">
+                        {% else %}
+                          <input type="text" name="model" id="model" class="form-control" data-bv-notempty="true" autocomplete="off" placeholder="Modelo">
+                        {% endif %}
+                      </div>
+                    </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-2"></div>
+                      <div class="form-group col-md-8">
+                        {% if product.price is defined %}
+                          <label class="control-label">Precio</label>
+                        {% else %}
+                          <label class="control-label">Precio*</label>
+                        {% endif %}
+                        <div class="input-group">
+                          <span class="input-group-addon"><i class="fa fa-dollar"></i></span>
+                          {% if product.price is defined %}
+                            <input type="text" name="price" id="price" class="form-control" value="{{ product.price }}">
+                          {% else %}
+                            <input type="text" name="price" id="price" class="form-control" data-bv-notempty="true" autocomplete="off" placeholder="Precio">
+                          {% endif %}
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-2"></div>
+                      <div class="form-group col-md-8">
+                        {% if product.category is defined %}
+                          <label class="control-label">Categoria</label>
+                         {% else %}
+                          <label class="control-label">Categoria*</label>
+                         {% endif %}
+                        <div class="input-group form-group">
+                          <span class="input-group-addon"><i class="fa fa-pie-chart"></i></span>
+                          <select name="category" id="category" class="form-control" data-bv-notempty="true">
+                          {% if product.category is defined %}
+                            <option value="{{ product.category }}">
+                              {{ product.category }}
+                            </option>
+                          {% else %}
+                              <option value="0">Seleciona una opción...</option>
+                          {% endif %}
+                            <option value="1">Ropa</option>
+                            <option value="2">Relojes</option>
+                            <option value="3">Tecnología</option>
+                          </select>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-2"></div>
+                      <div class="form-group col-md-8">
+                        {% if product.description is defined %}
+                          <label class="control-label">Descripción</label>
+                        {% else %}
+                          <label class="control-label">Descripción*</label>
+                        {% endif %}
+                        <div class="input-group">
+                          {% if product.description is defined %}
+                            <textarea name="description" id="description" class="form-control" cols="70" rows="6"></textarea>
+                          {% else %}
+                            <textarea name="description" id="description" class="form-control" cols="70" rows="6"></textarea>
+                          {% endif %}
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-2"></div>
+                      <div class="form-group col-md-4">
+                        {% if product.quantity is defined %}
+                          <label class="control-label">Cantidad</label>
+                        {% else %}
+                          <label class="control-label">Cantidad*</label>
+                        {% endif %}
+                        <div class="input-group">
+                          <span class="input-group-addon"><i class="fa fa-cubes"></i></span>
+                          {% if product.quantity is defined %}
+                            <input type="number" name="quantity" id="quantity" class="form-control" value="{{ product.quantity }}">
+                          {% else %}
+                            <input type="number" name="quantity" id="quantity" min="1" class="form-control" placeholder="0" autocomplete="off">
+                          {% endif %}
+                        </div>
+                      </div>
+                      <div class="form-group col-md-4">
+                        {% if product.stock is defined %}
+                          <label class="control-label">Stock</label>
+                        {% else %}
+                          <label class="control-label">Stock*</label>
+                        {% endif %}
+                        <div class="input-group">
+                          <span class="input-group-addon"><i class="fa fa-cubes"></i></span>
+                          {% if product.stock is defined %}
+                            <input type="number" name="stock" id="stock" class="form-control" value="{{ product.stock }}">
+                          {% else %}
+                            <input type="number" name="stock" id="stock" class="form-control" min="1" placeholder="0" autocomplete="off">
+                          {% endif %}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="box-footer">
+                    <div class="pull-right">
+                      <a href="{{ urlFor('products') }}" class="btn btn-default"><i class="fa fa-times"></i> Cancelar</a>
+                      {% if product.id is defined %}
+                        <button type="button" id="editProduct" name="editCustomer" class="btn btn-primary"><i class="fa fa-edit"></i> Actualizar</button>
+                      {% else %}
+                        <button type="button" id="newProduct" name="newProduct" class="btn btn-primary"><i class="fa fa-plus"></i> Añadir</button>
+                      {% endif %}
+                    </form>
+                    </div>
+                    <br><br>
+                  </div><!-- /.box-footer -->
+                </div><!-- /. box -->
+              </div><!-- /.col -->
+            </div><!-- /.row -->
+          </section><!-- /.content -->
+        </div><!-- /.content-wrapper -->
+      <footer class="main-footer">
+        <strong>Copyright &copy; {{ "now"|date("Y") }} </strong> Todos los derechos reservados.
+      </footer>
+    </div>
+{% endblock %}
+{% block js %}
+  <script src="{{ urlFor('root')}}public/plugins/daterangepicker/daterangepicker.js" type="text/javascript"></script>
+  <script src="{{ urlFor('root')}}public/plugins/input-mask/jquery.inputmask.js" type="text/javascript"></script>
+  <script src="{{ urlFor('root')}}public/plugins/input-mask/jquery.inputmask.date.extensions.js" type="text/javascript"></script>
+  <script src="{{ urlFor('root')}}public/plugins/input-mask/jquery.inputmask.extensions.js" type="text/javascript"></script>
+    <script type="text/javascript">
+      $(function () {
+        $('#productForm').bootstrapValidator();
+     });
+
+    $(document).ready(function() {
+      $('#newProduct').click(function(event) {
+        var id = $('#id').val();
+        var name = $('#name').val();
+        var market = $('#market').val();
+        var model = $('#model').val();
+        var price = $('#price').val();
+        var category = $('#category option:selected').val();
+        var description = $('#description').val();
+        var street = $('#street').val();
+        var quantity = $('#quantity').val();
+        if (name == "" || market == "" || model == "" || price == "" || category == 0 || description == "" || street == "" || quantity == "") {
+          $.growl.error({ message: "Rellene todos los campos!" });
+        } else {
+          $.ajax({
+            url: "nuevo",
+            type: "POST",
+            dataType: "html",
+            data: $('#productForm').serialize(),
+            success: function(data) {
+              if(data == 'vacio'){
+                $.growl.error({ message: "Rellene todos los campos!" });
+              } else if(data == 'exito') {
+                $.growl.notice({ message: "Has agregado un nuevo producto!" });
+                limpiar();
+              } else if(data == 'error') {
+                $.growl.error({ message: "Error del servidor!" });
+              }
+            }
+          });
+        }
+      });
+
+      $('#editCustomer').click(function(event) {
+        var id = $('#id').val();
+        var name = $('#name').val();
+        var last_name = $('#last_name').val();
+        var birthdate1 = $('#birthdate1').val();
+        var gender = $('#gender option:selected').val();
+        var email = $('#email').val();
+        var telephone1 = $('#telephone1').val();
+        var street = $('#street').val();
+        var number = $('#number').val();
+        var postcode = $('#postcode option:selected').val();
+        var place = $('#place').val();
+        var city = $('#city').val();
+        var entity = $('#entity').val();
+        var job = $('#job option:selected').val();
+        var school = $('#school option:selected').val();
+        var status_civil = $('#status_civil option:selected').val();
+        var sons = $('#sons').val();
+          $.ajax({
+            url: "editar",
+            type: "POST",
+            dataType: "html",
+            data: $('#customerForm').serialize(),
+            success: function(data) {
+              if(data == 'exito') {
+                $.growl.notice({ message: "Has editado la Información de un cliente!" });
+              } else if(data == 'error') {
+                $.growl.error({ message: "Error del servidor!" });
+              }
+            }
+          })
+      });
+
+    });
+
+      </script>
+    <script src="{{ urlFor('root') }}public/css/dist/js/demo.js"></script>
+{% endblock %}

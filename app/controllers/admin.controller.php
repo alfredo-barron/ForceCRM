@@ -1,5 +1,47 @@
 <?php
 
+$app->get('/u/0', $auth($app), function() use($app,$db){
+  $data = array();
+  $id = $_SESSION['id'];
+  $st = $db->prepare("SELECT users.id, users.name, users.last_name, users.email, users.gender, roles.name AS rol FROM users,roles WHERE users.id = ? AND users.rol = roles.id");
+  $st->setFetchMode(PDO::FETCH_OBJ);
+  $st->execute(array($id));
+  $data['user'] = $st->fetch();
+  $st = $db->prepare("SELECT * FROM customers WHERE status = 'Contacto'");
+  $st->execute();
+  $data['count_con'] = $st->rowCount();
+  $st = $db->prepare("SELECT * FROM customers WHERE status = 'Actual'");
+  $st->execute();
+  $data['count_cus'] = $st->rowCount();
+  $st = $db->prepare("SELECT * FROM campaings");
+  $st->execute();
+  $data['count_cam'] = $st->rowCount();
+  $st = $db->prepare("SELECT * FROM customers WHERE gender = 'H'");
+  $st->execute();
+  $data['men'] = $st->rowCount();
+  $st = $db->prepare("SELECT * FROM customers WHERE gender = 'M'");
+  $st->execute();
+  $data['women'] = $st->rowCount();
+  $st = $db->prepare("SELECT * FROM customers WHERE status = 'Potencial'");
+  $st->execute();
+  $data['customerP'] = $st->rowCount();
+  $st = $db->prepare("SELECT * FROM customers WHERE type = 'A'");
+  $st->execute();
+  $data['customerA'] = $st->rowCount();
+  $st = $db->prepare("SELECT * FROM customers WHERE type = 'B'");
+  $st->execute();
+  $data['customerB'] = $st->rowCount();
+  $st = $db->prepare("SELECT * FROM customers WHERE type = 'C'");
+  $st->execute();
+  $data['customerC'] = $st->rowCount();
+  $st = $db->prepare("SELECT * FROM campaings");
+    $st->execute();
+    while ($row = $st->fetchObject()) {
+
+    }
+  $app->render('index.twig',$data);
+})->name('dashboard');
+
 $app->group('/u/0/calendario', $auth($app), function() use($app,$db){
 
   $app->get('', function() use($app,$db) {
@@ -38,6 +80,50 @@ $app->group('/u/0/clientes', $auth($app), function() use($app,$db){
     $app->render('newcustomer.twig',$data);
   })->name('new-customer');
 
+  $app->post('/nuevo', function() use($app,$db){
+    $post = (object) $app->request()->post();
+    $id = (isset($post->id) and !empty($post->id)) ? $post->id : 0;
+    if($id != 0){
+      echo "error";
+    }else{
+      $name = $post->name;
+      $last_name = $post->last_name;
+      $birthdate = $post->birthdate;
+      $gender = $post->gender;
+      $email = $post->email;
+      $telephone = str_replace(' ', '', $post->telephone);
+      $street = $post->street;
+      $number = $post->number;
+      $postcode = $post->postcode;
+      $place = $post->place;
+      $city = $post->city;
+      $entity = $post->entity;
+      $job = $post->job;
+      $school = $post->school;
+      $status_civil = $post->status_civil;
+      $sons = $post->sons;
+      $status = "Contacto";
+      $date = date('Y-m-d');
+      if($name == "" || $last_name == "" || $birthdate == "" || $email == "" || $telephone == "" || $postcode == 0) {
+        echo "vacio";
+      } else {
+          $st = $db->prepare("SELECT * FROM customers WHERE email = ?");
+          $st->setFetchMode(PDO::FETCH_OBJ);
+          $st->execute(array($email));
+          if ($user = $st->fetch()) {
+            echo "existe";
+          } else {
+            $st = $db->prepare("INSERT INTO customers (name,last_name,birthdate,gender,email,telephone,street,number,postcode,place,city,entity,job,school,status_civil,sons,status,date_created) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
+            if ($customer = $st->execute(array($name,$last_name,$birthdate,$gender,$email,$telephone,$street,$number,$postcode,$place,$city,$entity,$job,$school,$status_civil,$sons,$status,$date))) {
+              echo "exito";
+            } else {
+              echo "error";
+            }
+         }
+      }
+    }
+  })->name('customer-post');
+
   $app->get('/actualizar(/:id_c)', function($id_c) use($app,$db) {
     $id = $_SESSION['id'];
     $st = $db->prepare("SELECT users.id, users.name, users.last_name, users.email, users.gender, roles.name AS rol FROM users,roles WHERE users.id = ? AND users.rol = roles.id");
@@ -75,55 +161,33 @@ $app->group('/u/0/clientes', $auth($app), function() use($app,$db){
     $app->render('newcustomer.twig',$data);
   })->name('edit-customer');
 
-  $app->post('/nuevo', function() use($app,$db){
+  $app->post('/actualizar/editar', function() use($app,$db){
     $post = (object) $app->request()->post();
     $id = (isset($post->id) and !empty($post->id)) ? $post->id : 0;
-    if($id != 0){
-      $name = $post->name;
-      $last_name = $post->last_name;
-      $birthdate = $post->birthdate1;
-      $gender = $post->gender;
-      $email = $post->email;
-      $telephone = trim($post->telephone1);
-      $street = $post->street;
-      $number = $post->number;
-      $postcode = $post->postcode;
-      $place = $post->place;
-      $city = $post->city;
-      $entity = $post->entity;
-      $job = $post->job;
-      $school = $post->school;
-      $status_civil = $post->status_civil;
-      $sons = $post->sons;
-      $st = $db->prepare("UPDATE customers SET name = ?, last_name = ?, birthdate = ?, gender = ?, email = ?, telephone = ?, street = ?, number = ?, postcode = ?, place = ?, city = ?, entity = ?, job = ?, school = ?, status_civil = ?, sons = ? WHERE id = $id");
-      $customer = $st->execute(array($name,$last_name,$birthdate,$gender,$email,$telephone,$street,$number,$postcode,$place,$city,$entity,$job,$school,$status_civil,$sons));
-      $app->redirect($app->urlFor('customers'));
-    }else{
-      $name = $post->name;
-      $last_name = $post->last_name;
-      $birthday = $post->birthday;
-      $gender = $post->gender;
-      $email = $post->email;
-      $telephone = trim($post->telephone);
-      $street = $post->street;
-      $number = $post->number;
-      $postcode = $post->postcode;
-      $place = $post->place;
-      $city = $post->city;
-      $entity = $post->entity;
-      $job = $post->job;
-      $school = $post->school;
-      $status_civil = $post->status_civil;
-      $sons = $post->sons;
-      $st = $db->prepare("INSERT INTO customers (name,last_name,birthdate,gender,email,telephone,street,number,postcode,place,city,entity,job,school,status_civil,sons) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
-      $customer = $st->execute(array($name,$last_name,$birthdate,$gender,$email,$telephone,$street,$number,$postcode,$place,$city,$entity,$job,$school,$school,$status_civil,$sons));
-      if ($customer) {
-        $success = "Cliente dado de alta";
-        $app->flash('success', $success);
-        $app->redirect($app->urlFor('new-customer'));
-      }
+    $name = $post->name;
+    $last_name = $post->last_name;
+    $birthdate = $post->birthdate1;
+    $gender = $post->gender;
+    $email = $post->email;
+    $telephone = trim($post->telephone1);
+    $street = $post->street;
+    $number = $post->number;
+    $postcode = $post->postcode;
+    $place = $post->place;
+    $city = $post->city;
+    $entity = $post->entity;
+    $job = $post->job;
+    $school = $post->school;
+    $status_civil = $post->status_civil;
+    $sons = $post->sons;
+    $st = $db->prepare("UPDATE customers SET name = ?, last_name = ?, birthdate = ?, gender = ?, email = ?, telephone = ?, street = ?, number = ?, postcode = ?, place = ?, city = ?, entity = ?, job = ?, school = ?, status_civil = ?, sons = ? WHERE id = $id");
+    $customer = $st->execute(array($name,$last_name,$birthdate,$gender,$email,$telephone,$street,$number,$postcode,$place,$city,$entity,$job,$school,$status_civil,$sons));
+    if ($customer) {
+      echo "exito";
+    } else {
+      echo "error";
     }
-  })->name('customer-post');
+  })->name('customer-edit-post');
 
   $app->get('/perfil(/:id_c)', function($id_c) use($app,$db) {
     if ($id_c == null) {
@@ -161,7 +225,7 @@ $app->group('/u/0/clientes', $auth($app), function() use($app,$db){
     $st->setFetchMode(PDO::FETCH_OBJ);
     $st->execute(array($id));
     $data['user'] = $st->fetch();
-    $st = $db->prepare("SELECT * FROM customers WHERE status <> 'Potencial' AND status <> 'Actual'");
+    $st = $db->prepare("SELECT * FROM customers WHERE status = 'Contacto'");
     $st->execute();
     $data['customers'] = $st->fetchAll();
     $app->render('customers.twig',$data);
@@ -339,6 +403,58 @@ $app->group('/u/0/email', $auth($app), function() use($app,$db){
 
 });
 
+$app->group('/u/0/productos', $auth($app), function() use($app,$db){
+
+  $app->get('', function() use($app,$db) {
+    $data = array();
+    $id = $_SESSION['id'];
+    $st = $db->prepare("SELECT users.id, users.name, users.last_name, users.email, users.gender, roles.name AS rol FROM users,roles WHERE users.id = ? AND users.rol = roles.id");
+    $st->setFetchMode(PDO::FETCH_OBJ);
+    $st->execute(array($id));
+    $data['user'] = $st->fetch();
+    $app->render('newproduct.twig',$data);
+  })->name('products');
+
+  $app->get('/nuevo', function() use($app,$db) {
+    $data = array();
+    $id = $_SESSION['id'];
+    $st = $db->prepare("SELECT users.id, users.name, users.last_name, users.email, users.gender, roles.name AS rol FROM users,roles WHERE users.id = ? AND users.rol = roles.id");
+    $st->setFetchMode(PDO::FETCH_OBJ);
+    $st->execute(array($id));
+    $data['user'] = $st->fetch();
+    $app->render('newproduct.twig',$data);
+  })->name('new-product');
+
+  $app->post('/nuevo', function() use($app,$db){
+    $post = (object) $app->request()->post();
+    $id = (isset($post->id) and !empty($post->id)) ? $post->id : 0;
+    if($id != 0){
+      echo "error";
+    }else{
+      $name = $post->name;
+      $market = $post->market;
+      $model = $post->model;
+      $price = $post->price;
+      $category = $post->category;
+      $description = $post->description;
+      $quantity = $post->quantity;
+      $stock = $post->stock;
+      $date = date('Y-m-d');
+      if($name == "" || $market == "" || $model == "" || $price == "" || $category == 0 || $description == "" || $quantity == "" || $stock == "") {
+        echo "vacio";
+      } else {
+        $st = $db->prepare("INSERT INTO customers (name,last_name,birthdate,gender,email,telephone,street,number,postcode,place,city,entity,job,school,status_civil,sons,status,date_created) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
+        if ($customer = $st->execute(array($name,$last_name,$birthdate,$gender,$email,$telephone,$street,$number,$postcode,$place,$city,$entity,$job,$school,$status_civil,$sons,$status,$date))) {
+          echo "exito";
+        } else {
+          echo "error";
+        }
+      }
+    }
+  })->name('product-post');
+
+});
+
 $app->group('/u/0/personal', $auth($app), function() use($app,$db){
 
   $app->get('', function() use($app,$db) {
@@ -348,7 +464,9 @@ $app->group('/u/0/personal', $auth($app), function() use($app,$db){
     $st->setFetchMode(PDO::FETCH_OBJ);
     $st->execute(array($id));
     $data['user'] = $st->fetch();
-    $data['users'] = User::with('rol')->get();
+    $st = $db->prepare("SELECT users.id, users.name, users.last_name, users.email, users.gender, roles.name AS rol FROM users,roles WHERE users.rol = roles.id");
+    $st->execute();
+    $data['users'] = $st->fetchAll();
     $app->render('personal.twig',$data);
   })->name('personal');
 

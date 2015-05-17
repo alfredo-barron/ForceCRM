@@ -118,48 +118,6 @@ $app->post('/login', function() use($app,$db){
   }
 })->name('login-post');
 
-$app->get('/u/0', $auth($app), function() use($app,$db){
-  $data = array();
-  $id = $_SESSION['id'];
-  $st = $db->prepare("SELECT users.id, users.name, users.last_name, users.email, users.gender, roles.name AS rol FROM users,roles WHERE users.id = ? AND users.rol = roles.id");
-  $st->setFetchMode(PDO::FETCH_OBJ);
-  $st->execute(array($id));
-  $data['user'] = $st->fetch();
-  $st = $db->prepare("SELECT * FROM customers WHERE status = '' OR status = 'Potencial'");
-  $st->execute();
-  $data['count_con'] = $st->rowCount();
-  $st = $db->prepare("SELECT * FROM customers WHERE status = 'Actual'");
-  $st->execute();
-  $data['count_cus'] = $st->rowCount();
-  $st = $db->prepare("SELECT * FROM campaings");
-  $st->execute();
-  $data['count_cam'] = $st->rowCount();
-  $st = $db->prepare("SELECT * FROM customers WHERE gender = 'H'");
-  $st->execute();
-  $data['men'] = $st->rowCount();
-  $st = $db->prepare("SELECT * FROM customers WHERE gender = 'M'");
-  $st->execute();
-  $data['women'] = $st->rowCount();
-  $st = $db->prepare("SELECT * FROM customers WHERE status = 'Potencial'");
-  $st->execute();
-  $data['customerP'] = $st->rowCount();
-  $st = $db->prepare("SELECT * FROM customers WHERE type = '1'");
-  $st->execute();
-  $data['customerA'] = $st->rowCount();
-  $st = $db->prepare("SELECT * FROM customers WHERE type = '2'");
-  $st->execute();
-  $data['customerB'] = $st->rowCount();
-  $st = $db->prepare("SELECT * FROM customers WHERE type = '3'");
-  $st->execute();
-  $data['customerC'] = $st->rowCount();
-  $st = $db->prepare("SELECT * FROM campaings");
-    $st->execute();
-    while ($row = $st->fetchObject()) {
-
-    }
-  $app->render('index.twig',$data);
-})->name('dashboard');
-
 $app->get('/logout', function() use($app){
   unset($_SESSION['id']);
   $app->view()->setData('user', null);

@@ -3,7 +3,8 @@
     <title>{{ title }} | Clientes</title>
 {% endblock %}
 {% block css %}
-    <link href="{{ urlFor('root') }}public/plugins/datatables/dataTables.bootstrap.css" rel="stylesheet" type="text/css" />
+    <link href="{{ urlFor('root') }}public/plugins/datepicker/datepicker.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="{{ urlFor('root') }}/public/css/bootstrapValidator.min.css">
 {% endblock %}
 {% block content %}
 <div class="wrapper">
@@ -27,18 +28,6 @@
             </ol>
           {% endif %}
         </section>
-        <!--Editar esto-->
-        {% if flash.success is not empty %}
-          <div class="col-md-offset-8 col-md-4">
-            <div class="box-body">
-              <div class="alert alert-success alert-dismissable">
-                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                <h4><i class="icon fa fa-check"></i>Exito!</h4>
-                {{ flash.success }}
-              </div>
-            </div>
-          </div>
-        {% endif %}
          <!-- Main content -->
     <section class="content">
       <!-- Info boxes -->
@@ -49,7 +38,10 @@
             <div class="box-header with-border">
               <h3 class="box-title">Datos del cliente</h3>
             </div><!-- /.box-header -->
-            <form action="{{ urlFor('customer-post') }}" method="post">
+            <form id="customerForm" name="customerForm"
+              data-bv-feedbackicons-valid="glyphicon glyphicon-ok"
+              data-bv-feedbackicons-invalid="glyphicon glyphicon-remove"
+              data-bv-feedbackicons-validating="glyphicon glyphicon-refresh">
             {% if customer.id is defined %}
               <input type="hidden" id="id" name="id" value="{{ customer.id }}">
             {% else %}
@@ -57,46 +49,62 @@
             {% endif %}
             <div class="box-body">
               <div class="row">
-                <div class="col-md-6">
-                   <label>Nombre(s):</label>
-                  <div class="input-group form-group has-feedback">
-                    <span class="input-group-addon"><i class="fa fa-user"></i></span>
-                    {% if customer.name is defined %}
-                      <input type="text" name="name" id="name" class="form-control" value="{{ customer.name }}" required>
-                    {% else %}
-                      <input type="text" name="name" id="name" class="form-control" placeholder="Nombre(s)" required>
-                    {% endif %}
+                <div class="form-group col-md-6">
+                   {% if customer.name is defined %}
+                    <label class="control-label">Nombre(s)</label>
+                   {% else %}
+                    <label class="control-label">Nombre(s)*</label>
+                   {% endif %}
+                    <div class="input-group">
+                      <span class="input-group-addon"><i class="fa fa-user"></i></span>
+                      {% if customer.name is defined %}
+                        <input type="text" name="name" id="name" class="form-control" value="{{ customer.name }}">
+                      {% else %}
+                        <input type="text" name="name" id="name" class="form-control" placeholder="Nombre(s)" data-bv-notempty="true" required data-bv-notempty-message="Este campo es obligatorio" autocomplete="off">
+                      {% endif %}
+                    </div>
+                  </div>
+                <div class=" form-group col-md-6">
+                  {% if customer.last_name is defined %}
+                    <label class="control-label">Apellidos</label>
+                   {% else %}
+                    <label class="control-label">Apellidos*</label>
+                   {% endif %}
+                    <div class="input-group">
+                      <span class="input-group-addon"><i class="fa fa-user"></i></span>
+                      {% if customer.last_name is defined %}
+                        <input type="text" name="last_name" id="last_name" class="form-control" value="{{ customer.last_name }}">
+                      {% else %}
+                        <input type="text" name="last_name" id="last_name" class="form-control" placeholder="Apellidos" data-bv-notempty="true" required data-bv-notempty-message="Este campo es obligatorio" autocomplete="off">
+                      {% endif %}
+                    </div>
                   </div>
                 </div>
-                <div class="col-md-6">
-                  <label>Apellidos:</label>
-                  <div class="input-group form-group has-feedback">
-                    <span class="input-group-addon"><i class="fa fa-user"></i></span>
-                    {% if customer.last_name is defined %}
-                      <input type="text" name="last_name" id="last_name" class="form-control" value="{{ customer.last_name }}" required>
-                    {% else %}
-                      <input type="text" name="last_name" id="last_name" class="form-control" placeholder="Apellidos" required>
-                    {% endif %}
-                  </div>
-                </div>
-              </div>
               <div class="row">
-                <div class="col-md-6">
-                  <label>Fecha de nacimiento:</label>
-                  <div class="input-group form-group has-feedback">
+                <div class="form-group col-md-6">
+                  {% if customer.birthdate is defined %}
+                    <label class="control-label">Fecha de nacimiento</label>
+                   {% else %}
+                    <label class="control-label">Fecha de nacimiento*</label>
+                   {% endif %}
+                  <div class="input-group">
                     <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
                     {% if customer.birthdate is defined %}
-                      <input type="date" name="birthdate1" id="birthdate1" class="form-control" value="{{ customer.birthdate }}">
+                      <input type="text" name="birthdate1" id="birthdate1" class="form-control" value="{{ customer.birthdate }}">
                     {% else %}
-                      <input type="text" name="birthdate" id="birthdate" class="form-control" placeholder="" required>
+                      <input type="text" name="birthdate" id="birthdate" class="form-control" placeholder="yyyy-mm-dd" data-bv-notempty="true" autocomplete="off">
                     {% endif %}
                   </div>
                 </div>
                 <div class="col-md-6">
-                  <label>Sexo:</label>
-                  <div class="input-group form-group has-feedback">
+                  {% if customer.gender is defined %}
+                    <label class="control-label">Sexo</label>
+                   {% else %}
+                    <label class="control-label">Sexo*</label>
+                   {% endif %}
+                  <div class="input-group form-group">
                     <span class="input-group-addon"><i class="fa fa-venus-mars"></i></span>
-                    <select name="gender" id="gender" class="form-control">
+                    <select name="gender" id="gender" class="form-control" data-bv-notempty="true">
                     {% if customer.gender is defined %}
                       <option value="{{ customer.gender }}">
                         {% if customer.gender == "H" %}
@@ -115,25 +123,33 @@
                 </div>
               </div>
               <div class="row">
-                <div class="col-md-6">
-                   <label>Email:</label>
-                  <div class="input-group form-group has-feedback">
+                <div class="form-group col-md-6">
+                   {% if customer.email is defined %}
+                    <label class="control-label">Email</label>
+                   {% else %}
+                    <label class="control-label">Email*</label>
+                   {% endif %}
+                  <div class="input-group">
                     <span class="input-group-addon"><i class="fa fa-envelope"></i></span>
                     {% if customer.email is defined %}
-                      <input type="email" name="email" id="email" class="form-control" value="{{ customer.email }}" required>
+                      <input type="email" name="email" id="email" class="form-control" value="{{ customer.email }}">
                     {% else %}
-                      <input type="email" name="email" id="email" class="form-control" placeholder="Correo electrónico" required>
+                      <input type="email" name="email" id="email" class="form-control" placeholder="Correo electrónico" data-bv-notempty="true" required data-bv-notempty-message="Este campo es obligatorio" autocomplete="off">
                     {% endif %}
                   </div>
                 </div>
-                <div class="col-md-6">
-                  <label>Telefono:</label>
-                   <div class="input-group form-group has-feedback">
+                <div class="form-group col-md-6">
+                   {% if customer.telephone is defined %}
+                    <label class="control-label">Telefono</label>
+                   {% else %}
+                    <label class="control-label">Telefono*</label>
+                   {% endif %}
+                   <div class="input-group">
                     <span class="input-group-addon"><i class="fa fa-phone"></i></span>
                     {% if customer.telephone is defined %}
-                    <input type="text" name="telephone1" id="telephone1" class="form-control" value="{{ customer.telephone }}" required>
+                    <input type="text" name="telephone1" id="telephone1" class="form-control" value="{{ customer.telephone }}">
                     {% else %}
-                    <input type="text" name="telephone" id="telephone" class="form-control" placeholder="" required data-inputmask='"mask": "999 999 9999"' data-mask>
+                    <input type="text" name="telephone" id="telephone" class="form-control" placeholder="###-###-####" data-inputmask='"mask": "999 999 9999"' data-mask data-bv-notempty="true" required data-bv-notempty-message="Este campo es obligatorio" autocomplete="off">
                     {% endif %}
                   </div>
                 </div>
@@ -142,9 +158,9 @@
                 <h3 class="box-title">Domicilio del cliente</h3>
               </div>
               <div class="row">
-                <div class="col-md-6">
-                   <label>Calle:</label>
-                  <div class="input-group form-group has-feedback">
+                <div class="form-group col-md-6">
+                   <label class="control-label">Calle</label>
+                  <div class="input-group">
                     <span class="input-group-addon"><i class="fa fa-road"></i></span>
                     {% if customer.street is defined %}
                       <input type="text" name="street" id="street" class="form-control" value="{{ customer.street }}">
@@ -153,23 +169,27 @@
                     {% endif %}
                   </div>
                 </div>
-                <div class="col-md-6">
-                  <label>Número:</label>
-                   <div class="input-group form-group has-feedback">
+                <div class="form-group col-md-6">
+                  <label class="control-label">Número</label>
+                   <div class="input-group">
                     <span class="input-group-addon"><i class="fa fa-sort"></i></span>
                     {% if customer.number is defined %}
-                    <input type="number" name="number" id="number" class="form-control" value="{{ customer.number }}">
+                    <input type="text" name="number" id="number" class="form-control" value="{{ customer.number }}">
                     {% else %}
-                    <input type="number" name="number" id="number" class="form-control" placeholder="###">
+                    <input type="text" name="number" id="number" class="form-control" placeholder="###">
                     {% endif %}
                   </div>
                 </div>
               </div>
               <div class="row">
-                <div class="col-md-6">
-                  <label>Código postal:</label>
-                   <div class="input-group form-group has-feedback">
-                    <span class="input-group-addon"><i class="fa fa-location-arrow"></i></span><select name="postcode" id="postcode" class="form-control">
+                <div class="form-group col-md-6">
+                   {% if customer.postcode is defined %}
+                    <label class="control-label">Código postal</label>
+                   {% else %}
+                    <label class="control-label">Código postal*</label>
+                   {% endif %}
+                   <div class="input-group">
+                    <span class="input-group-addon"><i class="fa fa-location-arrow"></i></span><select name="postcode" id="postcode" class="form-control" data-bv-notempty="true">
                       {% if customer.postcode is defined %}
                         <option value="{{ customer.postcode }}">{{ customer.postcode }}</option>
                       {% else %}
@@ -181,38 +201,40 @@
                     </select>
                   </div>
                 </div>
-                <div class="col-md-6">
-                  <label>Colonia:</label>
-                  <div class="input-group form-group has-feedback">
+                <div class="form-group col-md-6">
+                  <label class="control-label">Colonia:</label>
+                  <div class="input-group">
                     <span class="input-group-addon"><i class="fa fa-location-arrow"></i></span><select name="place" id="place" class="form-control">
+                      {% if customer.place is not defined %}
+                        <option value="0">Seleciona una opción...</option>
+                      {% endif %}
                       {% if customer.place is defined %}
                         <option value="{{ customer.place }}">{{ customer.place }}</option>
                       {% endif %}
                     </select>
                   </div>
                 </div>
-
               </div>
               <div class="row">
-                <div class="col-md-6">
-                   <label>Municipio:</label>
-                    <div class="input-group form-group has-feedback">
+                <div class="form-group col-md-6">
+                   <label class="control-label">Municipio:</label>
+                    <div class="input-group">
                     <span class="input-group-addon"><i class="fa fa-location-arrow"></i></span>
                     {% if customer.city is defined %}
-                      <input type="text" name="city" id="city" class="form-control" value="{{ customer.city }}" required>
+                      <input type="text" name="city" id="city" class="form-control" value="{{ customer.city }}">
                     {% else %}
-                      <input type="text" name="city" id="city" class="form-control" placeholder="Municipio" required>
+                      <input type="text" name="city" id="city" class="form-control" placeholder="Municipio">
                     {% endif %}
                   </div>
                 </div>
-                <div class="col-md-6">
-                   <label>Estado:</label>
-                  <div class="input-group form-group has-feedback">
+                <div class="form-group col-md-6">
+                   <label class="control-label">Estado:</label>
+                  <div class="input-group">
                     <span class="input-group-addon"><i class="fa fa-location-arrow"></i></span>
                     {% if customer.entity is defined %}
-                      <input type="text" name="entity" id="entity" class="form-control" value="{{ customer.entity }}" required>
+                      <input type="text" name="entity" id="entity" class="form-control" value="{{ customer.entity }}">
                     {% else %}
-                      <input type="text" name="entity" id="entity" class="form-control" placeholder="Estado" required>
+                      <input type="text" name="entity" id="entity" class="form-control" placeholder="Estado">
                     {% endif %}
                   </div>
                 </div>
@@ -221,9 +243,9 @@
                 <h3 class="box-title">Información del cliente</h3>
               </div>
               <div class="row">
-                <div class="col-md-6">
-                  <label>Ocupación:</label>
-                  <div class="input-group form-group has-feedback">
+                <div class="form-group col-md-6">
+                  <label class="control-label">Ocupación:</label>
+                  <div class="input-group">
                     <span class="input-group-addon"><i class="fa fa-briefcase"></i></span><select name="job" id="job" class="form-control">
                       {% if customer.job is defined %}
                         <option value="{{ customer.job }}">{{ job.name }}</option>
@@ -236,9 +258,9 @@
                     </select>
                   </div>
                 </div>
-                <div class="col-md-6">
-                   <label>Educación:</label>
-                  <div class="input-group form-group has-feedback">
+                <div class="form-group col-md-6">
+                   <label class="control-label">Educación:</label>
+                  <div class="input-group">
                     <span class="input-group-addon"><i class="fa fa-graduation-cap"></i></span><select name="school" id="school" class="form-control">
                       {% if customer.school is defined %}
                         <option value="{{ customer.school }}">{{ school.name }}</option>
@@ -253,9 +275,9 @@
                 </div>
               </div>
               <div class="row">
-                <div class="col-md-6">
-                  <label>Estado civil:</label>
-                  <div class="input-group form-group has-feedback">
+                <div class="form-group col-md-6">
+                  <label class="control-label">Estado civil:</label>
+                  <div class="input-group">
                     <span class="input-group-addon"><i class="fa fa-gavel"></i></span><select name="status_civil" id="status_civil" class="form-control">
                       {% if customer.status_civil is defined %}
                         <option value="{{ customer.status_civil }}">{{ status_civil1.name }}</option>
@@ -268,24 +290,25 @@
                     </select>
                   </div>
                 </div>
-                <div class="col-md-6">
-                  <label>Número de hijos:</label>
-                   <div class="input-group form-group has-feedback">
+                <div class="form-group col-md-6">
+                  <label class="control-label">Número de hijos:</label>
+                   <div class="input-group">
                     <span class="input-group-addon"><i class="fa fa-sort"></i></span>
                     {% if customer.sons is defined %}
-                      <input type="number" name="sons" id="sons" class="form-control" value="{{ customer.sons }}" required>
+                      <input type="number" name="sons" id="sons" class="form-control" value="{{ customer.sons }}">
                     {% else %}
-                      <input type="number" name="sons" id="sons" class="form-control" value="0" required>
+                      <input type="number" name="sons" id="sons" class="form-control" value="0">
                     {% endif %}
                 </div>
               </div>
+            </div>
             <div class="box-footer">
               <div class="pull-right">
                 <a href="{{ urlFor('customers') }}" class="btn btn-default"><i class="fa fa-times"></i> Cancelar</a>
                 {% if customer.id is defined %}
-                  <button type="submit" class="btn btn-primary"><i class="fa fa-edit"></i> Actualizar</button>
+                  <button type="button" id="editCustomer" name="editCustomer" class="btn btn-primary"><i class="fa fa-edit"></i> Actualizar</button>
                 {% else %}
-                  <button type="submit" class="btn btn-primary"><i class="fa fa-plus"></i> Crear</button>
+                  <button type="button" id="newCustomer" name="newCustomer" class="btn btn-primary"><i class="fa fa-plus"></i> Agregar</button>
                 {% endif %}
               </form>
               </div>
@@ -306,27 +329,126 @@
   <script src="{{ urlFor('root')}}public/plugins/input-mask/jquery.inputmask.js" type="text/javascript"></script>
   <script src="{{ urlFor('root')}}public/plugins/input-mask/jquery.inputmask.date.extensions.js" type="text/javascript"></script>
   <script src="{{ urlFor('root')}}public/plugins/input-mask/jquery.inputmask.extensions.js" type="text/javascript"></script>
-   <script src="{{ urlFor('root')}}public/plugins/daterangepicker/datepicker.js" type="text/javascript"></script>
     <script type="text/javascript">
       $(function () {
+        $('#customerForm').bootstrapValidator();
+
         //$("#datemask").inputmask("dd-mm-yyyy", {"placeholder": "dd-mm-yyyy"});
         $("[data-mask]").inputmask();
         //Date range picker
-        $('#birthdate').daterangepicker();
+        $('#birthdate').datepicker();
 
         $('#postcode').change(function(event){
         var sn = $("#postcode option:selected");
         $('#place').html('');
           $.getJSON("{{ urlFor('root') }}postcode.json/"+sn.val(), function(postcode){
-            var myArray = postcode.place.split(";");
-            for(var i=0;i<myArray.length;i++){
-                $('#place').append("<option value=\""+myArray[i]+"\">"+myArray[i]+"</option>");
-            }
-            $('input#city').val(postcode.city);
-            $('input#entity').val(postcode.entity);
+              var myArray = postcode.place.split(";");
+              for(var i=0;i<myArray.length;i++){
+                  $('#place').append("<option value=\""+myArray[i]+"\">"+myArray[i]+"</option>");
+              }
+              $('input#city').val(postcode.city);
+              $('input#entity').val(postcode.entity);
+              });
           });
+     });
+
+    $(document).ready(function() {
+      $('#newCustomer').click(function(event) {
+        var id = $('#id').val();
+        var name = $('#name').val();
+        var last_name = $('#last_name').val();
+        var birthdate = $('#birthdate').val();
+        var gender = $('#gender option:selected').val();
+        var email = $('#email').val();
+        var telephone = $('#telephone').val();
+        var street = $('#street').val();
+        var number = $('#number').val();
+        var postcode = $('#postcode option:selected').val();
+        var place = $('#place').val();
+        var city = $('#city').val();
+        var entity = $('#entity').val();
+        var job = $('#job option:selected').val();
+        var school = $('#school option:selected').val();
+        var status_civil = $('#status_civil option:selected').val();
+        var sons = $('#sons').val();
+        if (name == "" || last_name == "" || birthdate == "" || gender == 0 || email == "" || telephone == "" || postcode == 0) {
+          $.growl.error({ message: "Rellene todos los campos!" });
+        } else {
+          $.ajax({
+            url: "nuevo",
+            type: "POST",
+            dataType: "html",
+            data: $('#customerForm').serialize(),
+            success: function(data) {
+              if(data == 'vacio'){
+                $.growl.error({ message: "Rellene todos los campos!" });
+              } else if(data == 'existe') {
+                $.growl.warning({ message: "Este cliente ya existe! Verifique email" });
+              } else if(data == 'exito') {
+                $.growl.notice({ message: "Has agregado un nuevo cliente!" });
+                limpiar();
+              } else if(data == 'error') {
+                $.growl.error({ message: "Error del servidor!" });
+              }
+            }
+          })
+        }
       });
+
+      $('#editCustomer').click(function(event) {
+        var id = $('#id').val();
+        var name = $('#name').val();
+        var last_name = $('#last_name').val();
+        var birthdate1 = $('#birthdate1').val();
+        var gender = $('#gender option:selected').val();
+        var email = $('#email').val();
+        var telephone1 = $('#telephone1').val();
+        var street = $('#street').val();
+        var number = $('#number').val();
+        var postcode = $('#postcode option:selected').val();
+        var place = $('#place').val();
+        var city = $('#city').val();
+        var entity = $('#entity').val();
+        var job = $('#job option:selected').val();
+        var school = $('#school option:selected').val();
+        var status_civil = $('#status_civil option:selected').val();
+        var sons = $('#sons').val();
+          $.ajax({
+            url: "editar",
+            type: "POST",
+            dataType: "html",
+            data: $('#customerForm').serialize(),
+            success: function(data) {
+              if(data == 'exito') {
+                $.growl.notice({ message: "Has editado la Información de un cliente!" });
+              } else if(data == 'error') {
+                $.growl.error({ message: "Error del servidor!" });
+              }
+            }
+          })
+      });
+
+      function limpiar(){
+        name = $('#name').val("");
+        $('.form-group .col-md-6').removeClass('has-success').removeClass('has-feedback');
+        last_name = $('#last_name').val("");
+        birthdate = $('#birthdate').val("");
+        gender = $('#gender option:selected').val(0);
+        email = $('#email').val("");
+        telephone = $('#telephone').val("");
+        street = $('#street').val("");
+        number = $('#number').val("");
+        postcode = $('#postcode option:selected').val();
+        place = $('#place').val("");
+        city = $('#city').val("");
+        entity = $('#entity').val("");
+        job = $('#job option:selected').val(0);
+        school = $('#school option:selected').val(0);
+        status_civil = $('#status_civil option:selected').val(0);
+        sons = $('#sons').val(0);
+      }
     });
+
       </script>
     <script src="{{ urlFor('root') }}public/css/dist/js/demo.js"></script>
 {% endblock %}

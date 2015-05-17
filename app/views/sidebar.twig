@@ -39,12 +39,12 @@
     <!-- /.search form -->
     <!-- sidebar menu: : style can be found in sidebar.less -->
     <ul class="sidebar-menu">
-      <li class="header">SITIO WEB</li>
+     <!-- <li class="header">SITIO WEB</li>
       <li>
         <a href="{{ urlFor('site') }}">
           <i class="fa fa-shopping-cart"></i> <span>Sitio Web</span>
         </a>
-      </li>
+      </li> -->
       <li class="header">PANEL DE NAVEGACIÓN</li>
       <li >
         <a href="{{ urlFor('dashboard') }}">
@@ -143,7 +143,7 @@
         </a>
         <ul class="treeview-menu">
           {% if user.rol == "Jefe de Marketing" %}
-          <li><a href="#"><i class="fa fa-plus"></i> Nuevo producto</a></li>
+          <li><a href="{{ urlFor('new-product') }}"><i class="fa fa-plus"></i> Nuevo producto</a></li>
           {% endif %}
           <li><a href="#"><i class="fa fa-list"></i> Lista de productos</a></li>
         </ul>

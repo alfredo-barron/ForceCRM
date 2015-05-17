@@ -41,24 +41,19 @@ create table emails(
 );
 
 --Productos
-create table features(
-  id int auto_increment primary key,
-  feature1 text,
-  feature2 text,
-  features text
-);
-
 create table products(
   id int auto_increment primary key,
   created_by int not null,
-  campaing_id int,
   name text not null,
+  market text not null,
+  model text not null,
   price double,
   description text,
-  features int,
-  foreign key (created_by) references users(id),
-  foreign key (campaing_id) references campaings(id),
-  foreign key (features) references features(id)
+  quantity int,
+  stock int,
+  features text,
+  date_created date,
+  foreign key (created_by) references users(id)
 );
 
 --Perfil del cliente
@@ -99,12 +94,18 @@ create table customers(
   id int auto_increment primary key,
   name text not null,
   last_name text not null,
-  birthday date,
+  birthdate date,
   gender varchar(1),
   email text not null,
   telephone varchar(10),
+  street text,
+  number text,
   postcode int,
-  types int,
+  place text,
+  city text,
+  entity text,
+  type varchar(1),
+  status text,
   job int,
   school int,
   status_civil int,
@@ -112,6 +113,7 @@ create table customers(
   status_social int,
   status text,
   date_created date,
+  password text,
   foreign key (postcode) references postcodes(id),
   foreign key (types) references types_customers(id),
   foreign key (job) references jobs(id),
