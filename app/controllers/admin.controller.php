@@ -1,5 +1,19 @@
 <?php
 
+$app->group('/u/0/calendario', $auth($app), function() use($app,$db){
+
+  $app->get('', function() use($app,$db) {
+    $data = array();
+    $id = $_SESSION['id'];
+    $st = $db->prepare("SELECT users.id, users.name, users.last_name, users.email, users.gender, roles.name AS rol FROM users,roles WHERE users.id = ? AND users.rol = roles.id");
+    $st->setFetchMode(PDO::FETCH_OBJ);
+    $st->execute(array($id));
+    $data['user'] = $st->fetch();
+    $app->render('calendar.twig',$data);
+  })->name('calendar');
+
+});
+
 $app->group('/u/0/clientes', $auth($app), function() use($app,$db){
 
   $app->get('/nuevo', function() use($app,$db) {

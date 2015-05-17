@@ -25,7 +25,7 @@
       <div class="row">
         <div class="col-md-3 col-sm-6 col-xs-12">
           <div class="info-box">
-            <span class="info-box-icon bg-aqua"><i class="ion ion-speakerphone"></i></span>
+            <span class="info-box-icon bg-aqua"><i class="fa fa-bullhorn"></i></span>
             <div class="info-box-content">
               <span class="info-box-text">Campañas</span>
               <span class="info-box-number">
@@ -40,31 +40,9 @@
         </div><!-- /.col -->
         <div class="col-md-3 col-sm-6 col-xs-12">
           <div class="info-box">
-            <span class="info-box-icon bg-blue"><i class="ion ion-ios-star-outline"></i></span>
+            <span class="info-box-icon bg-blue"><i class="fa fa-star-o"></i></span>
             <div class="info-box-content">
               <span class="info-box-text">Clientes</span>
-              <span class="info-box-number">0</span>
-            </div><!-- /.info-box-content -->
-          </div><!-- /.info-box -->
-        </div><!-- /.col -->
-
-        <!-- fix for small devices only -->
-        <div class="clearfix visible-sm-block"></div>
-
-        <div class="col-md-3 col-sm-6 col-xs-12">
-          <div class="info-box">
-            <span class="info-box-icon bg-green"><i class="ion ion-ios-cart-outline"></i></span>
-            <div class="info-box-content">
-              <span class="info-box-text">Ventas</span>
-              <span class="info-box-number">0</span>
-            </div><!-- /.info-box-content -->
-          </div><!-- /.info-box -->
-        </div><!-- /.col -->
-        <div class="col-md-3 col-sm-6 col-xs-12">
-          <div class="info-box">
-            <span class="info-box-icon bg-yellow"><i class="ion ion-ios-people-outline"></i></span>
-            <div class="info-box-content">
-              <span class="info-box-text">Contactos</span>
               <span class="info-box-number">
                 {% if count_cus == 0 %}
                   0
@@ -75,10 +53,38 @@
             </div><!-- /.info-box-content -->
           </div><!-- /.info-box -->
         </div><!-- /.col -->
+
+        <!-- fix for small devices only -->
+        <div class="clearfix visible-sm-block"></div>
+
+        <div class="col-md-3 col-sm-6 col-xs-12">
+          <div class="info-box">
+            <span class="info-box-icon bg-green"><i class="fa fa-shopping-cart"></i></span>
+            <div class="info-box-content">
+              <span class="info-box-text">Ventas</span>
+              <span class="info-box-number">0</span>
+            </div><!-- /.info-box-content -->
+          </div><!-- /.info-box -->
+        </div><!-- /.col -->
+        <div class="col-md-3 col-sm-6 col-xs-12">
+          <div class="info-box">
+            <span class="info-box-icon bg-yellow"><i class="fa fa-users"></i></span>
+            <div class="info-box-content">
+              <span class="info-box-text">Contactos</span>
+              <span class="info-box-number">
+                {% if count_con == 0 %}
+                  0
+                {% else %}
+                  {{ count_con }}
+                {% endif %}
+              </span>
+            </div><!-- /.info-box-content -->
+          </div><!-- /.info-box -->
+        </div><!-- /.col -->
       </div><!-- /.row -->
 
       <div class="row">
-        <div class="col-md-12">
+        <div class="col-md-12 connectedSortable">
           <div class="box">
             <div class="box-header with-border">
               <h3 class="box-title">Informe mensual</h3>
@@ -142,7 +148,7 @@
 
       <!-- Main row -->
       <div class="row">
-        <div class="col-md-4">
+        <div class="col-md-4 connectedSortable">
           <div class="box box-default">
             <div class="box-header with-border">
               <h3 class="box-title">Hombres / Mujeres</h3>
@@ -180,7 +186,7 @@
           </div><!-- /.box -->
         </div><!-- /.col -->
 
-         <div class="col-md-4">
+         <div class="col-md-4 connectedSortable">
           <!-- PRODUCT LIST -->
           <div class="box box-primary">
             <div class="box-header with-border">
@@ -194,7 +200,7 @@
               <ul class="products-list product-list-in-box">
                 <li class="item">
                   <div class="product-img">
-                    <img src="{{ urlFor('root') }}public/img/admin.jpg" alt="Product Image"/>
+                    <img src="" alt="Product Image"/>
                   </div>
                   <div class="product-info">
                     <a href="javascript::;" class="product-title">Samsung TV <span class="label label-warning pull-right">$1800</span></a>
@@ -205,7 +211,7 @@
                 </li><!-- /.item -->
                 <li class="item">
                   <div class="product-img">
-                    <img src="{{ urlFor('root') }}public/img/admin.jpg" alt="Product Image"/>
+                    <img src="" alt="Product Image"/>
                   </div>
                   <div class="product-info">
                     <a href="javascript::;" class="product-title">Bicycle <span class="label label-info pull-right">$700</span></a>
@@ -216,7 +222,7 @@
                 </li><!-- /.item -->
                 <li class="item">
                   <div class="product-img">
-                    <img src="{{ urlFor('root') }}public/img/admin.jpg" alt="Product Image"/>
+                    <img src="" alt="Product Image"/>
                   </div>
                   <div class="product-info">
                     <a href="javascript::;" class="product-title">Xbox One <span class="label label-danger pull-right">$350</span></a>
@@ -227,7 +233,7 @@
                 </li><!-- /.item -->
                 <li class="item">
                   <div class="product-img">
-                    <img src="{{ urlFor('root') }}public/img/admin.jpg" alt="Product Image"/>
+                    <img src="" alt="Product Image"/>
                   </div>
                   <div class="product-info">
                     <a href="javascript::;" class="product-title">PlayStation 4 <span class="label label-success pull-right">$399</span></a>
@@ -244,26 +250,19 @@
           </div><!-- /.box -->
         </div><!-- /.col -->
 
-        <div class='col-md-4'>
+        <div class="col-md-4">
           <!-- Info Boxes Style 2 -->
-          <div class="info-box bg-yellow">
-            <span class="info-box-icon"><i class="ion ion-ios-pricetag-outline"></i></span>
-            <div class="info-box-content">
-              <span class="info-box-text">Inventario</span>
-              <span class="info-box-number">5,200</span>
-              <div class="progress">
-                <div class="progress-bar" style="width: 50%"></div>
-              </div>
-              <span class="progress-description">
-
-              </span>
-            </div><!-- /.info-box-content -->
-          </div><!-- /.info-box -->
-          <div class="info-box bg-green">
-            <span class="info-box-icon"><i class="ion ion-ios-heart-outline"></i></span>
+          <div class="info-box bg-aqua">
+            <span class="info-box-icon"><i class="fa fa-star"></i></span>
             <div class="info-box-content">
               <span class="info-box-text">Clientes A</span>
-              <span class="info-box-number">92,050</span>
+              <span class="info-box-number">
+                {% if customerA == 0 %}
+                  0
+                {% else %}
+                  {{ customerA }}
+                {% endif %}
+              </span>
               <div class="progress">
                 <div class="progress-bar" style="width: 20%"></div>
               </div>
@@ -272,11 +271,17 @@
               </span>
             </div><!-- /.info-box-content -->
           </div><!-- /.info-box -->
-          <div class="info-box bg-red">
-            <span class="info-box-icon"><i class="ion ion-ios-cloud-download-outline"></i></span>
+          <div class="info-box bg-green">
+            <span class="info-box-icon"><i class="fa fa-star-half-o"></i></span>
             <div class="info-box-content">
               <span class="info-box-text">Clientes B</span>
-              <span class="info-box-number">114,381</span>
+              <span class="info-box-number">
+                {% if customerB == 0 %}
+                  0
+                {% else %}
+                  {{ customerB }}
+                {% endif %}
+              </span>
               <div class="progress">
                 <div class="progress-bar" style="width: 70%"></div>
               </div>
@@ -285,13 +290,38 @@
               </span>
             </div><!-- /.info-box-content -->
           </div><!-- /.info-box -->
-          <div class="info-box bg-aqua">
-            <span class="info-box-icon"><i class="ion-ios-chatbubble-outline"></i></span>
+          <div class="info-box bg-red">
+            <span class="info-box-icon"><i class="fa fa-star-o"></i></span>
             <div class="info-box-content">
               <span class="info-box-text">Clientes C</span>
-              <span class="info-box-number">163,921</span>
+              <span class="info-box-number">
+                {% if customerC == 0 %}
+                  0
+                {% else %}
+                  {{ customerC }}
+                {% endif %}
+              </span>
               <div class="progress">
                 <div class="progress-bar" style="width: 40%"></div>
+              </div>
+              <span class="progress-description">
+
+              </span>
+            </div><!-- /.info-box-content -->
+          </div><!-- /.info-box -->
+          <div class="info-box bg-orange">
+            <span class="info-box-icon"><i class="fa fa-diamond"></i></span>
+            <div class="info-box-content">
+              <span class="info-box-text">Clientes Potenciales</span>
+              <span class="info-box-number">
+                 {% if customerP == 0 %}
+                  0
+                {% else %}
+                  {{ customerP }}
+                {% endif %}
+              </span>
+              <div class="progress">
+                <div class="progress-bar" style="width: 50%"></div>
               </div>
               <span class="progress-description">
 
@@ -302,7 +332,7 @@
       </div><!-- /.row -->
 
       <div class="row">
-        <div class="col-md-12">
+        <div class="col-md-12 connectedSortable">
           <!-- TABLE: LATEST ORDERS -->
           <div class="box box-info">
             <div class="box-header with-border">

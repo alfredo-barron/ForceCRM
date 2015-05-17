@@ -125,7 +125,10 @@ $app->get('/u/0', $auth($app), function() use($app,$db){
   $st->setFetchMode(PDO::FETCH_OBJ);
   $st->execute(array($id));
   $data['user'] = $st->fetch();
-  $st = $db->prepare("SELECT * FROM customers");
+  $st = $db->prepare("SELECT * FROM customers WHERE status = '' OR status = 'Potencial'");
+  $st->execute();
+  $data['count_con'] = $st->rowCount();
+  $st = $db->prepare("SELECT * FROM customers WHERE status = 'Actual'");
   $st->execute();
   $data['count_cus'] = $st->rowCount();
   $st = $db->prepare("SELECT * FROM campaings");
@@ -137,10 +140,23 @@ $app->get('/u/0', $auth($app), function() use($app,$db){
   $st = $db->prepare("SELECT * FROM customers WHERE gender = 'M'");
   $st->execute();
   $data['women'] = $st->rowCount();
-  //$data['customers'] = Customer::all();
-  //foreach ($data['customers'] as $customer) {
-  //  $age = date('now') - $customer->birthday;
-  //}
+  $st = $db->prepare("SELECT * FROM customers WHERE status = 'Potencial'");
+  $st->execute();
+  $data['customerP'] = $st->rowCount();
+  $st = $db->prepare("SELECT * FROM customers WHERE type = '1'");
+  $st->execute();
+  $data['customerA'] = $st->rowCount();
+  $st = $db->prepare("SELECT * FROM customers WHERE type = '2'");
+  $st->execute();
+  $data['customerB'] = $st->rowCount();
+  $st = $db->prepare("SELECT * FROM customers WHERE type = '3'");
+  $st->execute();
+  $data['customerC'] = $st->rowCount();
+  $st = $db->prepare("SELECT * FROM campaings");
+    $st->execute();
+    while ($row = $st->fetchObject()) {
+
+    }
   $app->render('index.twig',$data);
 })->name('dashboard');
 
