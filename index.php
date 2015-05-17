@@ -160,14 +160,14 @@ $app->get('/envios', function() use($app){
 
   $mail->From = 'forcecrm.notification@gmail.com';
   $mail->FromName = 'Force CRM';
-  $mail->addAddress('jos_1990_@hotmail.com', 'Josue Netro');     // Add a recipient Name is optional
+  $mail->addAddress('silvia040992@gmail.com', 'Silvia Gómez');     // Add a recipient Name is optional
   $mail->addReplyTo('forcecrm.notification@gmail.com', 'Contacto');
   //$mail->addCC('alfreedobarron@example.com');
   $mail->addBCC('forcecrm.notification@gmail.com');
 
   $mail->isHTML(true);                                  // Set email format to HTML
 
-  $mail->Subject = 'Oferta de fin de semana';
+  $mail->Subject = 'Fiesta de descuento';
   $mail->Body    = '<h1>Ropa primavera - verano!</h1><i>3% de descuento en </i>tendencias de modas ahora!<br><br><img src="https://letiroirdubonton.files.wordpress.com/2012/03/sessun-primavera-verano-siluetas-lookbook-2012.jpg" alt="" height="164" width="379"><br>';
   $mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
 
