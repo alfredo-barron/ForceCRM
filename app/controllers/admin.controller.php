@@ -34,11 +34,9 @@ $app->get('/u/0', $auth($app), function() use($app,$db){
   $st = $db->prepare("SELECT * FROM customers WHERE type = 'C'");
   $st->execute();
   $data['customerC'] = $st->rowCount();
-  $st = $db->prepare("SELECT * FROM campaings");
-    $st->execute();
-    while ($row = $st->fetchObject()) {
-
-    }
+  $st = $db->prepare("SELECT * FROM products ORDER BY date_created ASC");
+  $st->execute();
+  $data['productsASC'] = $st->fetchAll();
   $app->render('index.twig',$data);
 })->name('dashboard');
 
@@ -412,7 +410,10 @@ $app->group('/u/0/productos', $auth($app), function() use($app,$db){
     $st->setFetchMode(PDO::FETCH_OBJ);
     $st->execute(array($id));
     $data['user'] = $st->fetch();
-    $app->render('newproduct.twig',$data);
+    $st = $db->prepare("SELECT * FROM products");
+    $st->execute();
+    $data['products'] = $st->fetchAll();
+    $app->render('products.twig',$data);
   })->name('products');
 
   $app->get('/nuevo', function() use($app,$db) {
@@ -431,6 +432,7 @@ $app->group('/u/0/productos', $auth($app), function() use($app,$db){
     if($id != 0){
       echo "error";
     }else{
+      $created_by = $_SESSION['id'];
       $name = $post->name;
       $market = $post->market;
       $model = $post->model;
@@ -440,17 +442,18 @@ $app->group('/u/0/productos', $auth($app), function() use($app,$db){
       $quantity = $post->quantity;
       $stock = $post->stock;
       $date = date('Y-m-d');
-      if($name == "" || $market == "" || $model == "" || $price == "" || $category == 0 || $description == "" || $quantity == "" || $stock == "") {
+      if($name == "" || $market == "" || $model == "" || $price == "" || $description == "" || $quantity == "" || $stock == "" || $category == 0 ) {
         echo "vacio";
       } else {
-        $st = $db->prepare("INSERT INTO customers (name,last_name,birthdate,gender,email,telephone,street,number,postcode,place,city,entity,job,school,status_civil,sons,status,date_created) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
-        if ($customer = $st->execute(array($name,$last_name,$birthdate,$gender,$email,$telephone,$street,$number,$postcode,$place,$city,$entity,$job,$school,$status_civil,$sons,$status,$date))) {
-          echo "exito";
-        } else {
-          echo "error";
+        $st = $db->prepare("INSERT INTO products(created_by,name,market,model,price,category,description,quantity,stock,date_created) VALUES (?,?,?,?,?,?,?,?,?,?)");
+        $product = $st->execute(array($created_by,$name,$market,$model,$price,$category,$description,$quantity,$stock,$date));
+          if ($product) {
+            echo "exito";
+          } else {
+            echo "error";
+          }
         }
       }
-    }
   })->name('product-post');
 
 });

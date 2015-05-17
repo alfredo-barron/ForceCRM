@@ -128,19 +128,17 @@ $app->get('/dbd', function() use($app){
   $app->render('dictionary.twig');
 })->name('dbd');
 
-$app->get('/excel', function() use($app){
+$app->get('/excel', function() use($app,$db){
   require('public/php-excel-reader/excel_reader2.php');
   require('public/SpreadsheetReader.php');
   $Reader = new SpreadsheetReader('public/correos.xlsx');
     foreach ($Reader as $Row) {
-      $last_name = $Row[1];
-      $birthdate = $Row[2];
-      $gender = $Row[3];
-      $email = $Row[4];
-      $telephone = $Row[5];
-      $street = $Row[7];
-      $number = $Row[8];
-      echo "INSERT INTO customers (name,last_name,birthdate,gender,email,telephone,street,number,postcode,sons) VALUES('".$Row[0]."','".$Row[1]."',".$Row[3].",'".$Row[4]."','".$Row[5]."','".$Row[7]."','".$Row[8]."','".$Row[9]."',".$Row[15].")<br>";
+      $st = $db->prepare("INSERT INTO customers (name,last_name,birthdate,gender,email,telephone,place,street,number,postcode,city,entity,job,school,status_civil,sons) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
+     if($customer = $st->execute(array($Row[0],$Row[1],$Row[2],$Row[3],$Row[4],$Row[5],$Row[6],$Row[7],$Row[8],$Row[9],$Row[10],$Row[11],$Row[12],$Row[13],$Row[14],$Row[15]))){
+        echo "Se hizo";
+     } else {
+       echo "No";
+     }
     }
 });
 
@@ -162,15 +160,15 @@ $app->get('/envios', function() use($app){
 
   $mail->From = 'forcecrm.notification@gmail.com';
   $mail->FromName = 'Force CRM';
-  $mail->addAddress('alfreedobarron@gmail.com', 'Alfredo Barron');     // Add a recipient Name is optional
+  $mail->addAddress('jos_1990_@hotmail.com', 'Josue Netro');     // Add a recipient Name is optional
   $mail->addReplyTo('forcecrm.notification@gmail.com', 'Contacto');
   //$mail->addCC('alfreedobarron@example.com');
   $mail->addBCC('forcecrm.notification@gmail.com');
 
   $mail->isHTML(true);                                  // Set email format to HTML
 
-  $mail->Subject = 'CRM';
-  $mail->Body    = 'This is the HTML message body <b>in bold!</b>';
+  $mail->Subject = 'Descuento';
+  $mail->Body    = '<h1>Ropa primavera - verano!</h1><i>3% de descuento en </i>tendencias de modas ahora!<br><br><img src="https://letiroirdubonton.files.wordpress.com/2012/03/sessun-primavera-verano-siluetas-lookbook-2012.jpg" alt="" height="164" width="379"><br>';
   $mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
 
   if(!$mail->send()) {

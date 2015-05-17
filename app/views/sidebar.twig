@@ -145,7 +145,7 @@
           {% if user.rol == "Jefe de Marketing" %}
           <li><a href="{{ urlFor('new-product') }}"><i class="fa fa-plus"></i> Nuevo producto</a></li>
           {% endif %}
-          <li><a href="#"><i class="fa fa-list"></i> Lista de productos</a></li>
+          <li><a href="{{ urlFor('products') }}"><i class="fa fa-list"></i> Lista de productos</a></li>
         </ul>
       </li>
       {% if user.rol == "Administrador" %}
