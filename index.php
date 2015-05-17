@@ -151,7 +151,7 @@ $app->get('/envios', function() use($app){
   //$mail->SMTPDebug = 3;                               // Enable verbose debug output
 
   $mail->isSMTP();                                      // Set mailer to use SMTP
-  $mail->Host = 'smtp.gmail.com';                       // Specify main and backup SMTP servers
+  $mail->Host = 'smtp.live.com';    // smtp.gmail.com                  // Specify main and backup SMTP servers
   $mail->SMTPAuth = true;                               // Enable SMTP authentication
   $mail->Username = 'forcecrm.notification@gmail.com';                 // SMTP username
   $mail->Password = 'crm900123';                           // SMTP password
