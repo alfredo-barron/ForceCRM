@@ -151,7 +151,7 @@ $app->get('/envios', function() use($app){
   //$mail->SMTPDebug = 3;                               // Enable verbose debug output
 
   $mail->isSMTP();                                      // Set mailer to use SMTP
-  $mail->Host = 'smtp.live.com';    // smtp.gmail.com                  // Specify main and backup SMTP servers
+  $mail->Host = 'smtp.gmail.com';    // smtp.live.com     // Specify main and backup SMTP servers
   $mail->SMTPAuth = true;                               // Enable SMTP authentication
   $mail->Username = 'forcecrm.notification@gmail.com';                 // SMTP username
   $mail->Password = 'crm900123';                           // SMTP password
@@ -167,7 +167,7 @@ $app->get('/envios', function() use($app){
 
   $mail->isHTML(true);                                  // Set email format to HTML
 
-  $mail->Subject = 'Fiesta de descuento';
+  $mail->Subject = 'Tarde de moda';
   $mail->Body    = '<h1>Ropa primavera - verano!</h1><i>3% de descuento en </i>tendencias de modas ahora!<br><br><img src="https://letiroirdubonton.files.wordpress.com/2012/03/sessun-primavera-verano-siluetas-lookbook-2012.jpg" alt="" height="164" width="379"><br>';
   $mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
 
