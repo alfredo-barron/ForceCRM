@@ -167,7 +167,7 @@ $app->get('/envios', function() use($app){
 
   $mail->isHTML(true);                                  // Set email format to HTML
 
-  $mail->Subject = 'Descuento';
+  $mail->Subject = 'Oferta de fin de semana';
   $mail->Body    = '<h1>Ropa primavera - verano!</h1><i>3% de descuento en </i>tendencias de modas ahora!<br><br><img src="https://letiroirdubonton.files.wordpress.com/2012/03/sessun-primavera-verano-siluetas-lookbook-2012.jpg" alt="" height="164" width="379"><br>';
   $mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
 
