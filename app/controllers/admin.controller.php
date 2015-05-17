@@ -362,6 +362,13 @@ $app->get('/postcode.json/:id', function($id) use($app,$db){
     echo json_encode($postcode);
   });
 
+$app->get('/campaings', function() use($app,$db){
+    $st = $db->prepare("SELECT name AS title, date_start AS start, date_end AS end FROM campaings");
+    $st->execute();
+    $campaings = $st->fetchAll();
+    echo json_encode($campaings);
+  });
+
 $app->post('/u/checkcampaing', function() use($app,$db){
     $st = $db->prepare("SELECT * FROM campaings");
     $st->execute();
