@@ -63,7 +63,7 @@
             <span class="info-box-icon bg-green"><i class="fa fa-shopping-cart"></i></span>
             <div class="info-box-content">
               <span class="info-box-text">Ventas</span>
-              <span class="info-box-number">0</span>
+              <span class="info-box-number">1</span>
             </div><!-- /.info-box-content -->
           </div><!-- /.info-box -->
         </div><!-- /.col -->
@@ -119,9 +119,9 @@
                   </div><!-- /.progress-group -->
                   <div class="progress-group">
                     <span class="progress-text">Ventas completas</span>
-                    <span class="progress-number"><b>0</b>/0</span>
+                    <span class="progress-number"><b>1</b>/1</span>
                     <div class="progress sm">
-                      <div class="progress-bar progress-bar-red" style="width: 0%"></div>
+                      <div class="progress-bar progress-bar-red" style="width: 100%"></div>
                     </div>
                   </div><!-- /.progress-group -->
                   <div class="progress-group">
@@ -199,7 +199,7 @@
                 {% for p in productsASC %}
                   <li class="item">
                     <div class="product-img">
-                      <img src="" alt="{{ p.name }}"/>
+                      <img src="{{ urlFor('root') }}public/img/polo.jpg" alt="{{ p.name }}"/>
                     </div>
                     <div class="product-info">
                       <a href="javascript::;" class="product-title">{{ p.name }}<span class="label label-primary pull-right">${{ p.price }}</span></a>
