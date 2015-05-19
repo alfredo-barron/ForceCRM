@@ -181,8 +181,8 @@ $app->get('/envios', function() use($app){
                     <tr>
                       <td height="46" align="right" valign="middle"><table width="100%" border="0" cellspacing="0" cellpadding="0">
                           <tr>
-                            <td width="67%" align="right"><font style="font-family:'Myriad Pro', Helvetica, Arial, sans-serif; color:#68696a; font-size:8px; text-transform:uppercase"><a href= "http://yourlink" style="color:#68696a; text-decoration:none"><strong>SEND TO A FRIEND</strong></a></font></td>
-                            <td width="29%" align="right"><font style="font-family:'Myriad Pro', Helvetica, Arial, sans-serif; color:#68696a; font-size:8px"><a href= "http://yourlink" style="color:#68696a; text-decoration:none; text-transform:uppercase"><strong>VIEW AS A WEB PAGE</strong></a></font></td>
+                            <td width="67%" align="right"><font style="font-family: Helvetica, Arial, sans-serif; color:#68696a; font-size:8px; text-transform:uppercase"><a href= "http://yourlink" style="color:#68696a; text-decoration:none"><strong>SEND TO A FRIEND</strong></a></font></td>
+                            <td width="29%" align="right"><font style="font-family: Helvetica, Arial, sans-serif; color:#68696a; font-size:8px"><a href= "http://yourlink" style="color:#68696a; text-decoration:none; text-transform:uppercase"><strong>VIEW AS A WEB PAGE</strong></a></font></td>
                             <td width="4%">&nbsp;</td>
                           </tr>
                         </table></td>
@@ -195,7 +195,7 @@ $app->get('/envios', function() use($app){
             </table></td>
         </tr>
          <tr>
-          <td align="center"><font style="font-family:'Myriad Pro', Helvetica, Arial, sans-serif; color:#68696a; font-size:36px; text-transform:uppercase"><strong>N E W S L E T T E R</strong></font></td>
+          <td align="center"><font style="font-family: Helvetica, Arial, sans-serif; color:#68696a; font-size:36px; text-transform:uppercase"><strong>N E W S L E T T E R</strong></font></td>
         </tr>
         <tr>
           <td align="center"><a href= "http://yourlink" target="_blank"><img src="images/PROMO-GREEN2_02.jpg" alt="" width="598" height="249" border="0"/></a></td>
@@ -213,7 +213,7 @@ $app->get('/envios', function() use($app){
                       <tr>
                         <td width="95%"><table width="100%" border="0" cellspacing="0" cellpadding="0">
                           <tr>
-                            <td height="35" align="left" valign="middle" style="border-bottom:2px dotted #000000"><font style="font-family: Georgia, 'Times New Roman', Times, serif; color:#000000; font-size:25px"><strong><em>Main Feature Story</em></strong></font></td>
+                            <td height="35" align="left" valign="middle" style="border-bottom:2px dotted #000000"><font style="font-family: Georgia, Times, serif; color:#000000; font-size:25px"><strong><em>Main Feature Story</em></strong></font></td>
                           </tr>
                           <tr>
                             <td align="left" valign="top"><font style="font-family: Verdana, Geneva, sans-serif; color:#000000; font-size:13px; line-height:21px">Lorem Ipsum. Proin gravida nibh vel velit auctor aliquet. Aenean sollicitudin, lorem quis bibendum auctor, nisi elit consequat ipsum, nec sagittis sem nibh id elit. Duis sed odio sit amet nibh vulputate cursus a sit amet mauris. Morbi accumsan ipsum velit. Nam nec tellus a odio t non</font> <font style="font-family:Verdana, Geneva, sans-serif; color:#05bcda; font-size:12px; line-height:20px"><a href= "http://yourlink" style="color:#05bcda; text-decoration:none"><strong><em>read more} </em></strong></a></font></td>
@@ -232,7 +232,7 @@ $app->get('/envios', function() use($app){
                             <td><table width="100%" border="0" cellspacing="0" cellpadding="0">
                               <tr>
                                 <td width="43%"><img src="images/NEWSLETTER GREEN01.jpg" width="150" height="130" border="0" alt=""/></td>
-                                <td width="57%" align="left" valign="top"><font style="font-family: Georgia, 'Times New Roman', Times, serif; color:#05bcda; font-size:20px"><strong><em>Second feature</em></strong></font> <br />
+                                <td width="57%" align="left" valign="top"><font style="font-family: Georgia, Times, serif; color:#05bcda; font-size:20px"><strong><em>Second feature</em></strong></font> <br />
                                   <font style="font-family: Verdana, Geneva, sans-serif; color:#000000; font-size:13px; line-height:21px">Lorem Ipsum. Proin gravida nibh vel velit auctor aliquet. Aenean sollicitudin, lorem quisn</font> <font style="font-family:Verdana, Geneva, sans-serif; color:#05bcda; font-size:12px; line-height:20px"><a href= "http://yourlink" style="color:#05bcda; text-decoration:none"><strong><em>read more} </em></strong></a></font><font style="font-family: Verdana, Geneva, sans-serif; color:#000000; font-size:13px; line-height:21px">&nbsp; </font></td>
                               </tr>
                             </table></td>
@@ -251,7 +251,7 @@ $app->get('/envios', function() use($app){
                             <td><table width="100%" border="0" cellspacing="0" cellpadding="0">
                               <tr>
                                 <td width="43%"><img src="images/NEWSLETTER GREEN02.jpg" width="150" height="130" border="0" alt=""/></td>
-                                <td width="57%" align="left" valign="top"><font style="font-family: Georgia, 'Times New Roman', Times, serif; color:#05bcda; font-size:20px"><strong><em>Second feature</em></strong></font> <br />
+                                <td width="57%" align="left" valign="top"><font style="font-family: Georgia, Times, serif; color:#05bcda; font-size:20px"><strong><em>Second feature</em></strong></font> <br />
                                   <font style="font-family: Verdana, Geneva, sans-serif; color:#000000; font-size:13px; line-height:21px">Lorem Ipsum. Proin gravida nibh vel velit auctor aliquet. Aenean sollicitudin, lorem quisn</font> <font style="font-family:Verdana, Geneva, sans-serif; color:#05bcda; font-size:12px; line-height:20px"><a href= "http://yourlink" style="color:#05bcda; text-decoration:none"><strong><em>read more} </em></strong></a></font><font style="font-family: Verdana, Geneva, sans-serif; color:#000000; font-size:13px; line-height:21px">&nbsp; </font></td>
                               </tr>
                             </table></td>
@@ -285,7 +285,7 @@ $app->get('/envios', function() use($app){
                                   </tr>
                                   <tr>
                                     <td>&nbsp;</td>
-                                    <td align="center"><font style="font-family: Georgia, 'Times New Roman', Times, serif; color:#ffffff; font-size:16px"><strong>SPECIAL
+                                    <td align="center"><font style="font-family: Georgia, Times, serif; color:#ffffff; font-size:16px"><strong>SPECIAL
                                       COLUMN</strong></font></td>
                                     <td>&nbsp;</td>
                                   </tr>
@@ -303,7 +303,7 @@ $app->get('/envios', function() use($app){
                                   </tr>
                                   <tr>
                                     <td>&nbsp;</td>
-                                    <td align="left" valign="top"><font style="font-family: Georgia, 'Times New Roman', Times, serif; color:#ffffff; font-size:14px; line-height:21px">Lorem Ipsum. Proin gravida nibh vel velit auctor aliquet. Aenean sollicitudin, lorem quis bibendum auctor, nisi elit consequat ipsum, <font style="font-family:Verdana, Geneva, sans-serif; color:#ffffff; font-size:12px; line-height:20px"><a href= "http://yourlink" style="color:#ffffff; text-decoration:none"><strong><em>read more} </em></strong></a></font></font></td>
+                                    <td align="left" valign="top"><font style="font-family: Georgia, Times, serif; color:#ffffff; font-size:14px; line-height:21px">Lorem Ipsum. Proin gravida nibh vel velit auctor aliquet. Aenean sollicitudin, lorem quis bibendum auctor, nisi elit consequat ipsum, <font style="font-family:Verdana, Geneva, sans-serif; color:#ffffff; font-size:12px; line-height:20px"><a href= "http://yourlink" style="color:#ffffff; text-decoration:none"><strong><em>read more} </em></strong></a></font></font></td>
                                     <td>&nbsp;</td>
                                   </tr>
                                   <tr>
@@ -351,15 +351,15 @@ $app->get('/envios', function() use($app){
           <td><table width="100%" border="0" cellspacing="0" cellpadding="0">
             <tr>
               <td width="13%" align="center">&nbsp;</td>
-              <td width="14%" align="center"><font style="font-family:'Myriad Pro', Helvetica, Arial, sans-serif; color:#010203; font-size:9px; text-transform:uppercase"><a href= "http://yourlink" style="color:#010203; text-decoration:none"><strong>UNSUBSCRIBE </strong></a></font></td>
-              <td width="2%" align="center"><font style="font-family:'Myriad Pro', Helvetica, Arial, sans-serif; color:#010203; font-size:9px; text-transform:uppercase"><strong>|</strong></font></td>
-              <td width="9%" align="center"><font style="font-family:'Myriad Pro', Helvetica, Arial, sans-serif; color:#010203; font-size:9px; text-transform:uppercase"><a href= "http://yourlink" style="color:#010203; text-decoration:none"><strong>ABOUT </strong></a></font></td>
-              <td width="2%" align="center"><font style="font-family:'Myriad Pro', Helvetica, Arial, sans-serif; color:#010203; font-size:9px; text-transform:uppercase"><strong>|</strong></font></td>
-              <td width="10%" align="center"><font style="font-family:'Myriad Pro', Helvetica, Arial, sans-serif; color:#010203; font-size:9px; text-transform:uppercase"><a href= "http://yourlink" style="color:#010203; text-decoration:none"><strong>PRESS </strong></a></font></td>
-              <td width="2%" align="center"><font style="font-family:'Myriad Pro', Helvetica, Arial, sans-serif; color:#010203; font-size:9px; text-transform:uppercase"><strong>|</strong></font></td>
-              <td width="11%" align="center"><font style="font-family:'Myriad Pro', Helvetica, Arial, sans-serif; color:#010203; font-size:9px; text-transform:uppercase"><a href= "http://yourlink" style="color:#010203; text-decoration:none"><strong>CONTACT </strong></a></font></td>
-              <td width="2%" align="center"><font style="font-family:'Myriad Pro', Helvetica, Arial, sans-serif; color:#010203; font-size:9px; text-transform:uppercase"><strong>|</strong></font></td>
-              <td width="17%" align="center"><font style="font-family:'Myriad Pro', Helvetica, Arial, sans-serif; color:#010203; font-size:9px; text-transform:uppercase"><a href= "http://yourlink" style="color:#010203; text-decoration:none"><strong>STAY CONNECTED</strong></a></font></td>
+              <td width="14%" align="center"><font style="font-family: Helvetica, Arial, sans-serif; color:#010203; font-size:9px; text-transform:uppercase"><a href= "http://yourlink" style="color:#010203; text-decoration:none"><strong>UNSUBSCRIBE </strong></a></font></td>
+              <td width="2%" align="center"><font style="font-family: Helvetica, Arial, sans-serif; color:#010203; font-size:9px; text-transform:uppercase"><strong>|</strong></font></td>
+              <td width="9%" align="center"><font style="font-family: Helvetica, Arial, sans-serif; color:#010203; font-size:9px; text-transform:uppercase"><a href= "http://yourlink" style="color:#010203; text-decoration:none"><strong>ABOUT </strong></a></font></td>
+              <td width="2%" align="center"><font style="font-family: Helvetica, Arial, sans-serif; color:#010203; font-size:9px; text-transform:uppercase"><strong>|</strong></font></td>
+              <td width="10%" align="center"><font style="font-family: Helvetica, Arial, sans-serif; color:#010203; font-size:9px; text-transform:uppercase"><a href= "http://yourlink" style="color:#010203; text-decoration:none"><strong>PRESS </strong></a></font></td>
+              <td width="2%" align="center"><font style="font-family: Helvetica, Arial, sans-serif; color:#010203; font-size:9px; text-transform:uppercase"><strong>|</strong></font></td>
+              <td width="11%" align="center"><font style="font-family: Helvetica, Arial, sans-serif; color:#010203; font-size:9px; text-transform:uppercase"><a href= "http://yourlink" style="color:#010203; text-decoration:none"><strong>CONTACT </strong></a></font></td>
+              <td width="2%" align="center"><font style="font-family: Helvetica, Arial, sans-serif; color:#010203; font-size:9px; text-transform:uppercase"><strong>|</strong></font></td>
+              <td width="17%" align="center"><font style="font-family: Helvetica, Arial, sans-serif; color:#010203; font-size:9px; text-transform:uppercase"><a href= "http://yourlink" style="color:#010203; text-decoration:none"><strong>STAY CONNECTED</strong></a></font></td>
               <td width="4%" align="right"><a href="https://www.facebook.com/" target="_blank"><img src="images/PROMO-GREEN2_09_01.jpg" alt="facebook" width="22" height="19" border="0" /></a></td>
               <td width="5%" align="center"><a href="https://twitter.com/" target="_blank"><img src="images/PROMO-GREEN2_09_02.jpg" alt="twitter" width="23" height="19" border="0" /></a></td>
               <td width="4%" align="right"><a href="http://www.linkedin.com/" target="_blank"><img src="images/PROMO-GREEN2_09_03.jpg" alt="linkedin" width="20" height="19" border="0" /></a></td>
@@ -371,7 +371,7 @@ $app->get('/envios', function() use($app){
           <td>&nbsp;</td>
         </tr>
         <tr>
-          <td align="center"><font style="font-family:'Myriad Pro', Helvetica, Arial, sans-serif; color:#231f20; font-size:8px"><strong>Head Office &amp; Registered Office | Company name Ltd, Adress Line, Company Street, City, State, Zip Code | Tel: 123 555 555 | <a href= "http://yourlink" style="color:#010203; text-decoration:none">customercare@company.com</a></strong></font></td>
+          <td align="center"><font style="font-family: Helvetica, Arial, sans-serif; color:#231f20; font-size:8px"><strong>Head Office &amp; Registered Office | Company name Ltd, Adress Line, Company Street, City, State, Zip Code | Tel: 123 555 555 | <a href= "http://yourlink" style="color:#010203; text-decoration:none">customercare@company.com</a></strong></font></td>
         </tr>
         <tr>
           <td>&nbsp;</td>
