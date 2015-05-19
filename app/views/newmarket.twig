@@ -11,10 +11,7 @@
   {% include 'sidebar.twig' %}
   <div class="content-wrapper">
     <section class="content-header">
-          <h1>
-            Mercado
-            <small>nuevo</small>
-          </h1>
+          <h1><a href="{{ urlFor('dashboard') }}"><i class="fa fa-arrow-left fa-1x"></i></a> Mercado <small>nuevo</small></h1>
           <ol class="breadcrumb">
             <li><a href="{{ urlFor('dashboard') }}"><i class="fa fa-dashboard"></i> Force <b>CRM</b></a></li>
             <li class="active"><a href="#">Mercados</a></li>
@@ -31,40 +28,69 @@
               <h3 class="box-title">Identificar nuevo mercado</h3>
             </div><!-- /.box-header -->
             <div class="box-body">
-              <table id="example1" class="table table-bordered table-striped">
-                <thead>
-                  <tr>
-                    <th>Nombre</th>
-                    <th>Apellidos</th>
-                    <th>Email</th>
-                    <th>Fecha de nacimiento</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {% for c in customers %}
-                    <tr>
-                      <td>{{ c.name }}</td>
-                      <td>{{ c.last_name }}</td>
-                      <td>{{ c.email }}</td>
-                      <td>{{ c.birthday }}</td>
-                    </tr>
-                  {% endfor %}
-                </tbody>
-                <tfoot>
-                  <tr>
-                    <th>Nombre</th>
-                    <th>Apellidos</th>
-                    <th>Email</th>
-                    <th>Fecha de nacimiento</th>
-                  </tr>
-                </tfoot>
-              </table>
+              <br><br>
+              <div class="row">
+                <div class="col-md-offset-1 col-md-4">
+                  <div class="small-box bg-aqua">
+                    <div class="inner">
+                      <h3>0</h3>
+                      <p>Clientes A</p>
+                    </div>
+                    <div class="icon">
+                      <i class="fa fa-star"></i>
+                    </div>
+                    <a href="#" class="small-box-footer">Seleccionar <i class="fa fa-arrow-circle-right"></i></a>
+                  </div>
+                </div>
+                <div class="col-md-offset-2 col-md-4">
+                  <div class="small-box bg-green">
+                    <div class="inner">
+                      <h3>0</h3>
+                      <p>Clientes B</p>
+                    </div>
+                    <div class="icon">
+                      <i class="fa fa-star-half-o"></i>
+                    </div>
+                    <a href="#" class="small-box-footer">Seleccionar <i class="fa fa-arrow-circle-right"></i></a>
+                  </div>
+                </div>
+              </div>
+              <br><br>
+              <div class="row">
+                <div class="col-md-offset-1 col-md-4">
+                  <div class="small-box bg-red">
+                    <div class="inner">
+                      <h3>0</h3>
+                      <p>Clientes C</p>
+                    </div>
+                    <div class="icon">
+                      <i class="fa fa-star-o"></i>
+                    </div>
+                    <a href="#" class="small-box-footer">Seleccionar <i class="fa fa-arrow-circle-right"></i></a>
+                  </div>
+                </div>
+                <div class="col-md-offset-2 col-md-4">
+                  <div class="small-box bg-orange">
+                    <div class="inner">
+                      <h3>0</h3>
+                      <p>Clientes potenciales</p>
+                    </div>
+                    <div class="icon">
+                      <i class="fa fa-diamond"></i>
+                    </div>
+                    <a href="#" class="small-box-footer">Seleccionar <i class="fa fa-arrow-circle-right"></i></a>
+                  </div>
+                </div>
+              </div>
             </div><!-- /.box-body -->
           </div><!-- /.box -->
         </div><!-- /.col -->
       </div><!-- /.row -->
     </section><!-- /.content -->
   </div><!-- /.content-wrapper -->
+  <footer class="main-footer">
+    <strong>Copyright &copy; {{ "now"|date("Y") }} </strong> Todos los derechos reservados.
+  </footer>
 </div>
 {% endblock %}
 {% block js %}

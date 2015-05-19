@@ -40,15 +40,10 @@
 </div>
 {% endblock %}
 {% block js %}
-  <script src="{{ urlFor('root') }}public/plugins/fullcalendar/fullcalendar.min.js" type="text/javascript"></script>
-  <script src="{{ urlFor('root') }}public/plugins/fullcalendar/lang-all.js" type="text/javascript"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.7.0/moment.min.js" type="text/javascript"></script>
+  <script src="{{ urlFor('root') }}public/plugins/fullcalendar/fullcalendar.js" type="text/javascript"></script>
   <script type="text/javascript">
     $(document).ready(function() {
-      var date = new Date();
-        var d = date.getDate(),
-            m = date.getMonth(),
-            y = date.getFullYear();
-
           $('#calendar').fullCalendar({
           header: {
             left: 'prev,next today',
@@ -61,15 +56,12 @@
             week: 'Semana',
             day: 'Día'
           },
-          //Random default events
           events: {
             url: '{{ urlFor('root') }}campaings',
-            color: '#3c8dbc'
           },
           editable: false,
           droppable: false,
-          weekNumbers: true,
-          lang: 'es'
+          weekNumbers: true
         });
 
 

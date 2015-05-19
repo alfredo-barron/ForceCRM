@@ -269,6 +269,16 @@ $app->group('/u/0/mercados', $auth($app), function() use($app,$db){
     $app->render('newmarket.twig',$data);
   })->name('new-market');
 
+  $app->get('', function() use($app,$db) {
+    $data = array();
+    $id = $_SESSION['id'];
+    $st = $db->prepare("SELECT users.id, users.name, users.last_name, users.email, users.gender, roles.name AS rol FROM users,roles WHERE users.id = ? AND users.rol = roles.id");
+    $st->setFetchMode(PDO::FETCH_OBJ);
+    $st->execute(array($id));
+    $data['user'] = $st->fetch();
+    $app->render('markets.twig',$data);
+  })->name('markets');
+
 });
 
 $app->group('/u/0/campanas', $auth($app), function() use($app,$db){
@@ -364,6 +374,9 @@ $app->group('/u/0/email', $auth($app), function() use($app,$db){
     $st->setFetchMode(PDO::FETCH_OBJ);
     $st->execute(array($id));
     $data['user'] = $st->fetch();
+    $st = $db->prepare("SELECT * FROM emails ORDER BY date_created DESC");
+    $st->execute();
+    $data['emails'] = $st->fetchAll();
     $app->render('email.twig',$data);
   })->name('email');
 
@@ -442,7 +455,7 @@ $app->group('/u/0/productos', $auth($app), function() use($app,$db){
       $quantity = $post->quantity;
       $stock = $post->stock;
       $date = date('Y-m-d');
-      if($name == "" || $market == "" || $model == "" || $price == "" || $description == "" || $quantity == "" || $stock == "" || $category == 0 ) {
+      if($name == "" || $market == "" || $price == "" || $description == "" || $quantity == "" || $stock == "" || $category == 0 ) {
         echo "vacio";
       } else {
         $st = $db->prepare("INSERT INTO products(created_by,name,market,model,price,category,description,quantity,stock,date_created) VALUES (?,?,?,?,?,?,?,?,?,?)");
@@ -484,7 +497,7 @@ $app->get('/postcode.json/:id', function($id) use($app,$db){
   });
 
 $app->get('/campaings', function() use($app,$db){
-    $st = $db->prepare("SELECT name AS title, date_start AS start, date_end AS end FROM campaings");
+    $st = $db->prepare("SELECT name AS title, date_start AS start, date_end AS end, color FROM campaings");
     $st->execute();
     $campaings = $st->fetchAll();
     echo json_encode($campaings);
@@ -493,7 +506,7 @@ $app->get('/campaings', function() use($app,$db){
 $app->post('/u/checkcampaing', function() use($app,$db){
     $st = $db->prepare("SELECT * FROM campaings");
     $st->execute();
-    while ($row = $st->fetchObject()) {
+    while ($row = $st->fetch(PDO::FETCH_OBJ)) {
       $date_now = strtotime(date("d-m-Y"));
       $date_start = strtotime($row->date_start);
       $date_end = strtotime($row->date_end);
@@ -504,10 +517,8 @@ $app->post('/u/checkcampaing', function() use($app,$db){
       } else if ($date_end < $date_now) {
         $status = "Finalizada";
       }
-      $duration = $date_end - $date_start;
-      $duration = intval($duration/60/60/24) + 1;
-      $st = $db->prepare("UPDATE campaings SET status = ? WHERE id = $row->id");
-      $campaing = $st->execute(array($status));
+      $campaing = $db->prepare("UPDATE campaings SET status = '$status' WHERE id = $row->id");
+      $campaing->execute();
     }
   });
 

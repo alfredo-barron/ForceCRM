@@ -86,16 +86,7 @@
             {% if user.rol == "Jefe de Marketing" %}
             <li><a href="{{ urlFor('new-market') }}"><i class="fa fa-filter"></i> Identificar un mercado</a></li>
             {% endif %}
-            <li class="treeview">
-              <a href="#">
-                <i class="fa fa-list"></i> Lista de mercados
-                <i class="fa fa-angle-left pull-right"></i>
-              </a>
-              <ul class="treeview-menu">
-                <li><a href="#"><i class="fa fa-asterisk"></i> Objetivo</a></li>
-                <li><a href="#"><i class="fa fa-asterisk"></i> Activo</a></li>
-                <li><a href="#"><i class="fa fa-asterisk"></i> Inactivo</a></li>
-              </ul>
+            <li><a href="{{ urlFor('markets') }}"><i class="fa fa-list"></i> Lista de mercados</a>
             </li>
           </ul>
         </a>

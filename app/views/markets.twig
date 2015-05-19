@@ -1,6 +1,6 @@
 {% extends 'base.twig' %}
 {% block title %}
-    <title>{{ title }} | Productos</title>
+    <title>{{ title }} | Mercados</title>
 {% endblock %}
 {% block css %}
     <link href="{{ urlFor('root') }}public/plugins/datatables/dataTables.bootstrap.css" rel="stylesheet" type="text/css" />
@@ -11,10 +11,12 @@
   {% include 'sidebar.twig' %}
   <div class="content-wrapper">
     <section class="content-header">
-          <h1><a href="{{ urlFor('dashboard') }}"><i class="fa fa-arrow-left fa-1x"></i></a> Productos <small>listado</small></h1>
+          <h1> <a href="{{ urlFor('dashboard') }}"><i class="fa fa-arrow-left fa-1x"></i></a>
+            Mercados
+          </h1>
           <ol class="breadcrumb">
             <li><a href="{{ urlFor('dashboard') }}"><i class="fa fa-dashboard"></i> Force <b>CRM</b></a></li>
-            <li class="active"><a href="#">Productos</a></li>
+            <li class="active">Mercados</li>
           </ol>
         </section>
          <!-- Main content -->
@@ -25,34 +27,27 @@
 
     <div class="box">
             <div class="box-header">
-              <h3 class="box-title">Lista de usuarios</h3>
+              <h3 class="box-title">Lista de mercados</h3>
             </div><!-- /.box-header -->
             <div class="box-body">
               <table id="example1" class="table table-bordered table-striped">
                 <thead>
                   <tr>
                     <th>Nombre</th>
-                    <th>Marca</th>
-                    <th>Modelo</th>
-                    <th>Precio</th>
+                    <th>Tamaño</th>
+                    <th>Estatus</th>
+                    <th>Fecha</th>
                   </tr>
                 </thead>
                 <tbody>
-                  {% for p in products %}
-                    <tr>
-                      <td>{{ p.name }}</td>
-                      <td>{{ p.market }}</td>
-                      <td>{{ p.model }}</td>
-                      <td>$ {{ p.price }}</td>
-                    </tr>
-                  {% endfor %}
+
                 </tbody>
                 <tfoot>
                   <tr>
                     <th>Nombre</th>
-                    <th>Marca</th>
-                    <th>Modelo</th>
-                    <th>Precio</th>
+                    <th>Tamaño</th>
+                    <th>Estatus</th>
+                    <th>Fecha</th>
                   </tr>
                 </tfoot>
               </table>
