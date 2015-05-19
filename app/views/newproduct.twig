@@ -4,7 +4,6 @@
 {% endblock %}
 {% block css %}
     <link href="{{ urlFor('root') }}public/plugins/datepicker/datepicker.css" rel="stylesheet" type="text/css">
-    <link rel="stylesheet" href="{{ urlFor('root') }}/public/css/bootstrapValidator.min.css">
 {% endblock %}
 {% block content %}
 <div class="wrapper">
@@ -58,7 +57,7 @@
                         {% if product.name is defined %}
                           <input type="text" name="name" id="name" class="form-control" value="{{ product.name }}">
                         {% else %}
-                          <input type="text" name="name" id="name" class="form-control" placeholder="Nombre" data-bv-notempty="true" required autocomplete="off" title="Campo obligatorio">
+                          <input type="text" name="name" id="name" class="form-control" placeholder="Nombre" required autocomplete="off">
                         {% endif %}
                       </div>
                     </div>
@@ -76,7 +75,7 @@
                           {% if product.market is defined %}
                             <input type="text" name="market" id="market" class="form-control" value="{{ product.market }}">
                           {% else %}
-                            <input type="text" name="market" id="market" class="form-control" placeholder="Marca" required autocomplete="off" title="Campo obligatorio">
+                            <input type="text" name="market" id="market" class="form-control" placeholder="Marca" required autocomplete="off">
                           {% endif %}
                         </div>
                       </div>
@@ -109,7 +108,7 @@
                           {% if product.price is defined %}
                             <input type="text" name="price" id="price" class="form-control" value="{{ product.price }}">
                           {% else %}
-                            <input type="text" name="price" id="price" class="form-control" required autocomplete="off" placeholder="Precio" title="Campo obligatorio">
+                            <input type="text" name="price" id="price" class="form-control" required autocomplete="off" placeholder="Precio">
                           {% endif %}
                         </div>
                       </div>
@@ -124,7 +123,7 @@
                          {% endif %}
                         <div class="input-group form-group">
                           <span class="input-group-addon"><i class="fa fa-pie-chart"></i></span>
-                          <select name="category" id="category" class="form-control" required title="Campo obligatorio">
+                          <select name="category" id="category" class="form-control" required >
                           {% if product.category is defined %}
                             <option value="{{ product.category }}">
                               {{ product.category }}
@@ -148,10 +147,11 @@
                           <label class="control-label" title="Campo obligatorio">Descripción * :</label>
                         {% endif %}
                         <div class="input-group">
+                          <span class="input-group-addon"><i class="fa fa-align-justify"></i></span>
                           {% if product.description is defined %}
-                            <textarea name="description" id="description" class="form-control" cols="70" rows="6"></textarea>
+                            <textarea name="description" id="description" class="form-control">{{ product.description }}</textarea>
                           {% else %}
-                            <textarea name="description" id="description" class="form-control" cols="70" rows="6" title="Campo obligatorio"></textarea>
+                            <textarea name="description" id="description" class="form-control"  placeholder="Escribir detalladamente..." required></textarea>
                           {% endif %}
                         </div>
                       </div>
@@ -192,7 +192,7 @@
                   </div>
                   <div class="box-footer">
                     <div class="pull-right">
-                      <a href="#" class="btn btn-default"><i class="fa fa-times"></i> Cancelar</a>
+                      <a class="btn btn-default" id="btnCancelar" name="btnCancelar"><i class="fa fa-times"></i> Cancelar</a>
                       {% if product.id is defined %}
                         <button type="button" id="editProduct" name="editProduct" class="btn btn-primary"><i class="fa fa-edit"></i> Actualizar</button>
                       {% else %}
@@ -219,6 +219,7 @@
   <script src="{{ urlFor('root')}}public/plugins/input-mask/jquery.inputmask.extensions.js" type="text/javascript"></script>
     <script type="text/javascript">
     $(document).ready(function() {
+
       $('#newProduct').click(function(event) {
         var id = $('#id').val();
         var name = $('#name').val();
@@ -227,9 +228,9 @@
         var price = $('#price').val();
         var category = $('#category option:selected').val();
         var description = $('#description').val();
-        var street = $('#street').val();
         var quantity = $('#quantity').val();
-        if (name == "" || market == "" || price == "" || category == 0 || description == "" || street == "" || quantity == "") {
+        var stock = $('#stock').val();
+        if (name == "" || market == "" || price == "" || category == 0 || description == "" || stock == "" || quantity == "") {
           $.growl.error({ message: "Rellene todos los campos obligatorios!" });
         } else {
           $.ajax({
@@ -242,7 +243,7 @@
                 $.growl.error({ message: "Rellene todos los campos obligatorios!" });
               } else if(data == 'exito') {
                 $.growl.notice({ message: "Has agregado un nuevo producto!" });
-                //limpiar();
+                limpiar();
               } else if(data == 'error') {
                 $.growl.error({ message: "Error del servidor!" });
               }
@@ -250,6 +251,21 @@
           });
         }
       });
+
+      $('#btnCancelar').click(function(event) {
+        limpiar();
+      });
+
+      function limpiar(){
+        var name = $('#name').val("");
+        var market = $('#market').val("");
+        var model = $('#model').val("");
+        var price = $('#price').val("");
+        var category = $('#category').val($('#category > option:first').val());
+        var description = $('#description').val("");
+        var quantity = $('#quantity').val("");
+        var stock = $('#stock').val("");
+      }
     });
     </script>
     <script src="{{ urlFor('root') }}public/css/dist/js/demo.js"></script>

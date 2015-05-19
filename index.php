@@ -40,9 +40,6 @@ $app->hook('slim.before.dispatch', function() use ($app) {
 $app->get('/', function() use($app,$db){
   if (!isset($_SESSION['id'])) {
     $data = array();
-    $st = $db->prepare("SELECT * FROM roles WHERE id <> 1");
-    $st->execute();
-    $data['roles'] = $st->fetchAll();
     $st = $db->prepare("SELECT * FROM roles");
     $st->execute();
     $data['rols'] = $st->fetchAll();

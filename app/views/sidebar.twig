@@ -140,15 +140,10 @@
         </ul>
       </li>
       {% if user.rol == "Administrador" %}
-      <li class="treeview">
-        <a href="#">
+      <li>
+        <a href="{{ urlFor('personal') }}">
           <i class="fa fa-briefcase"></i> <span>Panel de usuarios</span>
-          <i class="fa fa-angle-left pull-right"></i>
         </a>
-        <ul class="treeview-menu">
-          <li><a href="#"><i class="fa fa-user-plus"></i> Nuevo miembro</a></li>
-          <li><a href="{{ urlFor('personal') }}"><i class="fa fa-list"></i> Lista de miembros</a></li>
-        </ul>
       </li>
       {% endif %}
     </ul>

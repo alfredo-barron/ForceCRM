@@ -4,6 +4,7 @@
 {% endblock %}
 {% block css %}
     <link href="{{ urlFor('root') }}public/plugins/datepicker/datepicker.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="{{ urlFor('root') }}public/css/examples.css">
 {% endblock %}
 {% block content %}
 <div class="wrapper">
@@ -56,7 +57,7 @@
                       {% if customer.name is defined %}
                         <input type="text" name="name" id="name" class="form-control" value="{{ customer.name }}">
                       {% else %}
-                        <input type="text" name="name" id="name" class="form-control" placeholder="Nombre(s)" required autocomplete="off" title="Campo obligatorio">
+                        <input type="text" name="name" id="name" class="form-control" placeholder="Nombre(s)" required autocomplete="off">
                       {% endif %}
                     </div>
                   </div>
@@ -71,7 +72,7 @@
                       {% if customer.last_name is defined %}
                         <input type="text" name="last_name" id="last_name" class="form-control" value="{{ customer.last_name }}">
                       {% else %}
-                        <input type="text" name="last_name" id="last_name" class="form-control" placeholder="Apellidos" title="Campo obligatorio" required autocomplete="off">
+                        <input type="text" name="last_name" id="last_name" class="form-control" placeholder="Apellidos" required autocomplete="off">
                       {% endif %}
                     </div>
                   </div>
@@ -88,7 +89,7 @@
                     {% if customer.birthdate is defined %}
                       <input type="text" name="birthdate1" id="birthdate1" class="form-control" value="{{ customer.birthdate }}">
                     {% else %}
-                      <input type="text" name="birthdate" id="birthdate" class="form-control" placeholder="yyyy-mm-dd" title="Campo obligatorio" autocomplete="off">
+                      <input type="text" name="birthdate" id="birthdate" class="form-control" placeholder="yyyy-mm-dd" required autocomplete="off">
                     {% endif %}
                   </div>
                 </div>
@@ -100,7 +101,7 @@
                    {% endif %}
                   <div class="input-group form-group">
                     <span class="input-group-addon"><i class="fa fa-venus-mars"></i></span>
-                    <select name="gender" id="gender" class="form-control" title="Campo obligatorio" required>
+                    <select name="gender" id="gender" class="form-control" required>
                     {% if customer.gender is defined %}
                       <option value="{{ customer.gender }}">
                         {% if customer.gender == "H" %}
@@ -130,7 +131,7 @@
                     {% if customer.email is defined %}
                       <input type="email" name="email" id="email" class="form-control" value="{{ customer.email }}">
                     {% else %}
-                      <input type="email" name="email" id="email" class="form-control" placeholder="Correo electrónico" required title="Campo obligatorio" autocomplete="off">
+                      <input type="email" name="email" id="email" class="form-control" placeholder="Correo electrónico" required autocomplete="off">
                     {% endif %}
                   </div>
                 </div>
@@ -145,7 +146,7 @@
                     {% if customer.telephone is defined %}
                     <input type="text" name="telephone1" id="telephone1" class="form-control" value="{{ customer.telephone }}">
                     {% else %}
-                    <input type="text" name="telephone" id="telephone" class="form-control" placeholder="###-###-####" data-inputmask='"mask": "999 999 9999"' data-mask title="Campo obligatorio" required autocomplete="off">
+                    <input type="text" name="telephone" id="telephone" class="form-control" placeholder="###-###-####" data-inputmask='"mask": "999 999 9999"' data-mask  required autocomplete="off">
                     {% endif %}
                   </div>
                 </div>
@@ -161,7 +162,7 @@
                     {% if customer.street is defined %}
                       <input type="text" name="street" id="street" class="form-control" value="{{ customer.street }}">
                     {% else %}
-                      <input type="text" name="street" id="street" class="form-control" placeholder="Calle">
+                      <input type="text" name="street" id="street" class="form-control" placeholder="Calle" autocomplete="off">
                     {% endif %}
                   </div>
                 </div>
@@ -172,7 +173,7 @@
                     {% if customer.number is defined %}
                     <input type="text" name="number" id="number" class="form-control" value="{{ customer.number }}">
                     {% else %}
-                    <input type="text" name="number" id="number" class="form-control" placeholder="###">
+                    <input type="text" name="number" id="number" class="form-control" placeholder="###" autocomplete="off">
                     {% endif %}
                   </div>
                 </div>
@@ -184,17 +185,13 @@
                    {% else %}
                     <label class="control-label" title="Campo obligatorio">Código postal * :</label>
                    {% endif %}
-                   <div class="input-group">
-                    <span class="input-group-addon"><i class="fa fa-location-arrow"></i></span><select name="postcode" id="postcode" class="form-control" title="Campo obligatorio">
-                      {% if customer.postcode is defined %}
-                        <option value="{{ customer.postcode }}">{{ customer.postcode }}</option>
-                      {% else %}
-                        <option value="0">Seleciona una opción...</option>
-                      {% endif %}
-                      {% for p in postcodes %}
-                        <option value="{{ p.id }}">{{ p.id }}</option>
-                      {% endfor %}
-                    </select>
+                   <div class="input-group" id="clase">
+                    <span class="input-group-addon"><i class="fa fa-location-arrow"></i></span>
+                    {% if customer.postcode is defined %}
+                      <input type="text" class="form-control" id="postcode" name="postcode" value="{{ customer.postcode }}" autocomplete="off" >
+                    {% else %}
+                      <input type="text" class="form-control" id="postcode" name="postcode" dir="auto" spellcheck="false" autocomplete="off" required placeholder="78000">
+                    {% endif %}
                   </div>
                 </div>
                 <div class="form-group col-md-6">
@@ -293,14 +290,14 @@
                     {% if customer.sons is defined %}
                       <input type="number" name="sons" id="sons" class="form-control" value="{{ customer.sons }}">
                     {% else %}
-                      <input type="number" name="sons" id="sons" class="form-control" value="0">
+                      <input type="number" name="sons" id="sons" class="form-control" value="0" min="1" max="10">
                     {% endif %}
                 </div>
               </div>
             </div>
             <div class="box-footer">
               <div class="pull-right">
-                <a href="{{ urlFor('customers') }}" class="btn btn-default"><i class="fa fa-times"></i> Cancelar</a>
+                <a class="btn btn-default" id="btnCancelar" name="btnCancelar"><i class="fa fa-times"></i> Cancelar</a>
                 {% if customer.id is defined %}
                   <button type="button" id="editCustomer" name="editCustomer" class="btn btn-primary"><i class="fa fa-edit"></i> Actualizar</button>
                 {% else %}
@@ -325,6 +322,7 @@
   <script src="{{ urlFor('root')}}public/plugins/input-mask/jquery.inputmask.js" type="text/javascript"></script>
   <script src="{{ urlFor('root')}}public/plugins/input-mask/jquery.inputmask.date.extensions.js" type="text/javascript"></script>
   <script src="{{ urlFor('root')}}public/plugins/input-mask/jquery.inputmask.extensions.js" type="text/javascript"></script>
+  <script src="{{ urlFor('root') }}public/js/typeahead.jquery.min.js"></script>
     <script type="text/javascript">
       $(function () {
         //$("#datemask").inputmask("dd-mm-yyyy", {"placeholder": "dd-mm-yyyy"});
@@ -332,17 +330,40 @@
         //Date range picker
         $('#birthdate').datepicker();
 
-        $('#postcode').change(function(event){
-        var sn = $("#postcode option:selected");
-        $('#place').html('');
-          $.getJSON("{{ urlFor('root') }}postcode.json/"+sn.val(), function(postcode){
-              var myArray = postcode.place.split(";");
-              for(var i=0;i<myArray.length;i++){
-                  $('#place').append("<option value=\""+myArray[i]+"\">"+myArray[i]+"</option>");
-              }
-              $('input#city').val(postcode.city);
-              $('input#entity').val(postcode.entity);
-              });
+        $('#postcode').change(function(event) {
+          var cp = $('#postcode').val();
+          if (cp.length >= 5) {
+            var sn = $("#postcode");
+            $('#place').html('');
+              $.getJSON("{{ urlFor('root') }}postcode.json/"+sn.val(), function(postcode){
+                  var myArray = postcode.place.split(";");
+                  for(var i=0;i<myArray.length;i++){
+                      $('#place').append("<option value=\""+myArray[i]+"\">"+myArray[i]+"</option>");
+                  }
+                  $('input#city').val(postcode.city);
+                  $('input#entity').val(postcode.entity);
+                  });
+              } else {
+                $('#place').html('<option value="0">Seleciona una opción...</option>');
+              };
+          });
+
+        $('#postcode').keyup(function(event) {
+          var cp = $('#postcode').val();
+          if (cp.length >= 5) {
+            var sn = $("#postcode");
+            $('#place').html('');
+              $.getJSON("{{ urlFor('root') }}postcode.json/"+sn.val(), function(postcode){
+                  var myArray = postcode.place.split(";");
+                  for(var i=0;i<myArray.length;i++){
+                      $('#place').append("<option value=\""+myArray[i]+"\">"+myArray[i]+"</option>");
+                  }
+                  $('input#city').val(postcode.city);
+                  $('input#entity').val(postcode.entity);
+                  });
+              } else {
+                $('#place').html('<option value="0">Seleciona una opción...</option>');
+              };
           });
      });
 
@@ -422,25 +443,55 @@
           })
       });
 
+      $('#btnCancelar').click(function(event) {
+        limpiar();
+      });
+
       function limpiar(){
-        name = $('#name').val("");
-        $('.form-group .col-md-6').removeClass('has-success').removeClass('has-feedback');
-        last_name = $('#last_name').val("");
-        birthdate = $('#birthdate').val("");
-        gender = $('#gender option:selected').val(0);
-        email = $('#email').val("");
-        telephone = $('#telephone').val("");
-        street = $('#street').val("");
-        number = $('#number').val("");
-        postcode = $('#postcode option:selected').val();
-        place = $('#place').val("");
-        city = $('#city').val("");
-        entity = $('#entity').val("");
-        job = $('#job option:selected').val(0);
-        school = $('#school option:selected').val(0);
-        status_civil = $('#status_civil option:selected').val(0);
-        sons = $('#sons').val(0);
+        var name = $('#name').val("");
+        var last_name = $('#last_name').val("");
+        var birthdate = $('#birthdate').val("");
+        var gender = $('#gender').val($('#gender > option:first').val());
+        var email = $('#email').val("");
+        var telephone = $('#telephone').val("");
+        var street = $('#street').val("");
+        var number = $('#number').val("");
+        var postcode = $('#postcode').val($('#postcode > option:first').val());
+        var place = $('#place').html('<option value="0">Seleciona una opción...</option>');
+        var city = $('#city').val("");
+        var entity = $('#entity').val("");
+        var job = $('#job').val($('#job > option:first').val());
+        var school = $('#school').val($('#school > option:first').val());
+        var status_civil = $('#status_civil').val($('#status_civil > option:first').val());
+        var sons = $('#sons').val(0);
       }
+
+    var postcode = [{% for postcode in postcodes %}'{{ postcode.id }}',{% endfor %}];
+
+    var substringMatcher = function(strs) {
+      return function findMatches(q, cb) {
+        var matches, substringRegex;
+        matches = [];
+        substrRegex = new RegExp(q, 'i');
+        $.each(strs, function(i, str) {
+        if (substrRegex.test(str)) {
+          matches.push({ value: str });
+        }
+      });
+      cb(matches);
+      };
+    };
+
+    $('#postcode').typeahead({
+      hint: true,
+      highlight: true,
+      minLength: 1
+    },{
+      name: 'postcode',
+      displayKey: 'value',
+      source: substringMatcher(postcode)
+    });
+
     });
 
       </script>
