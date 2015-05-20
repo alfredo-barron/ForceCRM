@@ -72,9 +72,7 @@ $app->post('/registro', function() use($app,$db){
   $st = $db->prepare("INSERT INTO users (name,last_name,email,password,gender,rol) VALUES (?,?,?,?,?,?)");
   $user = $st->execute(array($name,$last_name,$email,$password,$gender,$rol));
   if ($user) {
-    $success = "Eres un nuevo miembro";
-    $app->flash('success', $success);
-    $app->redirect($app->urlFor('root'));
+    $app->redirect($app->urlFor('personal'));
   }
 })->name('register-post');
 
