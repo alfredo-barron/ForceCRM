@@ -16,17 +16,6 @@
             <li class="active">Perfil</li>
           </ol>
         </section>
-        {% if flash.success is not empty %}
-          <div class="col-md-offset-8 col-md-4">
-            <div class="box-body">
-              <div class="alert alert-success alert-dismissable">
-                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                <h4><i class="icon fa fa-check"></i>Exito!</h4>
-                {{ flash.success }}
-              </div>
-            </div>
-          </div>
-        {% endif %}
          <!-- Main content -->
     <section class="content">
       <!-- Info boxes -->
@@ -53,12 +42,13 @@
                     <dt>Estado: </dt><dd>{{ customer.entity }}</dd>
                     <hr>
                     <dt>Género: </dt><dd>{% if customer.gender == "H" %}Hombre{% else %}Mujer{% endif %}</dd>
+                    <dt>Edad: </dt><dd>{% set edad = "now"|date('d/m/Y') - customer.birthdate|date('d/m/Y') %}
+                    {{ edad }}</dd>
                     <dt>Fecha de nacimiento: </dt><dd>{{ customer.birthdate|date('d') }} - {{ customer.birthdate|date('m') }} - {{ customer.birthdate|date('Y') }} {% if customer.birthdate|date('d') == "now"|date("d") and customer.birthdate|date('m') == "now"|date("m") %}  <i class="fa fa-birthday-cake" data-toggle="tooltip" title="Hoy cumpleaños"></i> {% endif %}</dd>
                     <dt>Ocupación: </dt><dd>{{ job.name }}</dd>
                     <dt>Educación: </dt><dd>{{ school.name }}</dd>
                     <dt>Estado civil: </dt><dd>{{ status_civil.name }}</dd>
                     <dt>Número de hijos: </dt><dd>{{ customer.sons }}</dd>
-                    <dt>Clase social: </dt><dd>{{ customer.status_social }}</dd>
                   </dl>
                 </div>
               </div>

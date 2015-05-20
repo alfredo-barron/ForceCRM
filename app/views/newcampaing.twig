@@ -13,17 +13,17 @@
   <div class="content-wrapper">
     <section class="content-header">
         {% if campaing.id is defined %}
-          <h1>Campaña <small>actualizar</small></h1>
+          <h1><a href="{{ urlFor('campaings') }}"><i class="fa fa-arrow-left fa-1x"></i></a> Campaña <small>actualizar</small></h1>
           <ol class="breadcrumb">
             <li><a href="{{ urlFor('dashboard') }}"><i class="fa fa-dashboard"></i> Force <b>CRM</b></a></li>
-            <li><a href="#">Campañas</a></li>
+            <li><a href="{{ urlFor('campaings') }}">Campañas</a></li>
             <li class="active">Actualizar</li>
           </ol>
         {% else %}
-          <h1>Campaña <small>nueva</small></h1>
+          <h1><a href="{{ urlFor('customers') }}"><i class="fa fa-arrow-left fa-1x"></i></a> Campaña <small>nueva</small></h1>
           <ol class="breadcrumb">
             <li><a href="{{ urlFor('dashboard') }}"><i class="fa fa-dashboard"></i> Force <b>CRM</b></a></li>
-            <li><a href="#">Campañas</a></li>
+            <li><a href="{{ urlFor('campaings') }}">Campañas</a></li>
             <li class="active">Nueva</li>
           </ol>
         {% endif %}
@@ -72,7 +72,7 @@
                   <div class="input-group">
                     <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
                     {% if campaing.date_start and campaing.date_end is defined %}
-                      <input type="text" class="form-control pull-right" name="reservation" id="reservation" placeholder="yyyy/mm/dd - yyyy/mm/dd" required title="Campo obligatorio" value="{{ campaing.date_start }} {{ campaing.date_end }}">
+                      <input type="text" class="form-control pull-right" name="reservation" id="reservation" placeholder="yyyy/mm/dd - yyyy/mm/dd" required title="Campo obligatorio" value="{{ campaing.date_start|date('Y/m/d') }} - {{ campaing.date_end|date('Y/m/d') }}">
                     {% else %}
                       <input type="text" class="form-control pull-right" name="reservation" id="reservation" placeholder="yyyy/mm/dd - yyyy/mm/dd" autocomplete="off" required>
                     {% endif %}
@@ -92,7 +92,7 @@
                     <select name="product_id" id="product_id" class="form-control" required >
                     {% if campaing.product_id is defined %}
                       <option value="{{ campaing.product_id }}">
-                        {{ campaing.product_id }}
+                        {{ product.name }}
                       </option>
                     {% else %}
                         <option value="0">Seleciona una opción...</option>
@@ -222,6 +222,29 @@
             }
           });
         }
+      });
+
+      $('#editCampaing').click(function(event) {
+        var id = $('#id').val();
+        var product_id = $('#product_id option:selected').val();
+        var name = $('#name').val();
+        var reservation = $('#reservation').val();
+        var target = $('#target').val();
+        var description = $('#description').val();
+        var color = $('#color').val();
+          $.ajax({
+            url: "editar",
+            type: "POST",
+            dataType: "html",
+            data: $('#campaingForm').serialize(),
+            success: function(data) {
+              if(data == 'exito') {
+                $.growl.notice({ message: "La campaña ha sido actualizada!" });
+              } else if(data == 'error') {
+                $.growl.error({ message: "Error del servidor!" });
+              }
+            }
+          })
       });
 
       $('#btnCancelar').click(function(event) {

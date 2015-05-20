@@ -15,21 +15,5 @@ function checkCampaings() {
 
 }
 
-function checkStatus_social() {
-  $.ajax({
-    url: "social_status",
-    type: "POST",
-    dataType: "html",
-    data: "",
-    success: function(data) {
-        setTimeout(function(){
-        checkStatus_social();
-      },10000);
-    }
-  })
-
-}
-
 checkCampaings();
-checkStatus_social();
 });

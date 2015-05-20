@@ -435,7 +435,7 @@
             data: $('#customerForm').serialize(),
             success: function(data) {
               if(data == 'exito') {
-                $.growl.notice({ message: "Has editado la Información de un cliente!" });
+                $.growl.notice({ message: "Has editado la información de un cliente!" });
               } else if(data == 'error') {
                 $.growl.error({ message: "Error del servidor!" });
               }

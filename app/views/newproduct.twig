@@ -11,7 +11,7 @@
   {% include 'sidebar.twig' %}
   <div class="content-wrapper">
     <section class="content-header">
-          {% if customer.id is defined %}
+          {% if product.id is defined %}
           <h1><a href="{{ urlFor('products') }}"><i class="fa fa-arrow-left fa-1x"></i></a>Producto <small>actualizar</small></h1>
           <ol class="breadcrumb">
             <li><a href="{{ urlFor('dashboard') }}"><i class="fa fa-dashboard"></i> Force <b>CRM</b></a></li>

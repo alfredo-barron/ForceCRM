@@ -341,6 +341,60 @@ $app->group('/u/0/campanas', $auth($app), function() use($app,$db){
     }
   })->name('campaing-post');
 
+  $app->get('/actualizar(/:id_c)', function($id_c) use($app,$db) {
+    $id = $_SESSION['id'];
+    $st = $db->prepare("SELECT users.id, users.name, users.last_name, users.email, users.gender, roles.name AS rol FROM users,roles WHERE users.id = ? AND users.rol = roles.id");
+    $st->setFetchMode(PDO::FETCH_OBJ);
+    $st->execute(array($id));
+    $data['user'] = $st->fetch();
+    $st = $db->prepare("SELECT * FROM campaings WHERE id = ?");
+    $st->setFetchMode(PDO::FETCH_OBJ);
+    $st->execute(array($id_c));
+    $data['campaing'] = $st->fetch();
+    $st = $db->prepare("SELECT * FROM products WHERE id = ?");
+    $st->setFetchMode(PDO::FETCH_OBJ);
+    $st->execute(array($data['campaing']->product_id));
+    $data['product'] = $st->fetch();
+    $st = $db->prepare("SELECT * FROM products");
+    $st->setFetchMode(PDO::FETCH_OBJ);
+    $st->execute();
+    $data['products'] = $st->fetchAll();
+    $app->render('newcampaing.twig',$data);
+  })->name('edit-campaing');
+
+  $app->post('/actualizar/editar', function() use($app,$db) {
+    $post = (object) $app->request()->post();
+    $id = (isset($post->id) and !empty($post->id)) ? $post->id : 0;
+    $created_by = $_SESSION['id'];
+    $product_id = $post->product_id;
+    $name = $post->name;
+    list($date_start, $date_end) = explode("-", $post->reservation);
+    $start = $date_start;
+    $end = $date_end;
+    $date_now = strtotime(date("d-m-Y"));
+    $date_start = strtotime($date_start);
+    $date_end = strtotime($date_end);
+    if ($date_start <= $date_now and $date_end >= $date_now) {
+      $status = "Activa";
+    } else if($date_start > $date_now) {
+      $status = "En espera";
+    } else if ($date_end < $date_now) {
+      $status = "Finalizada";
+    }
+    $target = $post->target;
+    $description = $post->description;
+    $duration = $date_end - $date_start;
+    $duration = intval($duration/60/60/24) + 1;
+    $color = $post->color;
+    $st = $db->prepare("UPDATE campaings SET name = ?,date_start = ?, date_end = ?,product_id = ?,status = ?, target = ?, description = ?, duration = ?, color = ? WHERE id = $id");
+    $campaing = $st->execute(array($name,$start,$end,$product_id,$status,$target,$description,$duration,$color));
+    if ($campaing) {
+        echo "exito";
+      } else {
+        echo "error";
+      }
+  })->name('campaing-edit-post');
+
   $app->get('', function() use($app,$db) {
     $data = array();
     $id = $_SESSION['id'];
@@ -352,7 +406,7 @@ $app->group('/u/0/campanas', $auth($app), function() use($app,$db){
     $st->execute();
     $data['campaings'] = $st->fetchAll();
     $app->render('campaings.activas.twig',$data);
-  })->name('campaings-activas');
+  })->name('campaings');
 
   $app->get('/espera', function() use($app,$db) {
     $data = array();
@@ -486,7 +540,50 @@ $app->group('/u/0/productos', $auth($app), function() use($app,$db){
       }
   })->name('product-post');
 
+  $app->get('/actualizar(/:id_p)', function($id_p) use($app,$db) {
+    $id = $_SESSION['id'];
+    $st = $db->prepare("SELECT users.id, users.name, users.last_name, users.email, users.gender, roles.name AS rol FROM users,roles WHERE users.id = ? AND users.rol = roles.id");
+    $st->setFetchMode(PDO::FETCH_OBJ);
+    $st->execute(array($id));
+    $data['user'] = $st->fetch();
+    $st = $db->prepare("SELECT * FROM products WHERE id = ?");
+    $st->setFetchMode(PDO::FETCH_OBJ);
+    $st->execute(array($id_p));
+    $data['product'] = $st->fetch();
+    $app->render('newproduct.twig',$data);
+  })->name('edit-product');
+
 });
+
+$app->post('/actualizar/editar', function() use($app,$db){
+    $post = (object) $app->request()->post();
+    $id = (isset($post->id) and !empty($post->id)) ? $post->id : 0;
+    if($id != 0){
+      echo "error";
+    }else{
+      $created_by = $_SESSION['id'];
+      $name = $post->name;
+      $market = $post->market;
+      $model = $post->model;
+      $price = $post->price;
+      $category = $post->category;
+      $description = $post->description;
+      $quantity = $post->quantity;
+      $stock = $post->stock;
+      $date = date('Y-m-d');
+      if($name == "" || $market == "" || $price == "" || $description == "" || $quantity == "" || $stock == "" || $category == 0 ) {
+        echo "vacio";
+      } else {
+        $st = $db->prepare("INSERT INTO products(created_by,name,market,model,price,category,description,quantity,stock,date_created) VALUES (?,?,?,?,?,?,?,?,?,?)");
+        $product = $st->execute(array($created_by,$name,$market,$model,$price,$category,$description,$quantity,$stock,$date));
+          if ($product) {
+            echo "exito";
+          } else {
+            echo "error";
+          }
+        }
+      }
+  })->name('product-edit-post');
 
 $app->group('/u/0/personal', $auth($app), function() use($app,$db){
 
@@ -517,7 +614,7 @@ $app->get('/postcode.json/:id', function($id) use($app,$db){
   });
 
 $app->get('/campaings', function() use($app,$db){
-    $st = $db->prepare("SELECT name AS title, date_start AS start, date_end AS end, color FROM campaings");
+    $st = $db->prepare("SELECT name AS title, date_start AS start, date_end AS end, color, target AS description FROM campaings");
     $st->execute();
     $campaings = $st->fetchAll();
     echo json_encode($campaings);
@@ -542,24 +639,5 @@ $app->post('/u/checkcampaing', function() use($app,$db){
     }
   });
 
-$app->post('/u/social_status', function() use($app,$db){
-    $st = $db->prepare("SELECT customers.id, schools.name AS school, jobs.name AS job FROM customers,schools,jobs WHERE customers.job = jobs.id AND customers.school = schools.id");
-    $st->execute();
-    exit();
-    while ($row = $st->fetch(PDO::FETCH_OBJ)) {
-        $educacion = $row->school;
-        $ocupacion = $row->job;
-        $id = $row->id;
-      if (($educacion == "Ninguna" OR $educacion == "Primaria" OR $educacion == "Secundaria") AND ($ocupacion == "Ninguna" OR $ocupacion == "Estudiante" OR $ocupacion == "Labores del hogar" OR $ocupacion == "Desempleado" OR $ocupacion == "Otros")) {
-        $status_social = 1;
-      } elseif (($educacion == "Preparatoria o Bachillerato" OR $educacion == "Licenciatura" OR $educacion == "Doctorado") AND ($ocupacion == "Profesionales por cuenta ajena" OR $ocupacion == "Profesionales por cuenta propia" OR $ocupacion == "Cargos intermedios" OR $ocupacion == "Trabajadores de gobierno" OR $ocupacion == "Trabajadores de educacion")) {
-        $status_social = 2;
-      } elseif (($educacion == "Licenciatura" OR $educacion == "Maestria o Doctorado") AND ($ocupacion == "Directivo" OR $ocupacion == "Fuerzas armadas" OR $ocupacion == "Trabajadores de salud")) {
-        $status_social = 3;
-      }
-      $customer = $db->prepare("UPDATE customers SET status_social = '$status_social' WHERE id = $id");
-      $customer->execute();
-    }
-  });
 
  ?>

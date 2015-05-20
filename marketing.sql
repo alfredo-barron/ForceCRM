@@ -1,3 +1,4 @@
+--MySQL
 --Datos de usuario
 create table roles(
   id int auto_increment primary key,
@@ -8,6 +9,7 @@ create table users(
   id int auto_increment primary key,
   name text not null,
   last_name text not null,
+  email text not null,
   password varchar(40) not null,
   gender varchar(1) not null,
   rol int not null,
@@ -21,10 +23,13 @@ create table campaings(
   name text not null,
   date_start date not null,
   date_end date not null,
+  product_id int not null,
   status text not null,
-  target text,
+  target text not null,
   description text not null,
-  frecuency int,
+  duration int,
+  date_created datetime,
+  color text,
   foreign key (created_by) references users(id)
 );
 
@@ -36,6 +41,7 @@ create table emails(
   subject text not null,
   content text not null,
   status text,
+  date_created datetime,
   foreign key (created_by) references users(id),
   foreign key (campaing_id) references campaings(id)
 );
@@ -53,6 +59,7 @@ create table products(
   quantity int,
   stock int,
   features text,
+  status boolean default true,
   date_created date,
   foreign key (created_by) references users(id)
 );
@@ -72,16 +79,6 @@ create table postcodes(
 );
 
 create table schools(
-  id int auto_increment primary key,
-  name text not null
-);
-
-create table types_customers(
-  id int auto_increment primary key,
-  name text not null
-);
-
-create table status_social(
   id int auto_increment primary key,
   name text not null
 );
@@ -148,6 +145,8 @@ create table customer_team(
   foreign key (customer_id) references customers(id),
   foreign key (team_id) references teams(id)
 );
+
+--PostgreSQL
 
 --Roles
 INSERT INTO roles (name) VALUES('Administrador');

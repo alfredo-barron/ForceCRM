@@ -47,7 +47,7 @@
                       <td>{{ c.last_name }}</td>
                       <td>{{ c.email }}</td>
                       <td>{{ c.birthdate }}</td>
-                      <td><a href="{{ urlFor('profile-customer') }}/{{ c.id }}">Ver perfil</a></td>
+                      <td><a href="{{ urlFor('profile-customer') }}/{{ c.id }}" class="btn btn-primary btn-xs"><i class="fa fa-user"></i>&nbsp; Perfil</a></td>
                     </tr>
                   {% endfor %}
                 </tbody>

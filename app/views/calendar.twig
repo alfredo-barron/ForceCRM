@@ -38,31 +38,61 @@
     <strong>Copyright &copy; {{ "now"|date("Y") }} </strong> Todos los derechos reservados.
   </footer>
 </div>
+    <div id="event" name="event" class="modal fade" tabindex="-1" role="dialog"  aria-hidden="true" class="modal">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title text-center"><div id="name"></div></h4>
+          </div>
+          <div class="modal-body">
+            <div id="description"></div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default btn-flat pull-left" data-dismiss="modal">Cerrar</button>
+          </div>
+        </div><!-- /.modal-content -->
+      </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
 {% endblock %}
 {% block js %}
   <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.7.0/moment.min.js" type="text/javascript"></script>
   <script src="{{ urlFor('root') }}public/plugins/fullcalendar/fullcalendar.js" type="text/javascript"></script>
   <script type="text/javascript">
     $(document).ready(function() {
-          $('#calendar').fullCalendar({
-          header: {
-            left: 'prev,next today',
-            center: 'title',
-            right: 'month,agendaWeek,agendaDay'
-          },
-          buttonText: {
-            today: 'Hoy',
-            month: 'Mes',
-            week: 'Semana',
-            day: 'Día'
-          },
-          events: {
-            url: '{{ urlFor('root') }}campaings',
-          },
-          editable: false,
-          droppable: false,
-          weekNumbers: true
-        });
+
+      $('#calendar').fullCalendar({
+      header: {
+        left: 'prev,next today',
+        center: 'title',
+        right: 'month,agendaWeek,agendaDay'
+      },
+      buttonText: {
+        today: 'Hoy',
+        month: 'Mes',
+        week: 'Semana',
+        day: 'Día'
+      },
+      events: {
+        url: '{{ urlFor('root') }}campaings'
+      },
+      editable: true,
+      weekNumbers: true,
+      eventLimit: true, // for all non-agenda views
+        views: {
+        agenda: {
+          eventLimit: 6 // adjust to 6 only for agendaWeek/agendaDay
+        }
+      },
+      eventClick: function(calEvent, jsEvent, view) {
+        //alert('Event: ' + calEvent.title + calEvent.description);
+        $('#event').modal();
+        $('#name').html(calEvent.title);
+        $('#description').html("<b>Objetivo:</b> "+calEvent.description);
+        // change the border color just for fun
+    }
+
+    });
 
 
     });
