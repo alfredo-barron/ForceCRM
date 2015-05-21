@@ -42,47 +42,103 @@
           <div class="box-header with-border">
             <h3 class="box-title">Redactar nuevo email</h3>
           </div><!-- /.box-header -->
-          <form action="{{ urlFor('email-post') }}" method="post">
+          <form id="emailForm" name="emailForm">
           <div class="box-body">
-          <label>Campaña:</label>
-          <div class="input-group form-group has-feedback">
-            <span class="input-group-addon"><i class="fa fa-bullhorn"></i></span>
-            <select name="campaing_id" id="campaing_id" class="form-control">
-              <option value="0">Selecciona campaña...</option>
-              {% for c in campaings %}
-                  <option value="{{ c.id }}">{{ c.name }}</option>
-              {% endfor %}
-            </select>
-          </div>
-             <label>Fecha y hora de envio: </label>
-            <div class="row">
-              <div class="col-md-6">
-                <div class="input-group form-group has-feedback">
-                  <span class="input-group-addon"><i class="fa fa-calendar"></i></span><input class="form-control pull-right" id="date" name="date" placeholder="Fecha:">
-                </div>
+          {% if email.id is defined %}
+            <input type="hidden" id="id" name="id" value="{{ email.id }}">
+          {% else %}
+            <input type="hidden" id="id" name="id" value="">
+          {% endif %}
+          <div class="row">
+            <div class="form-group col-md-12">
+              {% if email.campaing_id is defined %}
+                <label class="control-label">Campaña :</label>
+               {% else %}
+                <label class="control-label" title="Campo obligatorio">Campaña * :</label>
+               {% endif %}
+              <div class="input-group form-group">
+                <span class="input-group-addon"><i class="fa fa-bullhorn"></i></span>
+                <select name="campaing_id" id="campaing_id" class="form-control" required >
+                  {% if email.campaing_id is defined %}
+                    <option value="{{ email.campaing_id }}">
+                      {{ campaing.name }}
+                    </option>
+                  {% else %}
+                      <option value="0">Seleciona campaña...</option>
+                  {% endif %}
+                  {% for c in campaings %}
+                    <option value="{{ c.id }}">{{ c.name }}</option>
+                  {% endfor %}
+                </select>
               </div>
-              <div class="col-md-6">
-                <div class="bootstrap-timepicker">
-                  <div class="input-group form-group has-feedback">
-                    <span class="input-group-addon"><i class="fa fa-clock-o"></i></span><input class="form-control timepicker" id="hour" name="hour" placeholder="Hora:">
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12 form-group">
+              {% if email.date_send is defined %}
+                <label class="control-label">Fecha y hora de envio :</label>
+              {% else %}
+                <label class="control-label" title="Campo obligatorio">Fecha y hora de envio * :</label>
+              {% endif %}
+              <!--<div class="input-group">-->
+                {% if email.date_send is defined %}
+                  <input type="text" name="date_send" id="date_send" class="form-control" value="{{ email.date_send }}">
+                {% else %}
+                  <div class="row">
+                    <div class="col-md-6 form-group">
+                      <div class="input-group">
+                        <span class="input-group-addon"><i class="fa fa-calendar"></i></span><input class="form-control pull-right" id="date" name="date" placeholder="Fecha:">
+                      </div>
+                    </div>
+                    <div class="col-md-6 form-group">
+                      <div class="bootstrap-timepicker">
+                        <div class="input-group">
+                          <span class="input-group-addon"><i class="fa fa-clock-o"></i></span><input class="form-control timepicker" id="hour" name="hour" placeholder="Hora:">
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                {% endif %}
+                <!--</div>-->
+              </div>
+            </div>
+             <div class="row">
+                <div class="col-md-12 form-group">
+                  {% if email.subject is defined %}
+                    <label class="control-label">Asunto :</label>
+                  {% else %}
+                    <label class="control-label" title="Campo obligatorio">Asunto * :</label>
+                  {% endif %}
+                  <div class="input-group">
+                    <span class="input-group-addon"><i class="fa fa-bookmark"></i></span>
+                    {% if email.subject is defined %}
+                      <input type="text" name="subject" id="subject" class="form-control" value="{{ email.subject }}">
+                    {% else %}
+                      <input type="text" name="subject" id="subject" class="form-control" placeholder="Asunto" required autocomplete="off">
+                    {% endif %}
                   </div>
                 </div>
               </div>
-            </div>
             <div class="form-group">
-               <label>Asunto:</label>
-              <input class="form-control" id="subject" name="subject" placeholder="Asunto:">
-            </div>
-            <div class="form-group">
-              <textarea id="compose-textarea" id="content" name="content" class="form-control" style="height: 300px" placeholder="Escribir email...">
+              {% if email.content is defined %}
+                <textarea id="compose-textarea" id="content" name="content" class="form-control" style="height: 300px" placeholder="Escribir email...">
+                  {{ email.subject }}
+              </textarea>
+              {% else %}
+                <textarea id="compose-textarea" id="content" name="content" class="form-control" style="height: 300px" placeholder="Escribir email...">
 
               </textarea>
+              {% endif %}
             </div>
           </div><!-- /.box-body -->
           <div class="box-footer">
             <div class="pull-right">
-              <button class="btn btn-default"><i class="fa fa-times"></i> Cancelar</button>
-              <button type="submit" class="btn btn-primary"><i class="fa fa-archive"></i> Archivar</button>
+              <a href="{{ urlFor('email') }}" class="btn btn-default"><i class="fa fa-times"></i> Cancelar</a>
+              {% if email.id is defined %}
+                <button type="button" id="editEmail" name="editEmail" class="btn btn-primary"><i class="fa fa-edit"></i> Actualizar</button>
+              {% else %}
+                <button type="button" id="newEmail" name="newEmail" class="btn btn-primary"><i class="fa fa-archive"></i> Archivar</button>
+              {% endif %}
               </form>
             </div>
             <br><br>
@@ -113,7 +169,41 @@
         });
     });
     $(document).ready(function() {
+      $('#newEmail').click(function(event) {
+        var id = $('#id').val();
+        var campaing_id = $('#campaing_id option:selected').val();
+        var date = $('#date').val();
+        var hour = $('#hour').val();
+        var subject = $('#subject').val();
+        var content = $('#content').val();
+        if (campaing_id == 0 || date == "" || subject == "" || content == "") {
+          $.growl.error({ message: "Rellene todos los campos obligatorios!" });
+        } else {
+          $.ajax({
+            url: "nuevo",
+            type: "POST",
+            dataType: "html",
+            data: $('#emailForm').serialize(),
+            success: function(data) {
+              if(data == 'vacio'){
+                $.growl.error({ message: "Rellene todos los campos obligatorios!" });
+              } else if(data == 'exito') {
+                $.growl.notice({ message: "Has creado una nuevo email!" });
+                limpiar();
+              } else if(data == 'error') {
+                $.growl.error({ message: "Error del servidor!" });
+              }
+            }
+          });
+        }
+      });
 
+      function limpiar(){
+        var date = $('#date').val("");
+        var subject = $('#subject').val("");
+        var content = $('#content').empty();
+        var campaing_id = $('#campaing_id').val($('#campaing_id > option:first').val());
+      }
     });
   </script>
   <script src="{{ urlFor('root') }}public/css/dist/js/demo.js"></script>

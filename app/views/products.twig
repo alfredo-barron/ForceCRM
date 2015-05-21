@@ -49,7 +49,7 @@
                       <td>$ {{ p.price }}</td>
                       <td>{{ p.quantity }}</td>
                       <td>{{ p.quantity }}</td>
-                      <td><a href="{{ urlFor('edit-product') }}/{{ p.id }}" class="btn btn-primary btn-xs"><i class="fa fa-edit"></i> Actualizar</a>   <a href="" class="btn btn-danger btn-xs"><i class="fa fa-times"></i> Dar de baja</a></td>
+                      <td>{% if user.rol == "Jefe de Marketing" or user.rol == "Administrador" %}<a href="{{ urlFor('edit-product') }}/{{ p.id }}" class="btn btn-primary btn-xs"><i class="fa fa-edit"></i> Actualizar</a> {% endif %} {% if user.rol == "Administrador" %} <a href="" class="btn btn-danger btn-xs"><i class="fa fa-times"></i> Dar de baja</a> {% endif %}</td>
                     </tr>
                   {% endfor %}
                 </tbody>

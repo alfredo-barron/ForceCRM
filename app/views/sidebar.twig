@@ -114,6 +114,7 @@
           </li>
         </ul>
       </li>
+     {% if user.rol == "Jefe de Marketing" or user.rol == "Administrador" %}
      <li class="treeview">
         <a href="#">
           <i class="fa fa-inbox"></i>
@@ -127,6 +128,7 @@
           <li><a href="{{ urlFor('email') }}"><i class="fa fa-check"></i> Enviados</a></li>
         </ul>
       </li>
+      {% endif %}
       <li class="treeview">
         <a href="#">
           <i class="fa fa-barcode"></i> <span>Productos</span>

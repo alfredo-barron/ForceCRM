@@ -229,14 +229,14 @@
             <div class="info-box-content">
               <span class="info-box-text">Clientes A</span>
               <span class="info-box-number">
-                {% if customerA == 0 %}
+                {% if type.a == 0 %}
                   0
                 {% else %}
-                  {{ customerA }}
+                  {{ type.a }}
                 {% endif %}
               </span>
               <div class="progress">
-                <div class="progress-bar" style="width: {{ customerA }}%"></div>
+                <div class="progress-bar" style="width: {{ type.a }}%"></div>
               </div>
               <span class="progress-description">
 
@@ -248,14 +248,14 @@
             <div class="info-box-content">
               <span class="info-box-text">Clientes B</span>
               <span class="info-box-number">
-                {% if customerB == 0 %}
+                {% if type.b == 0 %}
                   0
                 {% else %}
-                  {{ customerB }}
+                  {{ type.b }}
                 {% endif %}
               </span>
               <div class="progress">
-                <div class="progress-bar" style="width: {{ customerB }}%"></div>
+                <div class="progress-bar" style="width: {{ type.b }}%"></div>
               </div>
               <span class="progress-description">
 
@@ -267,14 +267,14 @@
             <div class="info-box-content">
               <span class="info-box-text">Clientes C</span>
               <span class="info-box-number">
-                {% if customerC == 0 %}
+                {% if type.c == 0 %}
                   0
                 {% else %}
-                  {{ customerC }}
+                  {{ type.c }}
                 {% endif %}
               </span>
               <div class="progress">
-                <div class="progress-bar" style="width: {{ customerC }}%"></div>
+                <div class="progress-bar" style="width: {{ type.c }}%"></div>
               </div>
               <span class="progress-description">
 
@@ -327,7 +327,7 @@
                   </thead>
                   <tbody>
                     <tr>
-                      <td><a href="pages/examples/invoice.html">OR9842</a></td>
+                      <td><a href="#">OR9842</a></td>
                       <td>Camisa</td>
                       <td><span class="label label-success">Ropa</span></td>
                       <td>Alfredo</td>
@@ -350,8 +350,8 @@
 {% endblock %}
 {% block js %}
     <script type="text/javascript">
-      var men = {{ men|escape('js') }};
-      var women = {{ women|escape('js') }};
+      var men = {{ gender.h|escape('js') }};
+      var women = {{ gender.m|escape('js') }};
     </script>
     <script src="{{ urlFor('root') }}public/plugins/chartjs/Chart.min.js"></script>
     <script src="{{ urlFor('root') }}public/css/dist/js/demo.js"></script>

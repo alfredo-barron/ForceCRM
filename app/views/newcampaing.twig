@@ -46,7 +46,7 @@
             {% endif %}
             <div class="box-body">
               <div class="row">
-                <div class="col-md-offset-2 col-md-8 form-group">
+                <div class="col-md-12 form-group">
                   {% if campaing.name is defined %}
                     <label class="control-label">Nombre :</label>
                   {% else %}
@@ -63,7 +63,7 @@
                 </div>
               </div>
               <div class="row">
-                <div class="col-md-offset-2 col-md-8 form-group">
+                <div class="col-md-12 form-group">
                   {% if campaing.date_start and campaing.date_end is defined %}
                     <label class="control-label">Fecha de inicio - Fecha de fin :</label>
                   {% else %}
@@ -80,8 +80,7 @@
                 </div>
               </div>
               <div class="row">
-                <div class="col-md-2"></div>
-                <div class="form-group col-md-8">
+                <div class="form-group col-md-12">
                   {% if campaing.product_id is defined %}
                     <label class="control-label">Producto :</label>
                    {% else %}
@@ -108,7 +107,7 @@
                 <h3 class="box-title">Datos de la campaña</h3>
               </div><!-- /.box-header -->
               <div class="row">
-                <div class="col-md-offset-2 col-md-8 form-group">
+                <div class="col-md-12 form-group">
                   {% if campaing.target is defined %}
                     <label class="control-label">Objetivo :</label>
                   {% else %}
@@ -125,7 +124,7 @@
                 </div>
               </div>
               <div class="row">
-                <div class="col-md-offset-2 col-md-8 form-group">
+                <div class="col-md-12 form-group">
                   {% if campaing.description is defined %}
                     <label class="control-label">Descripción :</label>
                   {% else %}
@@ -142,7 +141,7 @@
                 </div>
               </div>
               <div class="row">
-                <div class="col-md-offset-2 col-md-8 form-group">
+                <div class="col-md-12 form-group">
                   {% if campaing.color is defined %}
                     <label class="control-label">Color identificador :</label>
                   {% else %}

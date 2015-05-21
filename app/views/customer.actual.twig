@@ -40,6 +40,7 @@
                     <th>Email</th>
                     <th>Fecha de nacimiento</th>
                     <th>Estatus</th>
+                    <th>Clasificación</th>
                     <th>Información</th>
                   </tr>
                 </thead>
@@ -51,6 +52,7 @@
                       <td>{{ c.email }}</td>
                       <td>{{ c.birthdate }}</td>
                       <td>{{ c.status }}</td>
+                      <td>{{ c.type }}</td>
                       <td><a href="{{ urlFor('profile-customer') }}/{{ c.id }}">Ver perfil</a></td>
                     </tr>
                   {% endfor %}
@@ -62,6 +64,7 @@
                     <th>Email</th>
                     <th>Fecha de nacimiento</th>
                     <th>Estatus</th>
+                    <th>Clasificación</th>
                     <th>Información</th>
                   </tr>
                 </tfoot>

@@ -127,6 +127,7 @@ $app->get('/excel', function() use($app,$db){
   require('public/php-excel-reader/excel_reader2.php');
   require('public/SpreadsheetReader.php');
   $Reader = new SpreadsheetReader('public/correos.xlsx');
+    exit();
     foreach ($Reader as $Row) {
       $st = $db->prepare("INSERT INTO customers (name,last_name,birthdate,gender,email,telephone,place,street,number,postcode,city,entity,job,school,status_civil,sons) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
      if($customer = $st->execute(array($Row[0],$Row[1],$Row[2],$Row[3],$Row[4],$Row[5],$Row[6],$Row[7],$Row[8],$Row[9],$Row[10],$Row[11],$Row[12],$Row[13],$Row[14],$Row[15]))){

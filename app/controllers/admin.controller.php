@@ -7,7 +7,7 @@ $app->get('/u/0', $auth($app), function() use($app,$db){
   $st->setFetchMode(PDO::FETCH_OBJ);
   $st->execute(array($id));
   $data['user'] = $st->fetch();
-  $st = $db->prepare("SELECT * FROM customers WHERE status = 'Contacto'");
+  $st = $db->prepare("SELECT * FROM customers");
   $st->execute();
   $data['count_con'] = $st->rowCount();
   $st = $db->prepare("SELECT * FROM customers WHERE status = 'Actual'");
@@ -19,24 +19,15 @@ $app->get('/u/0', $auth($app), function() use($app,$db){
   $st = $db->prepare("SELECT * FROM campaings WHERE status = 'Finalizada'");
   $st->execute();
   $data['cam_fin'] = $st->rowCount();
-  $st = $db->prepare("SELECT * FROM customers WHERE gender = 'H'");
+  $st = $db->prepare("SELECT COUNT(CASE gender WHEN 'H' THEN 'H' END) AS h, COUNT(CASE gender WHEN  'M' THEN 'M' END) AS m FROM customers;");
   $st->execute();
-  $data['men'] = $st->rowCount();
-  $st = $db->prepare("SELECT * FROM customers WHERE gender = 'M'");
-  $st->execute();
-  $data['women'] = $st->rowCount();
-  $st = $db->prepare("SELECT * FROM customers WHERE status = 'Potencial'");
+  $data['gender'] = $st->fetch();
+  $st = $db->prepare("SELECT * FROM customers WHERE status = 'Potencial' OR status = 'Contacto'");
   $st->execute();
   $data['customerP'] = $st->rowCount();
-  $st = $db->prepare("SELECT * FROM customers WHERE type = 'A'");
+  $st = $db->prepare("SELECT COUNT(CASE type WHEN 'A' THEN 'A' END) as a, COUNT(CASE type WHEN 'B' THEN 'B' END) AS b, COUNT(CASE type WHEN 'C' THEN 'C' END) as c FROM customers;");
   $st->execute();
-  $data['customerA'] = $st->rowCount();
-  $st = $db->prepare("SELECT * FROM customers WHERE type = 'B'");
-  $st->execute();
-  $data['customerB'] = $st->rowCount();
-  $st = $db->prepare("SELECT * FROM customers WHERE type = 'C'");
-  $st->execute();
-  $data['customerC'] = $st->rowCount();
+  $data['type'] = $st->fetch();
   $st = $db->prepare("SELECT * FROM products ORDER BY date_created DESC");
   $st->execute();
   $data['products'] = $st->rowCount();
@@ -230,7 +221,7 @@ $app->group('/u/0/clientes', $auth($app), function() use($app,$db){
     $st->setFetchMode(PDO::FETCH_OBJ);
     $st->execute(array($id));
     $data['user'] = $st->fetch();
-    $st = $db->prepare("SELECT * FROM customers WHERE status = 'Contacto'");
+    $st = $db->prepare("SELECT * FROM customers");
     $st->execute();
     $data['customers'] = $st->fetchAll();
     $app->render('customers.twig',$data);
@@ -243,7 +234,7 @@ $app->group('/u/0/clientes', $auth($app), function() use($app,$db){
     $st->setFetchMode(PDO::FETCH_OBJ);
     $st->execute(array($id));
     $data['user'] = $st->fetch();
-    $st = $db->prepare("SELECT * FROM customers WHERE status = 'Potencial'");
+    $st = $db->prepare("SELECT * FROM customers WHERE status = 'Potencial' OR status = 'Contacto'");
     $st->execute();
     $data['customers'] = $st->fetchAll();
     $app->render('customer.potencial.twig',$data);
@@ -297,28 +288,64 @@ $app->group('/u/0/mercados', $auth($app), function() use($app,$db){
     $data['user'] = $st->fetch();
     switch ($type) {
       case 'A':
-        $st = $db->prepare("SELECT * FROM customers WHERE status = 'Actual' AND type = 'A'");
+        $data['type'] = "A";
+        $st = $db->prepare("SELECT COUNT(CASE gender WHEN 'H' THEN 'H' END) AS h, COUNT(CASE gender WHEN  'M' THEN 'M' END) AS m FROM customers WHERE status = 'Actual' AND type = 'A'");
         $st->execute();
-        $customers = $st->fetchAll();
+        $data['gender'] = $st->fetch();
+        $st = $db->prepare("SELECT COUNT(CASE school WHEN 1 THEN 1 END) as ninguna, COUNT(CASE school WHEN 2 THEN 2 END) as primaria, COUNT(CASE school WHEN 3 THEN 3 END) as secundaria, COUNT(CASE school WHEN 4 THEN 5 END) as preparatoria, COUNT(CASE school WHEN 5 THEN 5 END) as licenciatura, COUNT(CASE school WHEN 6 THEN 6 END) as maestria FROM customers WHERE status = 'Actual' AND type = 'A'");
+        $st->execute();
+        $data['schools'] = $st->fetch();
+        $st = $db->prepare("SELECT COUNT(CASE job WHEN 1 THEN 1 END) as estudiante, COUNT(CASE job WHEN 2 THEN 2 END) as labores_hogar, COUNT(CASE job WHEN 3 THEN 3 END) as profesional_cuenta_ajena, COUNT(CASE job WHEN 4 THEN 4 END) as profesional_cuenta_propia, COUNT(CASE job WHEN 5 THEN 5 END) as desempleado, COUNT(CASE job WHEN 6 THEN 6 END) as directivo, COUNT(CASE job WHEN 7 THEN 7 END) as cargos_intermedios, COUNT(CASE job WHEN 8 THEN 8 END) as trabajadores_gobierno, COUNT(CASE job WHEN 9 THEN 9 END) as trabajadores_educacion, COUNT(CASE job WHEN 10 THEN 10 END) as trabajadores_salud, COUNT(CASE job WHEN 11 THEN 11 END) as fuerzas_armadas, COUNT(CASE job WHEN 12 THEN 12 END)  as otros FROM customers WHERE status = 'Actual' AND type = 'A'");
+        $st->execute();
+        $data['jobs'] = $st->fetch();
+        $st = $db->prepare("SELECT COUNT(CASE status_civil WHEN 1 THEN 1 END) as soltero, COUNT(CASE status_civil WHEN 2 THEN 2 END) as union_libre, COUNT(CASE status_civil WHEN 3 THEN 3 END) as casado, COUNT(CASE status_civil WHEN 4 THEN 4 END) as divorciado, COUNT(CASE status_civil WHEN 5 THEN 5 END) as viudo FROM customers WHERE status = 'Actual' AND type = 'A'");
+        $st->execute();
+        $data['status_civil'] = $st->fetch();
         break;
       case 'B':
-        $st = $db->prepare("SELECT * FROM customers WHERE status = 'Actual' AND type = 'B'");
+        $data['type'] = "B";
+        $st = $db->prepare("SELECT COUNT(CASE gender WHEN 'H' THEN 'H' END) AS h, COUNT(CASE gender WHEN  'M' THEN 'M' END) AS m FROM customers WHERE status = 'Actual' AND type = 'B'");
         $st->execute();
-        $customers = $st->fetchAll();
+        $data['gender'] = $st->fetch();
+        $st = $db->prepare("SELECT COUNT(CASE school WHEN 1 THEN 1 END) as ninguna, COUNT(CASE school WHEN 2 THEN 2 END) as primaria, COUNT(CASE school WHEN 3 THEN 3 END) as secundaria, COUNT(CASE school WHEN 4 THEN 5 END) as preparatoria, COUNT(CASE school WHEN 5 THEN 5 END) as licenciatura, COUNT(CASE school WHEN 6 THEN 6 END) as maestria FROM customers WHERE status = 'Actual' AND type = 'B'");
+        $st->execute();
+        $data['schools'] = $st->fetch();
+        $st = $db->prepare("SELECT COUNT(CASE job WHEN 1 THEN 1 END) as estudiante, COUNT(CASE job WHEN 2 THEN 2 END) as labores_hogar, COUNT(CASE job WHEN 3 THEN 3 END) as profesional_cuenta_ajena, COUNT(CASE job WHEN 4 THEN 4 END) as profesional_cuenta_propia, COUNT(CASE job WHEN 5 THEN 5 END) as desempleado, COUNT(CASE job WHEN 6 THEN 6 END) as directivo, COUNT(CASE job WHEN 7 THEN 7 END) as cargos_intermedios, COUNT(CASE job WHEN 8 THEN 8 END) as trabajadores_gobierno, COUNT(CASE job WHEN 9 THEN 9 END) as trabajadores_educacion, COUNT(CASE job WHEN 10 THEN 10 END) as trabajadores_salud, COUNT(CASE job WHEN 11 THEN 11 END) as fuerzas_armadas, COUNT(CASE job WHEN 12 THEN 12 END)  as otros FROM customers WHERE status = 'Actual' AND type = 'B'");
+        $st->execute();
+        $data['jobs'] = $st->fetch();
+        $st = $db->prepare("SELECT COUNT(CASE status_civil WHEN 1 THEN 1 END) as soltero, COUNT(CASE status_civil WHEN 2 THEN 2 END) as union_libre, COUNT(CASE status_civil WHEN 3 THEN 3 END) as casado, COUNT(CASE status_civil WHEN 4 THEN 4 END) as divorciado, COUNT(CASE status_civil WHEN 5 THEN 5 END) as viudo FROM customers WHERE status = 'Actual' AND type = 'B'");
+        $st->execute();
+        $data['status_civil'] = $st->fetch();
         break;
       case 'C':
-        $st = $db->prepare("SELECT * FROM customers WHERE status = 'Actual' AND type = 'C'");
+        $data['type'] = "C";
+        $st = $db->prepare("SELECT COUNT(CASE gender WHEN 'H' THEN 'H' END) AS h, COUNT(CASE gender WHEN  'M' THEN 'M' END) AS m FROM customers WHERE status = 'Actual' AND type = 'C'");
         $st->execute();
-        $customers = $st->fetchAll();
+        $data['gender'] = $st->fetch();
+        $st = $db->prepare("SELECT COUNT(CASE school WHEN 1 THEN 1 END) as ninguna, COUNT(CASE school WHEN 2 THEN 2 END) as primaria, COUNT(CASE school WHEN 3 THEN 3 END) as secundaria, COUNT(CASE school WHEN 4 THEN 5 END) as preparatoria, COUNT(CASE school WHEN 5 THEN 5 END) as licenciatura, COUNT(CASE school WHEN 6 THEN 6 END) as maestria FROM customers WHERE status = 'Actual' AND type = 'C'");
+        $st->execute();
+        $data['schools'] = $st->fetch();
+        $st = $db->prepare("SELECT COUNT(CASE job WHEN 1 THEN 1 END) as estudiante, COUNT(CASE job WHEN 2 THEN 2 END) as labores_hogar, COUNT(CASE job WHEN 3 THEN 3 END) as profesional_cuenta_ajena, COUNT(CASE job WHEN 4 THEN 4 END) as profesional_cuenta_propia, COUNT(CASE job WHEN 5 THEN 5 END) as desempleado, COUNT(CASE job WHEN 6 THEN 6 END) as directivo, COUNT(CASE job WHEN 7 THEN 7 END) as cargos_intermedios, COUNT(CASE job WHEN 8 THEN 8 END) as trabajadores_gobierno, COUNT(CASE job WHEN 9 THEN 9 END) as trabajadores_educacion, COUNT(CASE job WHEN 10 THEN 10 END) as trabajadores_salud, COUNT(CASE job WHEN 11 THEN 11 END) as fuerzas_armadas, COUNT(CASE job WHEN 12 THEN 12 END)  as otros FROM customers WHERE status = 'Actual' AND type = 'C'");
+        $st->execute();
+        $data['jobs'] = $st->fetch();
+        $st = $db->prepare("SELECT COUNT(CASE status_civil WHEN 1 THEN 1 END) as soltero, COUNT(CASE status_civil WHEN 2 THEN 2 END) as union_libre, COUNT(CASE status_civil WHEN 3 THEN 3 END) as casado, COUNT(CASE status_civil WHEN 4 THEN 4 END) as divorciado, COUNT(CASE status_civil WHEN 5 THEN 5 END) as viudo FROM customers WHERE status = 'Actual' AND type = 'C'");
+        $st->execute();
+        $data['status_civil'] = $st->fetch();
         break;
       case 'P':
         $data['type'] = "P";
-        $st = $db->prepare("SELECT * FROM customers WHERE status = 'Potencial' OR status = 'Contacto' AND gender = 'H'");
+        $st = $db->prepare("SELECT COUNT(CASE gender WHEN 'H' THEN 'H' END) AS h, COUNT(CASE gender WHEN  'M' THEN 'M' END) AS m FROM customers WHERE status = 'Potencial' OR status = 'Contacto'");
         $st->execute();
-        $data['H'] = $st->rowCount();
-        $st = $db->prepare("SELECT * FROM customers WHERE status = 'Potencial' OR status = 'Contacto' AND gender = 'M'");
+        $data['gender'] = $st->fetch();
+        $st = $db->prepare("SELECT COUNT(CASE school WHEN 1 THEN 1 END) as ninguna, COUNT(CASE school WHEN 2 THEN 2 END) as primaria, COUNT(CASE school WHEN 3 THEN 3 END) as secundaria, COUNT(CASE school WHEN 4 THEN 5 END) as preparatoria, COUNT(CASE school WHEN 5 THEN 5 END) as licenciatura, COUNT(CASE school WHEN 6 THEN 6 END) as maestria FROM customers WHERE status = 'Potencial' OR status = 'Contacto'");
         $st->execute();
-        $data['M'] = $st->rowCount();
+        $data['schools'] = $st->fetch();
+        $st = $db->prepare("SELECT COUNT(CASE job WHEN 1 THEN 1 END) as estudiante, COUNT(CASE job WHEN 2 THEN 2 END) as labores_hogar, COUNT(CASE job WHEN 3 THEN 3 END) as profesional_cuenta_ajena, COUNT(CASE job WHEN 4 THEN 4 END) as profesional_cuenta_propia, COUNT(CASE job WHEN 5 THEN 5 END) as desempleado, COUNT(CASE job WHEN 6 THEN 6 END) as directivo, COUNT(CASE job WHEN 7 THEN 7 END) as cargos_intermedios, COUNT(CASE job WHEN 8 THEN 8 END) as trabajadores_gobierno, COUNT(CASE job WHEN 9 THEN 9 END) as trabajadores_educacion, COUNT(CASE job WHEN 10 THEN 10 END) as trabajadores_salud, COUNT(CASE job WHEN 11 THEN 11 END) as fuerzas_armadas, COUNT(CASE job WHEN 12 THEN 12 END)  as otros FROM customers WHERE status = 'Potencial' OR status = 'Contacto'");
+        $st->execute();
+        $data['jobs'] = $st->fetch();
+        $st = $db->prepare("SELECT COUNT(CASE status_civil WHEN 1 THEN 1 END) as soltero, COUNT(CASE status_civil WHEN 2 THEN 2 END) as union_libre, COUNT(CASE status_civil WHEN 3 THEN 3 END) as casado, COUNT(CASE status_civil WHEN 4 THEN 4 END) as divorciado, COUNT(CASE status_civil WHEN 5 THEN 5 END) as viudo FROM customers WHERE status = 'Potencial' OR status = 'Contacto'");
+        $st->execute();
+        $data['status_civil'] = $st->fetch();
         break;
     }
     $app->render('market.twig',$data);
@@ -508,6 +535,19 @@ $app->group('/u/0/email', $auth($app), function() use($app,$db){
     $app->render('email.twig',$data);
   })->name('email');
 
+  $app->get('/vista/(:id_e)', function($id_e) use($app,$db) {
+    $data = array();
+    $id = $_SESSION['id'];
+    $st = $db->prepare("SELECT users.id, users.name, users.last_name, users.email, users.gender, roles.name AS rol FROM users,roles WHERE users.id = ? AND users.rol = roles.id");
+    $st->setFetchMode(PDO::FETCH_OBJ);
+    $st->execute(array($id));
+    $data['user'] = $st->fetch();
+    $st = $db->prepare("SELECT * FROM emails WHERE id = $id_e");
+    $st->execute();
+    $data['email'] = $st->fetch();
+    $app->render('email.vista.twig',$data);
+  })->name('vista-email');
+
   $app->get('/nuevo', function() use($app,$db) {
     $data = array();
     $id = $_SESSION['id'];
@@ -523,21 +563,31 @@ $app->group('/u/0/email', $auth($app), function() use($app,$db){
 
   $app->post('/nuevo', function() use($app,$db) {
     $post = (object) $app->request()->post();
-    $created_by = $_SESSION['id'];
-    $campaing_id = $post->campaing_id;
-    $datetime = $post->date." ".$post->hour;
-    $date_send =  new DateTime($datetime);
-    $date_send = date_format($date_send,'Y-m-d H:i');
-    $subject = $post->subject;
-    $content = $post->content;
-    $status = "Archivado";
-    $st = $db->prepare("INSERT INTO emails (created_by,campaing_id,date_send,subject,content,status) VALUES (?,?,?,?,?,?)");
-    $email = $st->execute(array($created_by,$campaing_id,$date_send,$subject,$content,$status));
-    if ($email) {
-      $success = "Correo redactado";
-      $app->flash('success', $success);
-      $app->redirect($app->urlFor('new-email'));
+    $id = (isset($post->id) and !empty($post->id)) ? $post->id : 0;
+    if($id != 0){
+      echo "error";
+    }else{
+      $created_by = $_SESSION['id'];
+      $campaing_id = $post->campaing_id;
+      $datetime = $post->date." ".$post->hour;
+      $date_send =  new DateTime($datetime);
+      $date_send = date_format($date_send,'Y-m-d H:i');
+      $subject = $post->subject;
+      $content = $post->content;
+      $status = "Archivado";
+      if($datetime == "" || $subject == "" || $content == "" || $campaing_id == 0) {
+        echo "vacio";
+      } else {
+        $st = $db->prepare("INSERT INTO emails (created_by,campaing_id,date_send,subject,content,status) VALUES (?,?,?,?,?,?)");
+        $email = $st->execute(array($created_by,$campaing_id,$date_send,$subject,$content,$status));
+      if ($email) {
+            echo "exito";
+          } else {
+            echo "error";
+          }
+      }
     }
+
   })->name('email-post');
 
 });

@@ -26,7 +26,7 @@
             <div class="box-header with-border">
               <h3 class="text-center">{{ customer.name }} <br> <small>{{ customer.last_name }}</small> </h3>
               <hr>
-              <h4 class="text-center">Cliente: <i> {{ customer.status }} {{ customer.type_customer }} </i></h4>
+              <h4 class="text-center">Cliente: <i><b> {{ customer.status }} {{ customer.type }} </b></i> ( {% if customer.type == 'A' %} <i class="fa fa-star"></i> {% elseif customer.type == 'B' %} <i class="fa fa-star-half-o"></i> {% elseif customer.type == 'C' %} <i class="fa fa fa-star-o"></i> {% else %} <i class="fa fa-diamond"></i> {% endif %} )</h4>
             </div><!-- /.box-header -->
             <div class="box-body">
               <div class="row with-border">
@@ -42,7 +42,7 @@
                     <dt>Estado: </dt><dd>{{ customer.entity }}</dd>
                     <hr>
                     <dt>Género: </dt><dd>{% if customer.gender == "H" %}Hombre{% else %}Mujer{% endif %}</dd>
-                    <dt>Edad: </dt><dd>{% set edad = "now"|date('d/m/Y') - customer.birthdate|date('d/m/Y') %}
+                    <!--<dt>Edad: </dt><dd>{# set edad = "now"|date('d/m/Y') - customer.birthdate|date('d/m/Y') #} -->
                     {{ edad }}</dd>
                     <dt>Fecha de nacimiento: </dt><dd>{{ customer.birthdate|date('d') }} - {{ customer.birthdate|date('m') }} - {{ customer.birthdate|date('Y') }} {% if customer.birthdate|date('d') == "now"|date("d") and customer.birthdate|date('m') == "now"|date("m") %}  <i class="fa fa-birthday-cake" data-toggle="tooltip" title="Hoy cumpleaños"></i> {% endif %}</dd>
                     <dt>Ocupación: </dt><dd>{{ job.name }}</dd>

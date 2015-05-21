@@ -53,7 +53,7 @@
                       <td>{{ c.date_start }}</td>
                       <td>{{ c.date_end }}</td>
                       <td>{{ c.duration }}</td>
-                      <td><a href="{{ urlFor('edit-campaing') }}/{{ c.id }}" class="btn btn-primary btn-xs"><i class="fa fa-edit"></i> Actualizar</a> </td>
+                      <td>{% if user.rol == "Jefe de Marketing" or user.rol == "Administrador" %}<a href="{{ urlFor('edit-campaing') }}/{{ c.id }}" class="btn btn-primary btn-xs"><i class="fa fa-edit"></i> Actualizar</a> {% endif %}</td>
                     </tr>
                   {% endfor %}
                 </tbody>
