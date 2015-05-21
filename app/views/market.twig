@@ -1,0 +1,189 @@
+{% extends 'base.twig' %}
+{% block title %}
+    <title>{{ title }} | Mercados</title>
+{% endblock %}
+{% block css %}
+    <link href="{{ urlFor('root') }}public/plugins/datatables/dataTables.bootstrap.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="{{ urlFor('root') }}public/plugins/iCheck/square/blue.css">
+{% endblock %}
+{% block content %}
+<div class="wrapper">
+  {% include 'navbar.twig' %}
+  {% include 'sidebar.twig' %}
+  <div class="content-wrapper">
+    <section class="content-header">
+          <h1><a href="{{ urlFor('new-market') }}"> <i class="fa fa-arrow-left fa-1x"></i></a> Segmentación <small>del mercado</small></h1>
+          <ol class="breadcrumb">
+            <li><a href="{{ urlFor('dashboard') }}"><i class="fa fa-dashboard"></i> Force <b>CRM</b></a></li>
+            <li class="active"><a href="{{ urlFor('new-market') }}">Mercados</a></li>
+            <li class="active"><a href="#">Segmentación</a></li>
+          </ol>
+        </section>
+         <!-- Main content -->
+    <section class="content">
+      <!-- Info boxes -->
+      <div class="row">
+        <div class="col-md-12">
+        <div class="nav-tabs-custom">
+          <!-- Tabs within a box -->
+          <ul class="nav nav-tabs pull-right">
+            <li class="active"><a href="#" id="gender" name="gender" data-toggle="tab">Sexo</a></li>
+            <li><a href="#" id="school" name="school" data-toggle="tab">Educación</a></li>
+            <li><a href="#" id="job" name="job" data-toggle="tab">Ocupación</a></li>
+            <li><a href="#" id="status_civil" name="status_civil" data-toggle="tab">Estado Civil</a></li>
+            <li class="pull-left header"><i class="fa fa-groups"></i>
+              {% if type == "P" %}
+                Clientes potenciales
+              {% endif %}
+            </li>
+          </ul>
+          <div class="tab-content no-padding">
+            <!-- Morris chart - Sales -->
+            <div class="chart tab-pane active" style="position: relative; height: 500px;">
+              <br><br>
+              <div class="col-md-offset-3 col-md-6">
+                <div id="canvas-holder">
+                  <canvas id="chart-area" width="400" height="400"></canvas>
+                  <canvas id="chart-area2" width="400" height="400"></canvas>
+                  <canvas id="chart-area3" width="700" height="400"></canvas>
+                  <canvas id="chart-area4" width="700" height="400"></canvas>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div><!-- /.nav-tabs-custom -->
+      </div><!-- /.row -->
+    </section><!-- /.content -->
+{% endblock %}
+{% block js %}
+  <script src="{{ urlFor('root')}}public/js/Chart.js" type="text/javascript"></script>
+  <!--<script src="{{ urlFor('root')}}public/js/graphs.js" type="text/javascript"></script>-->
+  <script src="{{ urlFor('root') }}public/css/dist/js/demo.js"></script>
+  <script>
+/*
+  var men = {{ H|escape('js') }};
+    var women = {{ M|escape('js') }};
+    var genderData = [
+    {
+      value: men,
+      color:"#3c8dbc",
+      highlight: "#3CA1BD",
+      label: "Hombres"
+    },
+    {
+      value: women,
+      color: "#f012be",
+      highlight: "#F011DA",
+      label: "Mujeres"
+    }
+
+  ];
+
+  var schoolData = {
+    labels: ["Ninguna", "Primaria", "Secundaria", "Preparatoria o Bachillerato", "Licenciatura", "Maestria o Doctorado"],
+    datasets: [
+        {
+            label: "Segmentación por educación",
+            fillColor: "rgba(220,220,220,0.2)",
+            strokeColor: "rgba(220,220,220,1)",
+            pointColor: "rgba(220,220,220,1)",
+            pointStrokeColor: "#fff",
+            pointHighlightFill: "#fff",
+            pointHighlightStroke: "rgba(220,220,220,1)",
+            data: [65, 59, 80, 81, 56, 55, 40]
+        }
+      ]
+    }
+
+    var ctx1 = document.getElementById("chart-gender").getContext("2d");
+    var ctx2 = document.getElementById("chart-school").getContext("2d");
+    window.myPie = new Chart(ctx1).Pie(genderData);
+    window.myPie = new Chart(ctx2).Pie(genderData);
+    //window.myPie = new Chart(ctx2).Line(schoolData, { responsive: true });
+*/
+    $(function() {
+      $('#chart-area2').hide();
+      $('#chart-area3').hide();
+      $('#chart-area4').hide();
+
+      $('#gender').click(function(event) {
+        $("#chart-area").show();
+        $("#chart-area2").hide();
+      });
+
+      $('#school').click(function(event) {
+        $("#chart-area").hide();
+        $("#chart-area2").show();
+      });
+    });
+
+  var men = {{ H|escape('js') }};
+    var women = {{ M|escape('js') }};
+    var pieData = [
+    {
+      value: men,
+      color:"#3c8dbc",
+      highlight: "#3CA1BD",
+      label: "Hombres"
+    },
+    {
+      value: women,
+      color: "#f012be",
+      highlight: "#F011DA",
+      label: "Mujeres"
+    }
+
+  ];
+
+  var barChartData = {
+    labels: ["Ninguna", "Primaria", "Secundaria", "Preparatoria o Bachillerato", "Licenciatura", "Maestria o Doctorado"],
+    datasets: [
+        {
+            label: "Segmentación por educación",
+            fillColor: "rgba(220,220,220,0.2)",
+            strokeColor: "rgba(220,220,220,1)",
+            pointColor: "rgba(220,220,220,1)",
+            pointStrokeColor: "#fff",
+            pointHighlightFill: "#fff",
+            pointHighlightStroke: "rgba(220,220,220,1)",
+            data: [65, 59, 80, 81, 56, 55, 40]
+        }
+      ]
+
+  }
+    var lineChartData = {
+      labels : ["Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio"],
+      datasets : [
+        {
+          label: "Primera serie de datos",
+          fillColor : "rgba(220,220,220,0.2)",
+          strokeColor : "#6b9dfa",
+          pointColor : "#1e45d7",
+          pointStrokeColor : "#fff",
+          pointHighlightFill : "#fff",
+          pointHighlightStroke : "rgba(220,220,220,1)",
+          data : [90,30,10,80,15,5,15]
+        },
+        {
+          label: "Segunda serie de datos",
+          fillColor : "rgba(151,187,205,0.2)",
+          strokeColor : "#e9e225",
+          pointColor : "#faab12",
+          pointStrokeColor : "#fff",
+          pointHighlightFill : "#fff",
+          pointHighlightStroke : "rgba(151,187,205,1)",
+          data : [40,50,70,40,85,55,15]
+        }
+      ]
+
+    }
+var ctx = document.getElementById("chart-area").getContext("2d");
+var ctx2 = document.getElementById("chart-area2").getContext("2d");
+var ctx3 = document.getElementById("chart-area3").getContext("2d");
+var ctx4 = document.getElementById("chart-area4").getContext("2d");
+window.myPie = new Chart(ctx).Pie(pieData);
+window.myPie = new Chart(ctx2).Doughnut(pieData);
+window.myPie = new Chart(ctx3).Bar(barChartData, {responsive:true});
+window.myPie = new Chart(ctx4).Line(lineChartData, {responsive:true});
+  </script>
+{% endblock %}

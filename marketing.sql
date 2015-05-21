@@ -1,4 +1,5 @@
---MySQL
+--MySQL int auto_increment, double, datetime
+--PostgreSQL serial, decimal, date
 --Datos de usuario
 create table roles(
   id int auto_increment primary key,
@@ -18,7 +19,7 @@ create table users(
 
 --Campañas
 create table campaings(
-  id int auto_increment primary key,
+  id serial primary key,
   created_by int not null,
   name text not null,
   date_start date not null,
@@ -28,40 +29,48 @@ create table campaings(
   target text not null,
   description text not null,
   duration int,
-  date_created datetime,
+  date_created date,
   color text,
   foreign key (created_by) references users(id)
 );
 
 create table emails(
-  id int auto_increment primary key,
+  id serial primary key,
   created_by int not null,
   campaing_id int not null,
   date_send date,
   subject text not null,
   content text not null,
   status text,
-  date_created datetime,
+  date_created date,
   foreign key (created_by) references users(id),
   foreign key (campaing_id) references campaings(id)
 );
 
 --Productos
 create table products(
-  id int auto_increment primary key,
+  id serial primary key,
   created_by int not null,
   name text not null,
   market text not null,
   model text not null,
-  price double,
+  price decimal,
   description text,
-  category text,
+  category int,
   quantity int,
   stock int,
   features text,
   status boolean default true,
+  img text,
   date_created date,
-  foreign key (created_by) references users(id)
+  foreign key (created_by) references users(id),
+  foreign key (category) references categories(id)
+);
+
+--Categorias
+create table categories(
+  id serial primary key,
+  name text not null
 );
 
 --Perfil del cliente
@@ -89,7 +98,7 @@ create table status_civil(
 );
 
 create table customers(
-  id int auto_increment primary key,
+  id serial primary key,
   name text not null,
   last_name text not null,
   birthdate date,
@@ -108,15 +117,12 @@ create table customers(
   school int,
   status_civil int,
   sons int,
-  status_social int,
   date_created date,
   password text,
   foreign key (postcode) references postcodes(id),
-  foreign key (types) references types_customers(id),
   foreign key (job) references jobs(id),
   foreign key (school) references schools(id),
-  foreign key (status_civil) references status_civil(id),
-  foreign key (status_social) references status_social(id)
+  foreign key (status_civil) references status_civil(id)
 );
 
 --Mercados
@@ -148,16 +154,16 @@ create table customer_team(
 
 --PostgreSQL
 
+--Categorias
+INSERT INTO categories (name) VALUES('Ropa');
+INSERT INTO categories (name) VALUES('Relojes');
+INSERT INTO categories (name) VALUES('Tecnología');
+
 --Roles
 INSERT INTO roles (name) VALUES('Administrador');
 INSERT INTO roles (name) VALUES('Jefe de Marketing');
 INSERT INTO roles (name) VALUES('Promotor');
 INSERT INTO roles (name) VALUES('Agente de Ventas');
-
---Tipos de clientes
-INSERT INTO types_customers (name) VALUES('A');
-INSERT INTO types_customers (name) VALUES('B');
-INSERT INTO types_customers (name) VALUES('C');
 
 --Educación
 INSERT INTO schools (name) VALUES('Ninguna');
@@ -173,11 +179,6 @@ INSERT INTO status_civil (name) VALUES('Unión Libre');
 INSERT INTO status_civil (name) VALUES('Casado');
 INSERT INTO status_civil (name) VALUES('Divorciado');
 INSERT INTO status_civil (name) VALUES('Viudo');
-
---Clase social
-INSERT INTO status_social (name) VALUES('Baja');
-INSERT INTO status_social (name) VALUES('Media');
-INSERT INTO status_social (name) VALUES('Alta');
 
 --Ocupacion
 INSERT INTO jobs (name) VALUES('Estudiante');

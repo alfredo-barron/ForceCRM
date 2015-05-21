@@ -33,25 +33,41 @@
                 <div class="col-md-offset-1 col-md-4">
                   <div class="small-box bg-aqua">
                     <div class="inner">
-                      <h3>0</h3>
+                      <h3>
+                      {% if customerA == 0 %}
+                        0
+                      {% else %}
+                        {{ customerA }}
+                      {% endif %}
+                      </h3>
                       <p>Clientes A</p>
                     </div>
                     <div class="icon">
                       <i class="fa fa-star"></i>
                     </div>
-                    <a href="#" class="small-box-footer">Seleccionar <i class="fa fa-arrow-circle-right"></i></a>
+                    {% if customerA != 0 %}
+                      <a href="{{ urlFor('market') }}A" class="small-box-footer">Seleccionar <i class="fa fa-arrow-circle-right"></i></a>
+                    {% endif %}
                   </div>
                 </div>
                 <div class="col-md-offset-2 col-md-4">
                   <div class="small-box bg-green">
                     <div class="inner">
-                      <h3>0</h3>
+                      <h3>
+                      {% if customerB == 0 %}
+                        0
+                      {% else %}
+                        {{ customerB }}
+                      {% endif %}
+                      </h3>
                       <p>Clientes B</p>
                     </div>
                     <div class="icon">
                       <i class="fa fa-star-half-o"></i>
                     </div>
-                    <a href="#" class="small-box-footer">Seleccionar <i class="fa fa-arrow-circle-right"></i></a>
+                    {% if customerC != 0 %}
+                      <a href="{{ urlFor('market') }}B" class="small-box-footer">Seleccionar <i class="fa fa-arrow-circle-right"></i></a>
+                    {% endif %}
                   </div>
                 </div>
               </div>
@@ -60,25 +76,41 @@
                 <div class="col-md-offset-1 col-md-4">
                   <div class="small-box bg-red">
                     <div class="inner">
-                      <h3>0</h3>
+                      <h3>
+                      {% if customerC == 0 %}
+                        0
+                      {% else %}
+                        {{ customerC }}
+                      {% endif %}
+                      </h3>
                       <p>Clientes C</p>
                     </div>
                     <div class="icon">
                       <i class="fa fa-star-o"></i>
                     </div>
-                    <a href="#" class="small-box-footer">Seleccionar <i class="fa fa-arrow-circle-right"></i></a>
+                    {% if customerC != 0 %}
+                      <a href="{{ urlFor('market') }}C" class="small-box-footer">Seleccionar <i class="fa fa-arrow-circle-right"></i></a>
+                    {% endif %}
                   </div>
                 </div>
                 <div class="col-md-offset-2 col-md-4">
                   <div class="small-box bg-orange">
                     <div class="inner">
-                      <h3>0</h3>
+                      <h3>
+                      {% if customerP == 0 %}
+                        0
+                      {% else %}
+                        {{ customerP }}
+                      {% endif %}
+                      </h3>
                       <p>Clientes potenciales</p>
                     </div>
                     <div class="icon">
                       <i class="fa fa-diamond"></i>
                     </div>
-                    <a href="#" class="small-box-footer">Seleccionar <i class="fa fa-arrow-circle-right"></i></a>
+                    {% if customerP != 0 %}
+                      <a href="{{ urlFor('market') }}P" class="small-box-footer">Seleccionar <i class="fa fa-arrow-circle-right"></i></a>
+                    {% endif %}
                   </div>
                 </div>
               </div>

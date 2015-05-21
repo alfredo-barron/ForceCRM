@@ -13,7 +13,7 @@
   <div class="content-wrapper">
     <section class="content-header">
           {% if customer.id is defined %}
-          <h1><a href="{{ urlFor('customers') }}"><i class="fa fa-arrow-left fa-1x"></i></a>Cliente <small>actualizar</small></h1>
+          <h1><a href="{{ urlFor('customers') }}"><i class="fa fa-arrow-left fa-1x"></i></a> Cliente <small>actualizar</small></h1>
           <ol class="breadcrumb">
             <li><a href="{{ urlFor('dashboard') }}"><i class="fa fa-dashboard"></i> Force <b>CRM</b></a></li>
             <li><a href="{{ urlFor('customers') }}">Clientes</a></li>
@@ -297,7 +297,7 @@
             </div>
             <div class="box-footer">
               <div class="pull-right">
-                <a class="btn btn-default" id="btnCancelar" name="btnCancelar"><i class="fa fa-times"></i> Cancelar</a>
+                <a href="{{ urlFor('customers') }}" class="btn btn-default"><i class="fa fa-times"></i> Cancelar</a>
                 {% if customer.id is defined %}
                   <button type="button" id="editCustomer" name="editCustomer" class="btn btn-primary"><i class="fa fa-edit"></i> Actualizar</button>
                 {% else %}
@@ -411,36 +411,51 @@
       });
 
       $('#editCustomer').click(function(event) {
-        var id = $('#id').val();
-        var name = $('#name').val();
-        var last_name = $('#last_name').val();
-        var birthdate1 = $('#birthdate1').val();
-        var gender = $('#gender option:selected').val();
-        var email = $('#email').val();
-        var telephone1 = $('#telephone1').val();
-        var street = $('#street').val();
-        var number = $('#number').val();
-        var postcode = $('#postcode option:selected').val();
-        var place = $('#place').val();
-        var city = $('#city').val();
-        var entity = $('#entity').val();
-        var job = $('#job option:selected').val();
-        var school = $('#school option:selected').val();
-        var status_civil = $('#status_civil option:selected').val();
-        var sons = $('#sons').val();
-          $.ajax({
-            url: "editar",
-            type: "POST",
-            dataType: "html",
-            data: $('#customerForm').serialize(),
-            success: function(data) {
-              if(data == 'exito') {
-                $.growl.notice({ message: "Has editado la información de un cliente!" });
-              } else if(data == 'error') {
-                $.growl.error({ message: "Error del servidor!" });
-              }
+        swal({
+          title: "¿Estás seguro?",
+          text: "Desea actualizar esta información!",
+          type: "warning",
+          showCancelButton: true,
+          confirmButtonColor: "#3c8dbc",
+          confirmButtonText: "Aceptar",
+          cancelButtonText: "Cancelar",
+          closeOnConfirm: false
+        },
+        function(isConfirm){
+          if (isConfirm) {
+            swal("Actualizada!", "Has editado la información de un cliente!", "success");
+            var id = $('#id').val();
+            var name = $('#name').val();
+            var last_name = $('#last_name').val();
+            var birthdate1 = $('#birthdate1').val();
+            var gender = $('#gender option:selected').val();
+            var email = $('#email').val();
+            var telephone1 = $('#telephone1').val();
+            var street = $('#street').val();
+            var number = $('#number').val();
+            var postcode = $('#postcode option:selected').val();
+            var place = $('#place').val();
+            var city = $('#city').val();
+            var entity = $('#entity').val();
+            var job = $('#job option:selected').val();
+            var school = $('#school option:selected').val();
+            var status_civil = $('#status_civil option:selected').val();
+            var sons = $('#sons').val();
+              $.ajax({
+                url: "editar",
+                type: "POST",
+                dataType: "html",
+                data: $('#customerForm').serialize(),
+                success: function(data) {
+                  if(data == 'exito') {
+                    //$.growl.notice({ message: "Has editado la información de un cliente!" });
+                  } else if(data == 'error') {
+                    $.growl.error({ message: "Error del servidor!" });
+                  }
+                }
+              });
             }
-          })
+        });
       });
 
       $('#btnCancelar').click(function(event) {

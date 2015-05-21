@@ -160,7 +160,7 @@
               </div>
             <div class="box-footer">
               <div class="pull-right">
-                <a class="btn btn-default" id="btnCancelar" name="btnCancelar"><i class="fa fa-times"></i> Cancelar</a>
+                <a href="{{ urlFor('campaings') }}" class="btn btn-default"><i class="fa fa-times"></i> Cancelar</a>
                 {% if campaing.id is defined %}
                   <button type="button" id="editCampaing" name="editCampaing" class="btn btn-primary"><i class="fa fa-edit"></i> Actualizar</button>
                 {% else %}
@@ -225,26 +225,41 @@
       });
 
       $('#editCampaing').click(function(event) {
-        var id = $('#id').val();
-        var product_id = $('#product_id option:selected').val();
-        var name = $('#name').val();
-        var reservation = $('#reservation').val();
-        var target = $('#target').val();
-        var description = $('#description').val();
-        var color = $('#color').val();
-          $.ajax({
-            url: "editar",
-            type: "POST",
-            dataType: "html",
-            data: $('#campaingForm').serialize(),
-            success: function(data) {
-              if(data == 'exito') {
-                $.growl.notice({ message: "La campaña ha sido actualizada!" });
-              } else if(data == 'error') {
-                $.growl.error({ message: "Error del servidor!" });
-              }
+        swal({
+          title: "¿Estás seguro?",
+          text: "Desea actualizar esta información!",
+          type: "warning",
+          showCancelButton: true,
+          confirmButtonColor: "#3c8dbc",
+          confirmButtonText: "Aceptar",
+          cancelButtonText: "Cancelar",
+          closeOnConfirm: false
+        },
+        function(isConfirm){
+          if (isConfirm) {
+            swal("Actualizada!", "La campaña ha sido actualizada!", "success");
+            var id = $('#id').val();
+            var product_id = $('#product_id option:selected').val();
+            var name = $('#name').val();
+            var reservation = $('#reservation').val();
+            var target = $('#target').val();
+            var description = $('#description').val();
+            var color = $('#color').val();
+              $.ajax({
+                url: "editar",
+                type: "POST",
+                dataType: "html",
+                data: $('#campaingForm').serialize(),
+                success: function(data) {
+                  if(data == 'exito') {
+                    //$.growl.notice({ message: "La campaña ha sido actualizada!" });
+                  } else if(data == 'error') {
+                    $.growl.error({ message: "Error del servidor!" });
+                  }
+                }
+              });
             }
-          })
+        });
       });
 
       $('#btnCancelar').click(function(event) {

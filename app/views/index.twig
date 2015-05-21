@@ -112,9 +112,9 @@
                   </p>
                   <div class="progress-group">
                     <span class="progress-text">Productos añadidos</span>
-                    <span class="progress-number"><b>1</b>/1</span>
+                    <span class="progress-number"><b>{{ products }}</b>/{{ products }}</span>
                     <div class="progress sm">
-                      <div class="progress-bar progress-bar-aqua" style="width: 100%"></div>
+                      <div class="progress-bar progress-bar-aqua" style="width: {{ products * 100}}%"></div>
                     </div>
                   </div><!-- /.progress-group -->
                   <div class="progress-group">
@@ -126,7 +126,7 @@
                   </div><!-- /.progress-group -->
                   <div class="progress-group">
                     <span class="progress-text">Campañas finalizadas</span>
-                    <span class="progress-number"><b>3</b>/6</span>
+                    <span class="progress-number"><b>{{ cam_fin }}</b>/{{ count_cam }}</span>
                     <div class="progress sm">
                       <div class="progress-bar progress-bar-green" style="width: 50%"></div>
                     </div>
@@ -196,13 +196,18 @@
             </div><!-- /.box-header -->
             <div class="box-body">
               <ul class="products-list product-list-in-box">
-                {% for p in productsASC %}
+                {% if products == 0 %}
+                     <li class="item">
+                       No se ha añadido ningún producto
+                     </li>
+                {% endif %}
+                {% for p in productsDESC %}
                   <li class="item">
                     <div class="product-img">
-                      <img src="{{ urlFor('root') }}public/img/polo.jpg" alt="{{ p.name }}"/>
+                      <img src="{{ urlFor('root') }}public/img/{{ p.img }}" alt="{{ p.name }}"/>
                     </div>
                     <div class="product-info">
-                      <a href="javascript::;" class="product-title">{{ p.name }}<span class="label label-primary pull-right">${{ p.price }}</span></a>
+                      <a href="javascript::;" class="product-title">{{ p.name }}<span class="label label-primary pull-right">$ {{ p.price }}.00</span></a>
                       <span class="product-description">
                         {{ p.description }}.
                       </span>

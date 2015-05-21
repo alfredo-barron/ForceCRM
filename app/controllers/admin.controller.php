@@ -16,6 +16,9 @@ $app->get('/u/0', $auth($app), function() use($app,$db){
   $st = $db->prepare("SELECT * FROM campaings");
   $st->execute();
   $data['count_cam'] = $st->rowCount();
+  $st = $db->prepare("SELECT * FROM campaings WHERE status = 'Finalizada'");
+  $st->execute();
+  $data['cam_fin'] = $st->rowCount();
   $st = $db->prepare("SELECT * FROM customers WHERE gender = 'H'");
   $st->execute();
   $data['men'] = $st->rowCount();
@@ -34,9 +37,10 @@ $app->get('/u/0', $auth($app), function() use($app,$db){
   $st = $db->prepare("SELECT * FROM customers WHERE type = 'C'");
   $st->execute();
   $data['customerC'] = $st->rowCount();
-  $st = $db->prepare("SELECT * FROM products ORDER BY date_created ASC");
+  $st = $db->prepare("SELECT * FROM products ORDER BY date_created DESC");
   $st->execute();
-  $data['productsASC'] = $st->fetchAll();
+  $data['products'] = $st->rowCount();
+  $data['productsDESC'] = $st->fetchAll();
   $app->render('index.twig',$data);
 })->name('dashboard');
 
@@ -269,8 +273,56 @@ $app->group('/u/0/mercados', $auth($app), function() use($app,$db){
     $st->setFetchMode(PDO::FETCH_OBJ);
     $st->execute(array($id));
     $data['user'] = $st->fetch();
+    $st = $db->prepare("SELECT * FROM customers WHERE status = 'Actual' AND type = 'A'");
+    $st->execute();
+    $data['customerA'] = $st->rowCount();
+    $st = $db->prepare("SELECT * FROM customers WHERE status = 'Actual' AND type = 'B'");
+    $st->execute();
+    $data['customerB'] = $st->rowCount();
+    $st = $db->prepare("SELECT * FROM customers WHERE status = 'Actual' AND type = 'C'");
+    $st->execute();
+    $data['customerC'] = $st->rowCount();
+    $st = $db->prepare("SELECT * FROM customers WHERE status = 'Potencial' OR status = 'Contacto'");
+    $st->execute();
+    $data['customerP'] = $st->rowCount();
     $app->render('newmarket.twig',$data);
   })->name('new-market');
+
+  $app->get('/nuevo/(:type)', function($type) use($app,$db) {
+    $data = array();
+    $id = $_SESSION['id'];
+    $st = $db->prepare("SELECT users.id, users.name, users.last_name, users.email, users.gender, roles.name AS rol FROM users,roles WHERE users.id = ? AND users.rol = roles.id");
+    $st->setFetchMode(PDO::FETCH_OBJ);
+    $st->execute(array($id));
+    $data['user'] = $st->fetch();
+    switch ($type) {
+      case 'A':
+        $st = $db->prepare("SELECT * FROM customers WHERE status = 'Actual' AND type = 'A'");
+        $st->execute();
+        $customers = $st->fetchAll();
+        break;
+      case 'B':
+        $st = $db->prepare("SELECT * FROM customers WHERE status = 'Actual' AND type = 'B'");
+        $st->execute();
+        $customers = $st->fetchAll();
+        break;
+      case 'C':
+        $st = $db->prepare("SELECT * FROM customers WHERE status = 'Actual' AND type = 'C'");
+        $st->execute();
+        $customers = $st->fetchAll();
+        break;
+      case 'P':
+        $data['type'] = "P";
+        $st = $db->prepare("SELECT * FROM customers WHERE status = 'Potencial' OR status = 'Contacto' AND gender = 'H'");
+        $st->execute();
+        $data['H'] = $st->rowCount();
+        $st = $db->prepare("SELECT * FROM customers WHERE status = 'Potencial' OR status = 'Contacto' AND gender = 'M'");
+        $st->execute();
+        $data['M'] = $st->rowCount();
+        break;
+    }
+    $app->render('market.twig',$data);
+  })->name('market');
 
   $app->get('', function() use($app,$db) {
     $data = array();
@@ -281,6 +333,12 @@ $app->group('/u/0/mercados', $auth($app), function() use($app,$db){
     $data['user'] = $st->fetch();
     $app->render('markets.twig',$data);
   })->name('markets');
+
+  $app->post('/nuevo/reportes', function() use($app,$db) {
+    $st = $db->prepare("SELECT * FROM customers WHERE status = 'Potencial' OR status = 'Contacto' AND gender = 'H'");
+    $st->execute();
+    $h = $st->rowCount();
+  })->name('reports');
 
 });
 
@@ -365,7 +423,6 @@ $app->group('/u/0/campanas', $auth($app), function() use($app,$db){
   $app->post('/actualizar/editar', function() use($app,$db) {
     $post = (object) $app->request()->post();
     $id = (isset($post->id) and !empty($post->id)) ? $post->id : 0;
-    $created_by = $_SESSION['id'];
     $product_id = $post->product_id;
     $name = $post->name;
     list($date_start, $date_end) = explode("-", $post->reservation);
@@ -386,7 +443,7 @@ $app->group('/u/0/campanas', $auth($app), function() use($app,$db){
     $duration = $date_end - $date_start;
     $duration = intval($duration/60/60/24) + 1;
     $color = $post->color;
-    $st = $db->prepare("UPDATE campaings SET name = ?,date_start = ?, date_end = ?,product_id = ?,status = ?, target = ?, description = ?, duration = ?, color = ? WHERE id = $id");
+    $st = $db->prepare("UPDATE campaings SET name = ?, date_start = ?, date_end = ?,product_id = ?,status = ?, target = ?, description = ?, duration = ?, color = ? WHERE id = $id");
     $campaing = $st->execute(array($name,$start,$end,$product_id,$status,$target,$description,$duration,$color));
     if ($campaing) {
         echo "exito";
@@ -507,6 +564,9 @@ $app->group('/u/0/productos', $auth($app), function() use($app,$db){
     $st->setFetchMode(PDO::FETCH_OBJ);
     $st->execute(array($id));
     $data['user'] = $st->fetch();
+    $st = $db->prepare("SELECT * FROM categories");
+    $st->execute();
+    $data['categories'] = $st->fetchAll();
     $app->render('newproduct.twig',$data);
   })->name('new-product');
 
@@ -525,12 +585,13 @@ $app->group('/u/0/productos', $auth($app), function() use($app,$db){
       $description = $post->description;
       $quantity = $post->quantity;
       $stock = $post->stock;
+      $features = $post->features;
       $date = date('Y-m-d');
       if($name == "" || $market == "" || $price == "" || $description == "" || $quantity == "" || $stock == "" || $category == 0 ) {
         echo "vacio";
       } else {
-        $st = $db->prepare("INSERT INTO products(created_by,name,market,model,price,category,description,quantity,stock,date_created) VALUES (?,?,?,?,?,?,?,?,?,?)");
-        $product = $st->execute(array($created_by,$name,$market,$model,$price,$category,$description,$quantity,$stock,$date));
+        $st = $db->prepare("INSERT INTO products(created_by,name,market,model,price,category,description,quantity,stock,features,date_created) VALUES (?,?,?,?,?,?,?,?,?,?,?)");
+        $product = $st->execute(array($created_by,$name,$market,$model,$price,$category,$description,$quantity,$stock,$features,$date));
           if ($product) {
             echo "exito";
           } else {
@@ -550,40 +611,38 @@ $app->group('/u/0/productos', $auth($app), function() use($app,$db){
     $st->setFetchMode(PDO::FETCH_OBJ);
     $st->execute(array($id_p));
     $data['product'] = $st->fetch();
+    $st = $db->prepare("SELECT * FROM categories WHERE id = ?");
+    $st->setFetchMode(PDO::FETCH_OBJ);
+    $st->execute(array($data['product']->category));
+    $data['category'] = $st->fetch();
+    $st = $db->prepare("SELECT * FROM categories");
+    $st->execute();
+    $data['categories'] = $st->fetchAll();
     $app->render('newproduct.twig',$data);
   })->name('edit-product');
 
-});
-
-$app->post('/actualizar/editar', function() use($app,$db){
+  $app->post('/actualizar/editar', function() use($app,$db){
     $post = (object) $app->request()->post();
     $id = (isset($post->id) and !empty($post->id)) ? $post->id : 0;
-    if($id != 0){
+    $name = $post->name;
+    $market = $post->market;
+    $model = $post->model;
+    $price = $post->price;
+    $category = $post->category;
+    $description = $post->description;
+    $quantity = $post->quantity;
+    $stock = $post->stock;
+    $features = $post->features;
+    $st = $db->prepare("UPDATE products SET name = ?, market = ?, model = ?, price = ?, category = ?, description = ?, quantity = ?, stock = ?, features = ? WHERE id = $id");
+    $product = $st->execute(array($name,$market,$model,$price,$category,$description,$quantity,$stock,$features));
+    if ($product) {
+      echo "exito";
+    } else {
       echo "error";
-    }else{
-      $created_by = $_SESSION['id'];
-      $name = $post->name;
-      $market = $post->market;
-      $model = $post->model;
-      $price = $post->price;
-      $category = $post->category;
-      $description = $post->description;
-      $quantity = $post->quantity;
-      $stock = $post->stock;
-      $date = date('Y-m-d');
-      if($name == "" || $market == "" || $price == "" || $description == "" || $quantity == "" || $stock == "" || $category == 0 ) {
-        echo "vacio";
-      } else {
-        $st = $db->prepare("INSERT INTO products(created_by,name,market,model,price,category,description,quantity,stock,date_created) VALUES (?,?,?,?,?,?,?,?,?,?)");
-        $product = $st->execute(array($created_by,$name,$market,$model,$price,$category,$description,$quantity,$stock,$date));
-          if ($product) {
-            echo "exito";
-          } else {
-            echo "error";
-          }
-        }
-      }
+    }
   })->name('product-edit-post');
+
+});
 
 $app->group('/u/0/personal', $auth($app), function() use($app,$db){
 
@@ -638,6 +697,5 @@ $app->post('/u/checkcampaing', function() use($app,$db){
       $campaing->execute();
     }
   });
-
 
  ?>
