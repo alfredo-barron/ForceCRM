@@ -66,7 +66,7 @@
           <div class="col-md-4">
             <div class="box box-warning direct-chat direct-chat-warning">
               <div class="box-header with-border">
-                <h3 class="box-title"> <i class="fa fa-inbox"></i> Emails </h3>
+                <h3 class="box-title"> <i class="fa fa-bullhorn"></i> Campañas </h3>
                  <div class="box-tools pull-right">
                     <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
                   </div>
@@ -74,7 +74,7 @@
               <div class="box-body">
                 <div class="direct-chat-messages">
                   <ul>
-                    <li>Ningún email enviado</li>
+                    <li>Ninguna campaña</li>
                   </ul>
                 </div>
               </div>
@@ -83,15 +83,24 @@
           <div class="col-md-4">
             <div class="box box-warning direct-chat direct-chat-warning">
               <div class="box-header with-border">
-                <h3 class="box-title"><i class="fa fa-bullhorn"></i> Campañas </h3>
+                <h3 class="box-title"><i class="fa fa-cubes"></i> Categorias de ventas</h3>
                 <div class="box-tools pull-right">
                   <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
                 </div>
               </div>
               <div class="box-body">
                 <div class="direct-chat-messages">
-                  <ul>
-                    <li>Ninguna campaña</li>
+                  <ul class="nav nav-pills nav-stacked">
+                    {% if categories == null %}
+                         <li class="item">
+                           No tiene categorias, no ha registrado ventas.
+                         </li>
+                    {% endif %}
+                    {% for c in categories %}
+                      <li class="item">
+                        <a href="javascript::;" class="product-title">{{ c.name }}</a>
+                      </li><!-- /.item -->
+                    {% endfor %}
                   </ul>
                 </div>
               </div>
@@ -107,8 +116,22 @@
               </div>
               <div class="box-body">
                 <div class="direct-chat-messages">
-                  <ul>
-                    <li>Ninguna venta</li>
+                  <ul class="products-list product-list-in-box">
+                    {% if products == null %}
+                         <li class="item">
+                           No ha registrado ninguna venta
+                         </li>
+                    {% endif %}
+                    {% for p in products %}
+                      <li class="item">
+                        <div class="product-img">
+                          <img src="{{ urlFor('root') }}public/products/{{ p.img }}" alt="{{ p.name }}"/>
+                        </div>
+                        <div class="product-info">
+                          <a href="javascript::;" class="product-title">{{ p.name }}</a>
+                        </div>
+                      </li><!-- /.item -->
+                    {% endfor %}
                   </ul>
                 </div>
               </div>

@@ -42,3 +42,145 @@ FROM customers;
 SELECT DATE_FORMAT(FROM_DAYS(TO_DAYS(NOW())-TO_DAYS(birthdate)), '%Y')+0 AS age FROM customers
 SELECT date_part('year',age( birthdate )) AS age FROM customers;
 
+--Obtener las ventas de un año
+SELECT COUNT(*) FROM sales,times WHERE sales.id_time = times.id AND times.year = '2015';
+--Obtener las ventas de un mes determinado
+SELECT COUNT(*) FROM sales,times WHERE sales.id_time = times.id AND times.month = '1';
+--Obtener las ventas por dia y mes
+SELECT COUNT(*) FROM sales,times WHERE sales.id_time = times.id AND times.day = '1' AND times.month = '1';
+
+--Obtener las ventas de cada mes:
+SELECT
+COUNT(CASE times.month WHEN 1 THEN 1 END) as enero,
+COUNT(CASE times.month WHEN 2 THEN 2 END) as febrero,
+COUNT(CASE times.month WHEN 3 THEN 3 END) as marzo,
+COUNT(CASE times.month WHEN 4 THEN 4 END) as abril,
+COUNT(CASE times.month WHEN 5 THEN 5 END) as mayo
+FROM sales,times
+WHERE sales.id_time = times.id;
+
+--Obtener los emails archivados y los enviados
+SELECT
+COUNT(*) as totales,
+COUNT(CASE status WHEN 'Archivado' THEN 'Archivado' END) as archivados,
+COUNT(CASE status WHEN 'Enviado' THEN 'Enviado' END) as enviados,
+COUNT(CASE status WHEN 'Fallido' THEN 'Fallido' END) as fallidos
+FROM emails;
+
+--Obtener las campañas activas, finalizadas y en espera
+SELECT
+COUNT(*) as totales,
+COUNT(CASE status WHEN 'Activa' THEN 'Activa' END) as activas,
+COUNT(CASE status WHEN 'Finalizada' THEN 'Finalizada' END) as finalizadas,
+COUNT(CASE status WHEN 'En espera' THEN 'En espera' END) as en_espera
+FROM campaings;
+
+--Obtener los clientes actuales y contacto
+SELECT
+COUNT(*) as totales,
+COUNT(CASE status WHEN 'Actual' THEN 'Actual' END) as clientes
+FROM customers;
+
+--Obtener las ventas de cada cliente
+SELECT DISTINCT products.name,products.img FROM sales,customers,products WHERE sales.id_customer = customers.id AND sales.id_product = products.id AND customers.id = 32;
+
+--Obtiene las categorias que mas compra un cliente
+SELECT DISTINCT categories.name FROM sales,customers,products,categories WHERE sales.id_customer = customers.id AND sales.id_product = products.id AND products.category = categories.id AND customers.id = 32;
+
+--Segmentación ABC
+--Obtengo el ID de los clientes
+SELECT id FROM customers;
+--Cuento las ventas de cada cliente
+SELECT COUNT(*) FROM sales WHERE id_customer = 1;
+--Si sus ventas son 0
+UPDATE customers SET status = 'Potencial' WHERE id = 1;
+--Si no es cliente actual
+UPDATE customers SET status = 'Actual' WHERE id = 1;
+--Obtener todos los clientes actuales que ha hecho compras //AND status = 'Actual'
+SELECT customers.id, customers.name, SUM(sales.sub_total) AS sales FROM customers,sales WHERE sales.id_customer = customers.id GROUP BY customers.id;
+
+SELECT SUM(sub_total) AS total FROM sales;
+
+SELECT
+  t1.id,
+  t1.year,
+  t1.name,
+  t1.sales
+FROM(
+    SELECT
+        customers.id AS id,
+        times.year AS year,
+        customers.name,
+        SUM(sales.sub_total) sales
+    FROM sales,customers,times
+        WHERE sales.id_customer = customers.id
+        AND sales.id_time = times.id
+    GROUP BY
+        customers.id,
+        times.year
+) t1
+  GROUP BY
+    t1.year,
+    t1.name,
+    t1.sales
+  ORDER BY
+    t1.sales DESC;
+
+--Obtener las edades /MYSQL
+SELECT
+  t1.id,
+  t1.age
+FROM(
+    SELECT
+      DATE_FORMAT(FROM_DAYS(TO_DAYS(NOW())-TO_DAYS(birthdate)), '%Y')+0 AS age,
+      id
+    FROM
+      customers
+) t1
+  ORDER BY
+    t1.age DESC;
+
+--Obtener las edades /PGSQL
+SELECT
+  t1.id,
+  t1.age
+FROM(
+    SELECT
+      date_part('year',age( birthdate )) AS age,
+      id
+    FROM
+      customers
+) t1
+  ORDER BY
+    t1.age DESC;
+
+--Obtener la segmetación por edad /MYSQL
+SELECT
+  COUNT(*) as total,
+  COUNT(CASE WHEN (t1.age BETWEEN 1 AND 12) THEN 1 END) as ninez,
+  COUNT(CASE WHEN (t1.age BETWEEN 13 AND 18) THEN 2 END) as jovenes,
+  COUNT(CASE WHEN (t1.age BETWEEN 18 AND 35) THEN 3 END) as jovenes_adultos,
+  COUNT(CASE WHEN (t1.age BETWEEN 35 AND 60) THEN 4 END) as adultos,
+  COUNT(CASE WHEN (t1.age > 60) THEN 5 END) as vejez
+FROM(
+    SELECT
+      DATE_FORMAT(FROM_DAYS(TO_DAYS(NOW())-TO_DAYS(birthdate)), '%Y')+0 AS age
+    FROM
+      customers
+) t1;
+
+
+--Obtener la segmetación por edad /PGSQL
+SELECT
+  COUNT(*) as total,
+  COUNT(CASE WHEN (t1.age BETWEEN 1 AND 12) THEN 1 END) as ninez,
+  COUNT(CASE WHEN (t1.age BETWEEN 13 AND 18) THEN 2 END) as jovenes,
+  COUNT(CASE WHEN (t1.age BETWEEN 18 AND 35) THEN 3 END) as jovenes_adultos,
+  COUNT(CASE WHEN (t1.age BETWEEN 35 AND 60) THEN 4 END) as adultos,
+  COUNT(CASE WHEN (t1.age > 60) THEN 5 END) as vejez
+FROM(
+    SELECT
+      date_part('year',age( birthdate )) AS age
+    FROM
+      customers
+) t1;

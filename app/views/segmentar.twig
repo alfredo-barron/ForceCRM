@@ -1,6 +1,6 @@
 {% extends 'base.twig' %}
 {% block title %}
-    <title>{{ title }} | Productos</title>
+    <title>{{ title }} | Mercados</title>
 {% endblock %}
 {% block css %}
     <link href="{{ urlFor('root') }}public/plugins/datatables/dataTables.bootstrap.css" rel="stylesheet" type="text/css" />
@@ -11,10 +11,13 @@
   {% include 'sidebar.twig' %}
   <div class="content-wrapper">
     <section class="content-header">
-          <h1><a href="{{ urlFor('dashboard') }}"><i class="fa fa-arrow-left fa-1x"></i></a> Productos <small>listado</small></h1>
+          <h1> <a href="{{ urlFor('dashboard') }}"><i class="fa fa-arrow-left fa-1x"></i></a>
+            Segmentar
+          </h1>
           <ol class="breadcrumb">
             <li><a href="{{ urlFor('dashboard') }}"><i class="fa fa-dashboard"></i> Force <b>CRM</b></a></li>
-            <li class="active"><a href="#">Productos</a></li>
+            <li><a href="{{ urlFor('markets') }}">Mercados</a></li>
+            <li class="active">Segmentar</li>
           </ol>
         </section>
          <!-- Main content -->
@@ -25,43 +28,43 @@
 
     <div class="box">
             <div class="box-header">
-              <h3 class="box-title">Lista de productos</h3>
+              <h3 class="box-title">Segmentar</h3>
             </div><!-- /.box-header -->
             <div class="box-body">
               <table id="example1" class="table table-bordered table-striped">
                 <thead>
                   <tr>
+                    <th>ID</th>
                     <th>Nombre</th>
-                    <th>Marca</th>
-                    <th>Modelo</th>
-                    <th>Precio</th>
-                    <th>Cantidad</th>
-                    <th>Stock</th>
-                    <th></th>
+                    <th>Ventas</th>
+                    <th>Ventas acumuladas</th>
+                    <th>Total de ventas</th>
+                    <th>Porcentaje</th>
+                    <th>Tipo</th>
                   </tr>
                 </thead>
                 <tbody>
-                  {% for p in products %}
+                  {% for seg in clasificacion %}
                     <tr>
-                      <td>{{ p.name }}</td>
-                      <td>{{ p.market }}</td>
-                      <td>{{ p.model }}</td>
-                      <td>$ {{ p.price }}</td>
-                      <td>{{ p.quantity }}</td>
-                      <td>{{ p.stock }}</td>
-                      <td>{% if user.rol == "Jefe de Marketing" or user.rol == "Administrador" %}<a href="{{ urlFor('edit-product') }}/{{ p.id }}" class="btn btn-primary btn-xs"><i class="fa fa-edit"></i> Actualizar</a> {% endif %} {% if user.rol == "Administrador" %} <a href="" class="btn btn-danger btn-xs"><i class="fa fa-times"></i> Dar de baja</a> {% endif %}</td>
+                      <td>{{ seg.id }}</td>
+                      <td>{{ seg.name }}</td>
+                      <td>{{ seg.sales }}</td>
+                      <td>Ventas acumuladas</td>
+                      <td>Total de ventas</td>
+                      <td>Porcentaje</td>
+                      <td>Tipo</td>
                     </tr>
                   {% endfor %}
                 </tbody>
                 <tfoot>
                   <tr>
+                    <th>ID</th>
                     <th>Nombre</th>
-                    <th>Marca</th>
-                    <th>Modelo</th>
-                    <th>Precio</th>
-                    <th>Cantidad</th>
-                    <th>Stock</th>
-                    <th></th>
+                    <th>Ventas</th>
+                    <th>Ventas acumuladas</th>
+                    <th>Total de ventas</th>
+                    <th>Porcentaje</th>
+                    <th>Tipo</th>
                   </tr>
                 </tfoot>
               </table>

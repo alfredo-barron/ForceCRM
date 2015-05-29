@@ -152,6 +152,27 @@ create table customer_team(
   foreign key (team_id) references teams(id)
 );
 
+CREATE TABLE times(
+id int auto_increment primary key,
+day int not null,
+month int not null,
+year int not null,
+hour time not null
+);
+
+CREATE TABLE sales(
+id int auto_increment primary key,
+id_customer int not null,
+id_product int not null,
+quantity int not null,
+id_time int not null,
+folio_sale int not null,
+sub_total float not null,
+foreign key(id_customer) references customers(id),
+foreign key(id_product) references products(id),
+foreign key(id_time) references times(id)
+);
+
 --PostgreSQL
 
 --Categorias

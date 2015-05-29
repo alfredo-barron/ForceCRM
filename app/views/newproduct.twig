@@ -37,7 +37,7 @@
             <div class="box-header with-border">
               <h3 class="box-title">Datos del producto</h3>
             </div><!-- /.box-header -->
-            <form id="productForm" name="productForm">
+            <form id="productForm" name="productForm" enctype="multipart/form-data">
                 {% if product.id is defined %}
                   <input type="hidden" id="id" name="id" value="{{ product.id }}">
                 {% else %}

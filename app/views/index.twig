@@ -30,10 +30,10 @@
             <div class="info-box-content">
               <span class="info-box-text">Campañas</span>
               <span class="info-box-number">
-                 {% if count_cam == 0 %}
+                 {% if campaings.totales == 0 %}
                   0
                 {% else %}
-                  {{ count_cam }}
+                  {{ campaings.totales }}
                 {% endif %}
               </span>
             </div><!-- /.info-box-content -->
@@ -45,10 +45,10 @@
             <div class="info-box-content">
               <span class="info-box-text">Clientes</span>
               <span class="info-box-number">
-                {% if count_cus == 0 %}
+                {% if customers.clientes == 0 %}
                   0
                 {% else %}
-                  {{ count_cus }}
+                  {{ customers.clientes }}
                 {% endif %}
               </span>
             </div><!-- /.info-box-content -->
@@ -63,7 +63,13 @@
             <span class="info-box-icon bg-green"><i class="fa fa-shopping-cart"></i></span>
             <div class="info-box-content">
               <span class="info-box-text">Ventas</span>
-              <span class="info-box-number">1</span>
+              <span class="info-box-number">
+                {% if sales == 0 %}
+                  0
+                {% else %}
+                  {{ sales }}
+                {% endif %}
+              </span>
             </div><!-- /.info-box-content -->
           </div><!-- /.info-box -->
         </div><!-- /.col -->
@@ -73,10 +79,10 @@
             <div class="info-box-content">
               <span class="info-box-text">Contactos</span>
               <span class="info-box-number">
-                {% if count_con == 0 %}
+                {% if customers.totales == 0 %}
                   0
                 {% else %}
-                  {{ count_con }}
+                  {{ customers.totales }}
                 {% endif %}
               </span>
             </div><!-- /.info-box-content -->
@@ -99,7 +105,7 @@
               <div class="row">
                 <div class="col-md-8">
                   <p class="text-center">
-                    <strong>Ventas: 1 Ene, 2015 - 30 Jul, 2015</strong>
+                    <strong>Ventas: 1 Ene, 2015 - 29 May, 2015</strong>
                   </p>
                   <div class="chart-responsive">
                     <!-- Sales Chart Canvas -->
@@ -114,28 +120,28 @@
                     <span class="progress-text">Productos añadidos</span>
                     <span class="progress-number"><b>{{ products }}</b>/{{ products }}</span>
                     <div class="progress sm">
-                      <div class="progress-bar progress-bar-aqua" style="width: {{ products * 100}}%"></div>
+                      <div class="progress-bar progress-bar-aqua" style="width: {{ (products * 100)/ products}}%"></div>
                     </div>
                   </div><!-- /.progress-group -->
                   <div class="progress-group">
                     <span class="progress-text">Ventas completas</span>
-                    <span class="progress-number"><b>1</b>/1</span>
+                    <span class="progress-number"><b>{{ sales }}</b>/{{ sales }}</span>
                     <div class="progress sm">
-                      <div class="progress-bar progress-bar-red" style="width: 100%"></div>
+                      <div class="progress-bar progress-bar-red" style="width: {{ (sales * 100)/ sales }}%"></div>
                     </div>
                   </div><!-- /.progress-group -->
                   <div class="progress-group">
                     <span class="progress-text">Campañas finalizadas</span>
-                    <span class="progress-number"><b>{{ cam_fin }}</b>/{{ count_cam }}</span>
+                    <span class="progress-number"><b>{{ campaings.finalizadas }}</b>/{{ campaings.totales }}</span>
                     <div class="progress sm">
-                      <div class="progress-bar progress-bar-green" style="width: 50%"></div>
+                      <div class="progress-bar progress-bar-green" style="width: {{ (campaings.finalizadas * 100)/ campaings.totales}}%"></div>
                     </div>
                   </div><!-- /.progress-group -->
                   <div class="progress-group">
                     <span class="progress-text">Emails enviados</span>
-                    <span class="progress-number"><b>0</b>/2</span>
+                    <span class="progress-number"><b>{{ (emails.enviados * 100)/ emails.totales }}</b>/{{ emails.totales }}</span>
                     <div class="progress sm">
-                      <div class="progress-bar progress-bar-yellow" style="width: 0%"></div>
+                      <div class="progress-bar progress-bar-yellow" style="width: {{ emails.enviados }}%"></div>
                     </div>
                   </div><!-- /.progress-group -->
                 </div><!-- /.col -->
@@ -204,7 +210,7 @@
                 {% for p in productsDESC %}
                   <li class="item">
                     <div class="product-img">
-                      <img src="{{ urlFor('root') }}public/img/{{ p.img }}" alt="{{ p.name }}"/>
+                      <img src="{{ urlFor('root') }}public/products/{{ p.img }}" alt="{{ p.name }}"/>
                     </div>
                     <div class="product-info">
                       <a href="javascript::;" class="product-title">{{ p.name }}<span class="label label-primary pull-right">$ {{ p.price }}.00</span></a>
@@ -350,8 +356,13 @@
 {% endblock %}
 {% block js %}
     <script type="text/javascript">
-      var men = {{ gender.h|escape('js') }};
-      var women = {{ gender.m|escape('js') }};
+      var men = {{ gender.h|e('js') }};
+      var women = {{ gender.m|e('js') }};
+      var enero = {{ sales_month.enero|e('js') }}
+      var febrero = {{ sales_month.febrero|e('js') }}
+      var marzo = {{ sales_month.marzo|e('js') }}
+      var abril = {{ sales_month.abril|e('js') }}
+      var mayo = {{ sales_month.mayo|e('js') }}
     </script>
     <script src="{{ urlFor('root') }}public/plugins/chartjs/Chart.min.js"></script>
     <script src="{{ urlFor('root') }}public/css/dist/js/demo.js"></script>

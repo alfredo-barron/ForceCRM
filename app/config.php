@@ -26,7 +26,7 @@ $app->configureMode('development', function () use ($app) {
   $app->config(array('log.enabled' => false, 'debug' => true));
 });
 
-$app->notFound(function () use ($app) {
+$app->notFound(function () use ($app,$db) {
   if (isset($_SESSION['id'])) {
     $data = array();
     $id = $_SESSION['id'];

@@ -84,6 +84,7 @@
           <i class="fa fa-angle-left pull-right"></i>
           <ul class="treeview-menu">
             {% if user.rol == "Jefe de Marketing" %}
+            <li><a href="{{ urlFor('segmentar') }}"><i class="fa fa-gears"></i> Proceso de segmentación</a></li>
             <li><a href="{{ urlFor('new-market') }}"><i class="fa fa-filter"></i> Identificar un mercado</a></li>
             {% endif %}
             <li><a href="{{ urlFor('markets') }}"><i class="fa fa-list"></i> Lista de mercados</a>
