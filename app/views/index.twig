@@ -127,7 +127,7 @@
                     <span class="progress-text">Ventas completas</span>
                     <span class="progress-number"><b>{{ sales }}</b>/{{ sales }}</span>
                     <div class="progress sm">
-                      <div class="progress-bar progress-bar-red" style="width: {{ (sales * 100)/ sales }}%"></div>
+                      <div class="progress-bar progress-bar-red" style="width: {% if sales == 0 %} 0 {% else %} {{ (sales * 100)/ sales }} {% endif %}%"></div>
                     </div>
                   </div><!-- /.progress-group -->
                   <div class="progress-group">
