@@ -847,17 +847,18 @@ $app->post('/u/checkcampaing', function() use($app,$db){
 });
 
 $app->get('/u/envioemails', function() use($app,$db){
+  require 'vendor/phpmailer/phpmailer/PHPMailerAutoload.php';
   $st = $db->prepare("SELECT * FROM emails");
   $st->execute();
   while ($row = $st->fetch(PDO::FETCH_OBJ)) {
-    $date_now = strtotime(date("d-m-Y"));
+    $date_now = strtotime(date("d-m-Y H:i:s"));
     $date_start = strtotime($row->date_send);
+
     if ($date_start != $date_now) {
       $st_email = $db->prepare("SELECT emails.id AS id_email, customers.id, customers.name, customers.last_name, customers.email, emails.subject, emails.content, campaings.id AS campaing_id, teams.id AS team_id FROM emails,campaings,campaing_team,teams,customer_team,customers WHERE emails.campaing_id = campaings.id AND campaing_team.campaing_id = campaings.id AND campaing_team.team_id = teams.id AND customer_team.team_id = teams.id AND customer_team.customer_id = customers.id AND emails.id = ?");
       $st_email->execute(array($row->id));
-      while ($row_email = $st_email->fetch(PDO::FETCH_OBJ)) {
-
-        require 'vendor/phpmailer/phpmailer/PHPMailerAutoload.php';
+      //print_r($row_email);
+     while ($row_email = $st_email->fetch(PDO::FETCH_OBJ)) {
 
         $mail = new PHPMailer;
 
@@ -883,21 +884,20 @@ $app->get('/u/envioemails', function() use($app,$db){
         $mail->Subject = utf8_decode($row_email->subject);
         $mail->Body    = $row_email->content;
         //$mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
-
         if(!$mail->send()) {
-            echo 'Message could not be sent.';
+            echo 'Message could not be sent: '.$row_email->email;
             echo 'Mailer Error: ' . $mail->ErrorInfo;
             $campaing_email = $db->prepare("UPDATE emails SET status = 'Fallido' WHERE id = $row_email->id_email");
             $campaing_email->execute();
         } else {
-            echo 'Message has been sent';
+            echo 'Message has been sent: '.$row_email->email;
             $campaing_email = $db->prepare("UPDATE emails SET status = 'Enviado' WHERE id = $row_email->id_email");
             $campaing_email->execute();
         }
-      }
+     }
     }
-    //
   }
 });
+
 
  ?>
