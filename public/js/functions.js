@@ -15,5 +15,21 @@ function checkCampaings() {
 
 }
 
+function envios() {
+  $.ajax({
+    url: "checkcampaing",
+    type: "POST",
+    dataType: "html",
+    data: "",
+    success: function(data) {
+        setTimeout(function(){
+        envios();
+      },1);
+    }
+  })
+
+}
+
+envios();
 checkCampaings();
 });

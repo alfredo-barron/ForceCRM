@@ -627,9 +627,15 @@ $app->group('/u/0/email', $auth($app), function() use($app,$db){
     $st->setFetchMode(PDO::FETCH_OBJ);
     $st->execute(array($id));
     $data['user'] = $st->fetch();
-    $st = $db->prepare("SELECT emails.id, emails.subject, emails.date_send, emails.date_created, campaings.name AS campaing FROM emails,campaings WHERE emails.campaing_id = campaings.id ORDER BY emails.date_created DESC");
+    $st = $db->prepare("SELECT emails.id, emails.subject, emails.date_send, emails.date_created, campaings.name AS campaing FROM emails,campaings WHERE emails.campaing_id = campaings.id AND emails.status = 'Archivado' ORDER BY emails.date_created DESC");
     $st->execute();
     $data['emails'] = $st->fetchAll();
+    $st = $db->prepare("SELECT emails.id, emails.subject, emails.date_send, emails.date_created, campaings.name AS campaing FROM emails,campaings WHERE emails.campaing_id = campaings.id AND emails.status = 'Enviado' ORDER BY emails.date_created DESC");
+    $st->execute();
+    $data['emails_enviados'] = $st->fetchAll();
+    $st = $db->prepare("SELECT emails.id, emails.subject, emails.date_send, emails.date_created, campaings.name AS campaing FROM emails,campaings WHERE emails.campaing_id = campaings.id AND emails.status = 'Fallido' ORDER BY emails.date_created DESC");
+    $st->execute();
+    $data['emails_fallidos'] = $st->fetchAll();
     $app->render('email.twig',$data);
   })->name('email');
 
@@ -846,7 +852,7 @@ $app->post('/u/checkcampaing', function() use($app,$db){
   }
 });
 
-$app->get('/u/envioemails', function() use($app,$db){
+$app->post('/u/envioemails', function() use($app,$db){
   require 'vendor/phpmailer/phpmailer/PHPMailerAutoload.php';
   $st = $db->prepare("SELECT * FROM emails");
   $st->execute();
@@ -854,7 +860,7 @@ $app->get('/u/envioemails', function() use($app,$db){
     $date_now = strtotime(date("d-m-Y H:i:s"));
     $date_start = strtotime($row->date_send);
 
-    if ($date_start != $date_now) {
+    if ($date_start == $date_now) {
       $st_email = $db->prepare("SELECT emails.id AS id_email, customers.id, customers.name, customers.last_name, customers.email, emails.subject, emails.content, campaings.id AS campaing_id, teams.id AS team_id FROM emails,campaings,campaing_team,teams,customer_team,customers WHERE emails.campaing_id = campaings.id AND campaing_team.campaing_id = campaings.id AND campaing_team.team_id = teams.id AND customer_team.team_id = teams.id AND customer_team.customer_id = customers.id AND emails.id = ?");
       $st_email->execute(array($row->id));
       //print_r($row_email);
