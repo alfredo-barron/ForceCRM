@@ -313,6 +313,7 @@ $app->group('/u/0/mercados', $auth($app), function() use($app,$db){
     $st->setFetchMode(PDO::FETCH_OBJ);
     $st->execute(array($id));
     $data['user'] = $st->fetch();
+    /*
     $st = $db->prepare("SELECT t1.id, t1.year, t1.name, t1.sales FROM(SELECT customers.id AS id, times.year AS year, customers.name, SUM(sales.sub_total) sales FROM sales,customers,times WHERE sales.id_customer = customers.id AND sales.id_time = times.id GROUP BY customers.id, times.year) t1 GROUP BY t1.year, t1.name, t1.sales ORDER BY t1.sales DESC");
     $st->execute();
     //$data['clasificacion'] = $st->fetchAll();
@@ -344,7 +345,7 @@ $app->group('/u/0/mercados', $auth($app), function() use($app,$db){
       $customer = $db->prepare("UPDATE customers SET status = 'Actual', type = '$type' WHERE id = $row->id");
       $customer->execute();
     }
-    $data['abc'] = $abc;
+    $data['abc'] = $abc;*/
     $app->render('segmentar.twig',$data);
   })->name('segmentar');
 
