@@ -38,11 +38,11 @@ create table emails(
   id serial primary key,
   created_by int not null,
   campaing_id int not null,
-  date_send date,
+  date_send timestamp,
   subject text not null,
   content text not null,
   status text,
-  date_created date,
+  date_created timestamp,
   foreign key (created_by) references users(id),
   foreign key (campaing_id) references campaings(id)
 );
@@ -153,7 +153,7 @@ create table customer_team(
 );
 
 CREATE TABLE times(
-id int auto_increment primary key,
+id serial primary key,
 day int not null,
 month int not null,
 year int not null,
@@ -161,7 +161,7 @@ hour time not null
 );
 
 CREATE TABLE sales(
-id int auto_increment primary key,
+id serial primary key,
 id_customer int not null,
 id_product int not null,
 quantity int not null,
