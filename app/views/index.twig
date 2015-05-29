@@ -120,7 +120,7 @@
                     <span class="progress-text">Productos añadidos</span>
                     <span class="progress-number"><b>{{ products }}</b>/{{ products }}</span>
                     <div class="progress sm">
-                      <div class="progress-bar progress-bar-aqua" style="width: {{ (products * 100)/ products}}%"></div>
+                      <div class="progress-bar progress-bar-aqua" style="width: {% if products == 0 %} 0 {% else %} {{ ((products * 100)/ products) }} {% endif %}%"></div>
                     </div>
                   </div><!-- /.progress-group -->
                   <div class="progress-group">
