@@ -873,14 +873,14 @@ $app->get('/u/envioemails', function() use($app,$db){
 
         $mail->From = 'forcecrm.notification@gmail.com';
         $mail->FromName = 'Force CRM';
-        $mail->addAddress($row_email->email, $row_email->name." ".$row_email->last_name);     // Add a recipient Name is optional
+        $mail->addAddress($row_email->email, utf8_decode($row_email->name)." ".utf8_decode($row_email->last_name));     // Add a recipient Name is optional
         $mail->addReplyTo('forcecrm.notification@gmail.com', 'Contacto');
-        //$mail->addCC('alfreedobarron@example.com');
+        $mail->addBCC('alfreedobarron@gmail.com');
         $mail->addBCC('forcecrm.notification@gmail.com');
 
         $mail->isHTML(true);                                  // Set email format to HTML
 
-        $mail->Subject = $row_email->subject;
+        $mail->Subject = utf8_decode($row_email->subject);
         $mail->Body    = $row_email->content;
         //$mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
 
