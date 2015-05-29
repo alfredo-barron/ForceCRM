@@ -846,17 +846,57 @@ $app->post('/u/checkcampaing', function() use($app,$db){
   }
 });
 
-$app->post('/u/envioemails', function() use($app,$db){
+$app->get('/u/envioemails', function() use($app,$db){
   $st = $db->prepare("SELECT * FROM emails");
   $st->execute();
   while ($row = $st->fetch(PDO::FETCH_OBJ)) {
     $date_now = strtotime(date("d-m-Y"));
     $date_start = strtotime($row->date_send);
-    if ($date_start == $date_now) {
+    if ($date_start != $date_now) {
+      $st_email = $db->prepare("SELECT emails.id AS id_email, customers.id, customers.name, customers.last_name, customers.email, emails.subject, emails.content, campaings.id AS campaing_id, teams.id AS team_id FROM emails,campaings,campaing_team,teams,customer_team,customers WHERE emails.campaing_id = campaings.id AND campaing_team.campaing_id = campaings.id AND campaing_team.team_id = teams.id AND customer_team.team_id = teams.id AND customer_team.customer_id = customers.id AND emails.id = ?");
+      $st_email->execute(array($row->id));
+      while ($row_email = $st_email->fetch(PDO::FETCH_OBJ)) {
 
+        require 'vendor/phpmailer/phpmailer/PHPMailerAutoload.php';
+
+        $mail = new PHPMailer;
+
+        //$mail->SMTPDebug = 3;                               // Enable verbose debug output
+
+        $mail->isSMTP();                                      // Set mailer to use SMTP
+        $mail->Host = 'smtp.gmail.com';    // smtp.live.com     // Specify main and backup SMTP servers
+        $mail->SMTPAuth = true;                               // Enable SMTP authentication
+        $mail->Username = 'forcecrm.notification@gmail.com';                 // SMTP username
+        $mail->Password = 'crm900123';                           // SMTP password
+        $mail->SMTPSecure = 'tls';                            // Enable TLS encryption, `ssl` also accepted
+        $mail->Port = 25;                                    // TCP port to connect to
+
+        $mail->From = 'forcecrm.notification@gmail.com';
+        $mail->FromName = 'Force CRM';
+        $mail->addAddress($row_email->email, $row_email->name." ".$row_email->last_name);     // Add a recipient Name is optional
+        $mail->addReplyTo('forcecrm.notification@gmail.com', 'Contacto');
+        //$mail->addCC('alfreedobarron@example.com');
+        $mail->addBCC('forcecrm.notification@gmail.com');
+
+        $mail->isHTML(true);                                  // Set email format to HTML
+
+        $mail->Subject = $row_email->subject;
+        $mail->Body    = $row_email->content;
+        //$mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
+
+        if(!$mail->send()) {
+            echo 'Message could not be sent.';
+            echo 'Mailer Error: ' . $mail->ErrorInfo;
+            $campaing_email = $db->prepare("UPDATE emails SET status = 'Fallido' WHERE id = $row_email->id_email");
+            $campaing_email->execute();
+        } else {
+            echo 'Message has been sent';
+            $campaing_email = $db->prepare("UPDATE emails SET status = 'Enviado' WHERE id = $row_email->id_email");
+            $campaing_email->execute();
+        }
+      }
     }
-    $campaing = $db->prepare("UPDATE campaings SET status = '$status' WHERE id = $row->id");
-    $campaing->execute();
+    //
   }
 });
 
