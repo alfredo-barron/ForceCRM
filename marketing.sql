@@ -127,17 +127,21 @@ create table customers(
 
 --Mercados
 create table teams(
-  id int auto_increment primary key,
+  id serial primary key,
   created_by int not null,
   name text,
   description text,
   status text not null,
   date_created date,
+  gender int,
+  age int,
+  job int,
+  status_civil int,
   foreign key (created_by) references users(id)
 );
 
 create table campaing_team(
-  id int auto_increment primary key,
+  id serial primary key,
   campaing_id int not null,
   team_id int not null,
   foreign key (campaing_id) references campaings(id),
@@ -145,7 +149,7 @@ create table campaing_team(
 );
 
 create table customer_team(
-  id int auto_increment primary key,
+  id serial primary key,
   customer_id int not null,
   team_id int not null,
   foreign key (customer_id) references customers(id),

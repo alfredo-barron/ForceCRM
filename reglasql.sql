@@ -250,3 +250,7 @@ SELECT
       customer_team.team_id = teams.id
     ) t1
       GROUP BY id;
+
+SELECT customers.email, emails.subject, emails.content  FROM teams,customers,campaings,customer_team,campaing_team,emails WHERE emails.campaing_id = campaings.id AND campaing_team.campaing_id = campaings.id AND campaing_team.team_id = teams.id AND customer_team.customer_id = customers.id AND teams.id = 1;
+
+SELECT customers.id, customers.email, emails.subject, emails.content, campaings.id AS campaing_id, teams.id AS team_id FROM emails,campaings,campaing_team,teams,customer_team,customers WHERE emails.campaing_id = campaings.id AND campaing_team.campaing_id = campaings.id AND campaing_team.team_id = teams.id AND customer_team.team_id = teams.id AND customer_team.customer_id = customers.id AND emails.id = 7;
