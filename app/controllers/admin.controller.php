@@ -846,7 +846,17 @@ $app->post('/u/checkcampaing', function() use($app,$db){
 });
 
 $app->post('/u/envioemails', function() use($app,$db){
+  $st = $db->prepare("SELECT * FROM emails");
+  $st->execute();
+  while ($row = $st->fetch(PDO::FETCH_OBJ)) {
+    $date_now = strtotime(date("d-m-Y"));
+    $date_start = strtotime($row->date_send);
+    if ($date_start == $date_now) {
 
+    }
+    $campaing = $db->prepare("UPDATE campaings SET status = '$status' WHERE id = $row->id");
+    $campaing->execute();
+  }
 });
 
  ?>

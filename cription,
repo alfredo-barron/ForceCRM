@@ -1,0 +1,14 @@
+ id |            email             |      subject      |                                                                          content                                                                          | campaing_id | team_id 
+----+------------------------------+-------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------+-------------+---------
+  8 | annel_1401@hotmail.com       | Oferta de camisas | <h1>Camisas :D</h1>Diferentes colores tenemos!<br>Prueba numero 1.<br><img src="http://forcecrm.herokuapp.com/public/products/polo.jpg" alt="Camisa">\n\n |          22 |       2
+ 10 | hugo_hernanddez@Yahoo.com.mx | Oferta de camisas | <h1>Camisas :D</h1>Diferentes colores tenemos!<br>Prueba numero 1.<br><img src="http://forcecrm.herokuapp.com/public/products/polo.jpg" alt="Camisa">\n\n |          22 |       2
+ 16 | simer_ska@hotmail.com        | Oferta de camisas | <h1>Camisas :D</h1>Diferentes colores tenemos!<br>Prueba numero 1.<br><img src="http://forcecrm.herokuapp.com/public/products/polo.jpg" alt="Camisa">\n\n |          22 |       2
+ 18 | martinhdzv@hotmail.com       | Oferta de camisas | <h1>Camisas :D</h1>Diferentes colores tenemos!<br>Prueba numero 1.<br><img src="http://forcecrm.herokuapp.com/public/products/polo.jpg" alt="Camisa">\n\n |          22 |       2
+ 20 | omedina722@gmail.com         | Oferta de camisas | <h1>Camisas :D</h1>Diferentes colores tenemos!<br>Prueba numero 1.<br><img src="http://forcecrm.herokuapp.com/public/products/polo.jpg" alt="Camisa">\n\n |          22 |       2
+ 21 | morado.wm@gmail.com          | Oferta de camisas | <h1>Camisas :D</h1>Diferentes colores tenemos!<br>Prueba numero 1.<br><img src="http://forcecrm.herokuapp.com/public/products/polo.jpg" alt="Camisa">\n\n |          22 |       2
+ 22 | dillei_64@hotmail.com        | Oferta de camisas | <h1>Camisas :D</h1>Diferentes colores tenemos!<br>Prueba numero 1.<br><img src="http://forcecrm.herokuapp.com/public/products/polo.jpg" alt="Camisa">\n\n |          22 |       2
+ 23 | ingtecelialde@gmail.com      | Oferta de camisas | <h1>Camisas :D</h1>Diferentes colores tenemos!<br>Prueba numero 1.<br><img src="http://forcecrm.herokuapp.com/public/products/polo.jpg" alt="Camisa">\n\n |          22 |       2
+ 28 | sanches_119@hotmail.com      | Oferta de camisas | <h1>Camisas :D</h1>Diferentes colores tenemos!<br>Prueba numero 1.<br><img src="http://forcecrm.herokuapp.com/public/products/polo.jpg" alt="Camisa">\n\n |          22 |       2
+ 30 | canino_dipp@hotmail.com      | Oferta de camisas | <h1>Camisas :D</h1>Diferentes colores tenemos!<br>Prueba numero 1.<br><img src="http://forcecrm.herokuapp.com/public/products/polo.jpg" alt="Camisa">\n\n |          22 |       2
+(10 rows)
+
