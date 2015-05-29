@@ -52,8 +52,8 @@
                       <td>{{ c.email }}</td>
                       <td>{{ c.birthdate }}</td>
                       <td>{{ c.status }}</td>
-                      <td>{{ c.type }}</td>
-                      <td><a href="{{ urlFor('profile-customer') }}/{{ c.id }}">Ver perfil</a></td>
+                      <td>{{ c.type }} ( {% if c.type == 'A' %} <i class="fa fa-star"></i> {% elseif c.type == 'B' %} <i class="fa fa-star-half-o"></i> {% elseif c.type == 'C' %} <i class="fa fa fa-star-o"></i> {% endif %} )</td>
+                      <td><a href="{{ urlFor('profile-customer') }}/{{ c.id }}" class="btn btn-primary btn-xs"><i class="fa fa-user"></i>&nbsp; Perfil</a></td>
                     </tr>
                   {% endfor %}
                 </tbody>

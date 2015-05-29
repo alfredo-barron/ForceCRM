@@ -37,22 +37,25 @@
                     <th>ID</th>
                     <th>Nombre</th>
                     <th>Ventas</th>
+                    <th>% Ventas</th>
                     <th>Ventas acumuladas</th>
                     <th>Total de ventas</th>
-                    <th>Porcentaje</th>
+                    <th>% Ventas acumuladas</th>
                     <th>Tipo</th>
                   </tr>
                 </thead>
                 <tbody>
-                  {% for seg in clasificacion %}
+                  {% for seg in abc %}
                     <tr>
                       <td>{{ seg.id }}</td>
                       <td>{{ seg.name }}</td>
-                      <td>{{ seg.sales }}</td>
-                      <td>Ventas acumuladas</td>
-                      <td>Total de ventas</td>
-                      <td>Porcentaje</td>
-                      <td>Tipo</td>
+                      <td>$ {{ seg.sales }}</td>
+                      <td>% {{ seg.sales_porcentaje }}</td>
+                      <td>$ {{ seg.sales_acumuladas }}</td>
+                      <td>$ {{ seg.total_sales }}</td>
+                      <td>% {{ seg.porcentaje_sales_acumuladas }}</td>
+                      <td>{{ seg.type }}</td>
+                      <td>( {% if seg.type == 'A' %} <i class="fa fa-star"></i> {% elseif seg.type == 'B' %} <i class="fa fa-star-half-o"></i> {% elseif seg.type == 'C' %} <i class="fa fa fa-star-o"></i> {% endif %} )</td>
                     </tr>
                   {% endfor %}
                 </tbody>
@@ -61,9 +64,10 @@
                     <th>ID</th>
                     <th>Nombre</th>
                     <th>Ventas</th>
+                    <th>% Ventas</th>
                     <th>Ventas acumuladas</th>
                     <th>Total de ventas</th>
-                    <th>Porcentaje</th>
+                    <th>% Ventas acumuladas</th>
                     <th>Tipo</th>
                   </tr>
                 </tfoot>

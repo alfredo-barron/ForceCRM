@@ -86,7 +86,7 @@
                    {% else %}
                     <label class="control-label" title="Campo obligatorio">Producto * :</label>
                    {% endif %}
-                  <div class="input-group form-group">
+                  <div class="input-group">
                     <span class="input-group-addon"><i class="fa fa-barcode"></i></span>
                     <select name="product_id" id="product_id" class="form-control" required >
                     {% if campaing.product_id is defined %}
@@ -98,6 +98,20 @@
                     {% endif %}
                       {% for p in products %}
                       <option value="{{ p.id }}">{{ p.name }}</option>
+                      {% endfor %}
+                    </select>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="form-group col-md-12">
+                    <label class="control-label">Mercado disponible :</label>
+                  <div class="input-group">
+                    <span class="input-group-addon"><i class="fa fa-group"></i></span>
+                    <select name="market_id" id="market_id" class="form-control" required >
+                        <option value="0">Seleciona una opción...</option>
+                      {% for m in markets %}
+                      <option value="{{ m.id }}">{{ m.name }}</option>
                       {% endfor %}
                     </select>
                   </div>
@@ -196,6 +210,7 @@
       $('#newCampaing').click(function(event) {
         var id = $('#id').val();
         var product_id = $('#product_id option:selected').val();
+        var market_id = $('#market_id option:selected').val();
         var name = $('#name').val();
         var reservation = $('#reservation').val();
         var target = $('#target').val();
@@ -272,6 +287,7 @@
         var description = $('#description').val("");
         var color = $('#color').val("");
         var product_id = $('#product_id').val($('#product_id > option:first').val());
+        var product_id = $('#market_id').val($('#market_id > option:first').val());
       }
     });
     </script>

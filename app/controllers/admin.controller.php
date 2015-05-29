@@ -8,21 +8,26 @@ $app->get('/u/0', $auth($app), function() use($app,$db){
   $st->execute(array($id));
   $data['user'] = $st->fetch();
   $st = $db->prepare("SELECT COUNT(*) as totales, COUNT(CASE status WHEN 'Actual' THEN 'Actual' END) as clientes FROM customers");
+  $st->setFetchMode(PDO::FETCH_OBJ);
   $st->execute();
   $data['customers'] = $st->fetch();
   $st = $db->prepare("SELECT COUNT(*) as totales, COUNT(CASE status WHEN 'Activa' THEN 'Activa' END) as activas, COUNT(CASE status WHEN 'Finalizada' THEN 'Finalizada' END) as finalizadas, COUNT(CASE status WHEN 'En espera' THEN 'En espera' END) as en_espera FROM campaings");
+  $st->setFetchMode(PDO::FETCH_OBJ);
   $st->execute();
   $data['campaings'] = $st->fetch();
   $st = $db->prepare("SELECT COUNT(*) as totales, COUNT(CASE status WHEN 'Archivado' THEN 'Archivado' END) as archivados, COUNT(CASE status WHEN 'Enviado' THEN 'Enviado' END) as enviados, COUNT(CASE status WHEN 'Fallido' THEN 'Fallido' END) as fallidos FROM emails");
+  $st->setFetchMode(PDO::FETCH_OBJ);
   $st->execute();
   $data['emails'] = $st->fetch();
   $st = $db->prepare("SELECT COUNT(CASE gender WHEN 'H' THEN 'H' END) AS h, COUNT(CASE gender WHEN  'M' THEN 'M' END) AS m FROM customers;");
+  $st->setFetchMode(PDO::FETCH_OBJ);
   $st->execute();
   $data['gender'] = $st->fetch();
   $st = $db->prepare("SELECT * FROM customers WHERE status = 'Potencial' OR status = 'Contacto'");
   $st->execute();
   $data['customerP'] = $st->rowCount();
   $st = $db->prepare("SELECT COUNT(CASE type WHEN 'A' THEN 'A' END) as a, COUNT(CASE type WHEN 'B' THEN 'B' END) AS b, COUNT(CASE type WHEN 'C' THEN 'C' END) as c FROM customers;");
+  $st->setFetchMode(PDO::FETCH_OBJ);
   $st->execute();
   $data['type'] = $st->fetch();
   $st = $db->prepare("SELECT * FROM products ORDER BY date_created DESC");
@@ -34,12 +39,28 @@ $app->get('/u/0', $auth($app), function() use($app,$db){
   $st = $db->prepare("SELECT * FROM sales");
   $st->execute();
   $data['sales'] = $st->rowCount();
-  $st = $db->prepare('SELECT COUNT(CASE times.month WHEN 1 THEN 1 END) as enero, COUNT(CASE times.month WHEN 2 THEN 2 END) as febrero, COUNT(CASE times.month WHEN 3 THEN 3 END) as marzo, COUNT(CASE times.month WHEN 4 THEN 4 END) as abril, COUNT(CASE times.month WHEN 5 THEN 5 END) as mayo FROM sales,times WHERE sales.id_time = times.id');
+  $st = $db->prepare("SELECT COUNT(CASE times.month WHEN 1 THEN 1 END) as enero, COUNT(CASE times.month WHEN 2 THEN 2 END) as febrero, COUNT(CASE times.month WHEN 3 THEN 3 END) as marzo, COUNT(CASE times.month WHEN 4 THEN 4 END) as abril, COUNT(CASE times.month WHEN 5 THEN 5 END) as mayo FROM sales,times WHERE sales.id_time = times.id");
+  $st->setFetchMode(PDO::FETCH_OBJ);
   $st->execute();
   $data['sales_month'] = $st->fetch();
+  $st = $db->prepare("SELECT sales.id AS id, customers.name AS name, products.name AS product, categories.name AS category FROM sales,customers,products,times,categories WHERE sales.id_customer = customers.id AND sales.id_product = products.id AND products.category = categories.id AND sales.id_time = times.id ORDER BY sales.id DESC LIMIT 4");
+  $st->setFetchMode(PDO::FETCH_OBJ);
+  $st->execute();
+  $data['sales_ultimate'] = $st->fetchAll();
   $st = $db->prepare("SELECT * FROM emails WHERE status = 'Archivado'");
   $st->execute();
   $data['emails.'] = $st->rowCount();
+  if(getenv('DATABASE_URL') != false){
+    $st = $db->prepare("SELECT COUNT(*) as total, COUNT(CASE WHEN (t1.age BETWEEN 1 AND 12) THEN 1 END) as ninez, COUNT(CASE WHEN (t1.age BETWEEN 13 AND 18) THEN 2 END) as jovenes, COUNT(CASE WHEN (t1.age BETWEEN 18 AND 35) THEN 3 END) as jovenes_adultos, COUNT(CASE WHEN (t1.age BETWEEN 35 AND 60) THEN 4 END) as adultos, COUNT(CASE WHEN (t1.age > 60) THEN 5 END) as vejez FROM(SELECT date_part('year',age( birthdate )) AS age FROM customers) t1");
+    $st->setFetchMode(PDO::FETCH_OBJ);
+    $st->execute();
+    $data['ages'] = $st->fetch();
+  } else {
+    $st = $db->prepare("SELECT COUNT(*) as total, COUNT(CASE WHEN (t1.age BETWEEN 1 AND 12) THEN 1 END) as ninez, COUNT(CASE WHEN (t1.age BETWEEN 13 AND 18) THEN 2 END) as jovenes, COUNT(CASE WHEN (t1.age BETWEEN 18 AND 35) THEN 3 END) as jovenes_adultos, COUNT(CASE WHEN (t1.age BETWEEN 35 AND 60) THEN 4 END) as adultos, COUNT(CASE WHEN (t1.age > 60) THEN 5 END) as vejez FROM(SELECT DATE_FORMAT(FROM_DAYS(TO_DAYS(NOW())-TO_DAYS(birthdate)), '%Y')+0 AS age FROM customers) t1");
+    $st->setFetchMode(PDO::FETCH_OBJ);
+    $st->execute();
+    $data['ages'] = $st->fetch();
+  }
   $app->render('index.twig',$data);
 })->name('dashboard');
 
@@ -227,6 +248,17 @@ $app->group('/u/0/clientes', $auth($app), function() use($app,$db){
     $st->setFetchMode(PDO::FETCH_OBJ);
     $st->execute(array($id_c));
     $data['categories'] = $st->fetchAll();
+    if(getenv('DATABASE_URL') != false){
+      $st = $db->prepare("SELECT t1.id, t1.age FROM(SELECT date_part('year',age( birthdate )) AS age, id FROM customers) t1 WHERE id = ?");
+      $st->setFetchMode(PDO::FETCH_OBJ);
+      $st->execute(array($id_c));
+      $data['age'] = $st->fetch();
+    } else {
+      $st = $db->prepare("SELECT t1.id, t1.age FROM(SELECT DATE_FORMAT(FROM_DAYS(TO_DAYS(NOW())-TO_DAYS(birthdate)), '%Y')+0 AS age, id FROM customers) t1 WHERE id = ?");
+      $st->setFetchMode(PDO::FETCH_OBJ);
+      $st->execute(array($id_c));
+      $data['age'] = $st->fetch();
+    }
     $app->render('customer.profile.twig',$data);
   })->name('profile-customer');
 
@@ -275,6 +307,7 @@ $app->group('/u/0/mercados', $auth($app), function() use($app,$db){
 
   $app->get('/segmentar', function() use($app,$db){
     $data = array();
+    $abc = array();
     $id = $_SESSION['id'];
     $st = $db->prepare("SELECT users.id, users.name, users.last_name, users.email, users.gender, roles.name AS rol FROM users,roles WHERE users.id = ? AND users.rol = roles.id");
     $st->setFetchMode(PDO::FETCH_OBJ);
@@ -293,16 +326,25 @@ $app->group('/u/0/mercados', $auth($app), function() use($app,$db){
     while($row = $st->fetch(PDO::FETCH_OBJ)){
       $sum = $sum + $row->sales;
       $acu = $acu + round(($row->sales * 100)/$total->total,6);
-      echo $row->id." | ".$row->name." | ".$row->sales." | %".round(($row->sales * 100)/$total->total,6)." | ".$sum." | ".$total->total." | %".$acu."<br>";
       if ($acu <= 0 and $acu >= 20) {
-        echo "A";
+        $type = "A";
       } else if($acu > 20 and $acu <= 50) {
-        echo "B";
+        $type = "B";
       } else if($acu > 50) {
-        echo "C";
+        $type = "C";
       }
+      $abc[] = array('id' => $row->id,
+                     'name' => $row->name,
+                     'sales' => $row->sales,
+                     'sales_porcentaje' => round(($row->sales * 100)/$total->total,6),
+                     'sales_acumuladas' => $sum,
+                     'total_sales' => $total->total,
+                     'porcentaje_sales_acumuladas' => $acu,
+                     'type' => $type);
+      $customer = $db->prepare("UPDATE customers SET status = 'Actual', type = '$type' WHERE id = $row->id");
+      $customer->execute();
     }
-    exit();
+    $data['abc'] = $abc;
     $app->render('segmentar.twig',$data);
   })->name('segmentar');
 
@@ -351,6 +393,17 @@ $app->group('/u/0/mercados', $auth($app), function() use($app,$db){
         $st = $db->prepare("SELECT COUNT(CASE status_civil WHEN 1 THEN 1 END) as soltero, COUNT(CASE status_civil WHEN 2 THEN 2 END) as union_libre, COUNT(CASE status_civil WHEN 3 THEN 3 END) as casado, COUNT(CASE status_civil WHEN 4 THEN 4 END) as divorciado, COUNT(CASE status_civil WHEN 5 THEN 5 END) as viudo FROM customers WHERE status = 'Actual' AND type = '$type'");
         $st->execute();
         $data['status_civil'] = $st->fetch();
+        if(getenv('DATABASE_URL') != false){
+          $st = $db->prepare("SELECT COUNT(*) as total, COUNT(CASE WHEN (t1.age BETWEEN 1 AND 12) THEN 1 END) as ninez, COUNT(CASE WHEN (t1.age BETWEEN 13 AND 18) THEN 2 END) as jovenes, COUNT(CASE WHEN (t1.age BETWEEN 18 AND 35) THEN 3 END) as jovenes_adultos, COUNT(CASE WHEN (t1.age BETWEEN 35 AND 60) THEN 4 END) as adultos, COUNT(CASE WHEN (t1.age > 60) THEN 5 END) as vejez FROM(SELECT date_part('year',age( birthdate )) AS age, status, type FROM customers) t1 WHERE status = 'Actual' AND type = '$type'");
+          $st->setFetchMode(PDO::FETCH_OBJ);
+          $st->execute();
+          $data['ages'] = $st->fetch();
+        } else {
+          $st = $db->prepare("SELECT COUNT(*) as total, COUNT(CASE WHEN (t1.age BETWEEN 1 AND 12) THEN 1 END) as ninez, COUNT(CASE WHEN (t1.age BETWEEN 13 AND 18) THEN 2 END) as jovenes, COUNT(CASE WHEN (t1.age BETWEEN 18 AND 35) THEN 3 END) as jovenes_adultos, COUNT(CASE WHEN (t1.age BETWEEN 35 AND 60) THEN 4 END) as adultos, COUNT(CASE WHEN (t1.age > 60) THEN 5 END) as vejez FROM(SELECT DATE_FORMAT(FROM_DAYS(TO_DAYS(NOW())-TO_DAYS(birthdate)), '%Y')+0 AS age, status, type FROM customers) t1 WHERE status = 'Actual' AND type = '$type'");
+          $st->setFetchMode(PDO::FETCH_OBJ);
+          $st->execute();
+          $data['ages'] = $st->fetch();
+        }
         break;
       case 'potencial':
         $data['type'] = "P";
@@ -367,6 +420,15 @@ $app->group('/u/0/mercados', $auth($app), function() use($app,$db){
         $st = $db->prepare("SELECT COUNT(CASE status_civil WHEN 1 THEN 1 END) as soltero, COUNT(CASE status_civil WHEN 2 THEN 2 END) as union_libre, COUNT(CASE status_civil WHEN 3 THEN 3 END) as casado, COUNT(CASE status_civil WHEN 4 THEN 4 END) as divorciado, COUNT(CASE status_civil WHEN 5 THEN 5 END) as viudo FROM customers WHERE status = 'Potencial' OR status = 'Contacto'");
         $st->execute();
         $data['status_civil'] = $st->fetch();
+        if(getenv('DATABASE_URL') != false){
+          $st = $db->prepare("SELECT COUNT(*) as total, COUNT(CASE WHEN (t1.age BETWEEN 1 AND 12) THEN 1 END) as ninez, COUNT(CASE WHEN (t1.age BETWEEN 13 AND 18) THEN 2 END) as jovenes, COUNT(CASE WHEN (t1.age BETWEEN 18 AND 35) THEN 3 END) as jovenes_adultos, COUNT(CASE WHEN (t1.age BETWEEN 35 AND 60) THEN 4 END) as adultos, COUNT(CASE WHEN (t1.age > 60) THEN 5 END) as vejez FROM(SELECT date_part('year',age( birthdate )) AS age, status FROM customers) t1 WHERE status = 'Potencial' OR status = 'Contacto'");
+          $st->execute();
+          $data['ages'] = $st->fetch();
+        } else {
+          $st = $db->prepare("SELECT COUNT(*) as total, COUNT(CASE WHEN (t1.age BETWEEN 1 AND 12) THEN 1 END) as ninez, COUNT(CASE WHEN (t1.age BETWEEN 13 AND 18) THEN 2 END) as jovenes, COUNT(CASE WHEN (t1.age BETWEEN 18 AND 35) THEN 3 END) as jovenes_adultos, COUNT(CASE WHEN (t1.age BETWEEN 35 AND 60) THEN 4 END) as adultos, COUNT(CASE WHEN (t1.age > 60) THEN 5 END) as vejez FROM(SELECT DATE_FORMAT(FROM_DAYS(TO_DAYS(NOW())-TO_DAYS(birthdate)), '%Y')+0 AS age, status FROM customers) t1 WHERE status = 'Potencial' OR status = 'Contacto'");
+          $st->execute();
+          $data['ages'] = $st->fetch();
+        }
         break;
     }
     $app->render('market.twig',$data);
@@ -379,6 +441,9 @@ $app->group('/u/0/mercados', $auth($app), function() use($app,$db){
     $st->setFetchMode(PDO::FETCH_OBJ);
     $st->execute(array($id));
     $data['user'] = $st->fetch();
+    $st = $db->prepare("SELECT id, name, description, COUNT(team) AS total, date_created FROM(SELECT teams.id, teams.name, teams.description, customer_team.team_id AS team, teams.date_created FROM teams,customer_team WHERE customer_team.team_id = teams.id) t1 GROUP BY id");
+    $st->execute();
+    $data['markets'] = $st->fetchAll();
     $app->render('markets.twig',$data);
   })->name('markets');
 
@@ -402,6 +467,9 @@ $app->group('/u/0/campanas', $auth($app), function() use($app,$db){
     $st = $db->prepare("SELECT * FROM products WHERE status = true ORDER BY date_created ASC");
     $st->execute();
     $data['products'] = $st->fetchAll();
+    $st = $db->prepare("SELECT * FROM teams ORDER BY date_created ASC");
+    $st->execute();
+    $data['markets'] = $st->fetchAll();
     $app->render('newcampaing.twig',$data);
   })->name('new-campaing');
 
@@ -439,6 +507,14 @@ $app->group('/u/0/campanas', $auth($app), function() use($app,$db){
         $st = $db->prepare("INSERT INTO campaings (created_by,name,date_start,date_end,product_id,status,target,description,duration,date_created,color) VALUES (?,?,?,?,?,?,?,?,?,?,?)");
         $campaing = $st->execute(array($created_by,$name,$start,$end,$product_id,$status,$target,$description,$duration,$date_created,$color));
         if ($campaing) {
+            if (isset($post->market_id)) {
+              $st = $db->prepare("SELECT * FROM campaings ORDER BY date_created DESC LIMIT 1");
+              $st->setFetchMode(PDO::FETCH_OBJ);
+              $st->execute();
+              $data['campaing'] = $st->fetch();
+              $st = $db->prepare("INSERT INTO campaing_team (campaing_id,teams_id) VALUES(?,?)");
+              $team = $st->execute(array($data['campaing']->id,$post->market_id));
+            }
             echo "exito";
           } else {
             echo "error";

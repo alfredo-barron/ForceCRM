@@ -181,10 +181,11 @@
             </div><!-- /.box-body -->
             <div class="box-footer no-padding">
               <ul class="nav nav-pills nav-stacked">
-                <li><a href="javascript::;">Niños <span class="pull-right text-red"></i> 0% </span></a></li>
-                <li><a href="javascript::;">Jovenés <span class="pull-right text-green"> 0% </span></a></li>
-                <li><a href="javascript::;">Adultos <span class="pull-right text-yellow"> 100% </span></a></li>
-                <li><a href="javascript::;">Ancianos <span class="pull-right text-yellow"> 0% </span></a></li>
+                <!--<li><a href="javascript::;">Niños <span class="pull-right text-red"></i> 0% </span></a></li>-->
+                <li><a href="javascript::;">Jovenés <span class="pull-right text-green"> {{ (((ages.jovenes + ages.ninez)*100)/ ages.total)|number_format }}% </span></a></li>
+                <li><a href="javascript::;">Adultos Jovenés <span class="pull-right text-yellow"> {{ ((ages.jovenes_adultos * 100)/ ages.total)|number_format }}% </span></a></li>
+                <li><a href="javascript::;">Adultos <span class="pull-right text-yellow"> {{ ((ages.adultos * 100)/ ages.total)|number_format }}% </span></a></li>
+                <li><a href="javascript::;">3ra edad <span class="pull-right text-yellow"> {{ ((ages.vejez * 100)/ ages.total)|number_format }}% </span></a></li>
               </ul>
             </div><!-- /.footer -->
           </div><!-- /.box -->
@@ -332,13 +333,14 @@
                     </tr>
                   </thead>
                   <tbody>
+                   {% for sales in sales_ultimate %}
                     <tr>
-                      <td><a href="#">OR9842</a></td>
-                      <td>Camisa</td>
-                      <td><span class="label label-success">Ropa</span></td>
-                      <td>Alfredo</td>
+                      <td><a href="#">{{ sales.id }}</a></td>
+                      <td>{{ sales.product }}</td>
+                      <td><span class="label label-success">{{ sales.category }}</span></td>
+                      <td>{{ sales.name }}</td>
                     </tr>
-
+                   {% endfor %}
                   </tbody>
                 </table>
               </div><!-- /.table-responsive -->

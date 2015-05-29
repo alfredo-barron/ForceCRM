@@ -34,19 +34,26 @@
                 <thead>
                   <tr>
                     <th>Nombre</th>
+                    <th>Descripción</th>
                     <th>Tamaño</th>
-                    <th>Estatus</th>
                     <th>Fecha</th>
                   </tr>
                 </thead>
                 <tbody>
-
+                  {% for m in markets %}
+                    <tr>
+                      <td>{{ m.name}}</td>
+                      <td>{{ m.description }}</td>
+                      <td>{{ m.total }}</td>
+                      <td>{{ m.date_created }}</td>
+                    </tr>
+                  {% endfor %}
                 </tbody>
                 <tfoot>
                   <tr>
                     <th>Nombre</th>
+                    <th>Descripción</th>
                     <th>Tamaño</th>
-                    <th>Estatus</th>
                     <th>Fecha</th>
                   </tr>
                 </tfoot>

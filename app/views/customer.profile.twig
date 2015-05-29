@@ -35,15 +35,14 @@
                     <dt>Email: </dt><dd><a class="tip mail" data-email="{{ customer.email }}" href="mailto:{{ customer.email }}" title="{{ customer.email }}">{{ customer.email }}</a></dd>
                     <dt>Telefono: </dt><dd>{{ customer.telephone }}</dd>
                     <hr>
-                    <dt>Domicilio: </dt><dd>Calle {{ customer.street }} #{{ customer.number }}</dd>
+                    <dt>Domicilio: </dt><dd>Calle {{ customer.street }} {% if customer.number == "s/n" %}{{ customer.number }}{% else %}# {{ customer.number }}{% endif %}</dd>
                     <dt>Localidad: </dt><dd>{{ customer.place }}</dd>
                     <dt>Código postal: </dt><dd>{{ customer.postcode }}</dd>
                     <dt>Municipio: </dt><dd>{{ customer.city }}</dd>
                     <dt>Estado: </dt><dd>{{ customer.entity }}</dd>
                     <hr>
                     <dt>Género: </dt><dd>{% if customer.gender == "H" %}Hombre{% else %}Mujer{% endif %}</dd>
-                    <!--<dt>Edad: </dt><dd>{# set edad = "now"|date('d/m/Y') - customer.birthdate|date('d/m/Y') #} -->
-                    {{ edad }}</dd>
+                    <dt>Edad: </dt><dd>{{ age.age }}</dd>
                     <dt>Fecha de nacimiento: </dt><dd>{{ customer.birthdate|date('d') }} - {{ customer.birthdate|date('m') }} - {{ customer.birthdate|date('Y') }} {% if customer.birthdate|date('d') == "now"|date("d") and customer.birthdate|date('m') == "now"|date("m") %}  <i class="fa fa-birthday-cake" data-toggle="tooltip" title="Hoy cumpleaños"></i> {% endif %}</dd>
                     <dt>Ocupación: </dt><dd>{{ job.name }}</dd>
                     <dt>Educación: </dt><dd>{{ school.name }}</dd>

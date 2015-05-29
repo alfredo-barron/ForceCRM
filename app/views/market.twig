@@ -31,6 +31,7 @@
             <li><a href="#" id="school" name="school" data-toggle="tab">Educación</a></li>
             <li><a href="#" id="job" name="job" data-toggle="tab">Ocupación</a></li>
             <li><a href="#" id="status_civil" name="status_civil" data-toggle="tab">Estado Civil</a></li>
+            <li><a href="#" id="age" name="age" data-toggle="tab">Edad</a></li>
             <li class="pull-left header"><i class="fa fa-groups"></i>
               {% if type == "a" %}
                 <i class="fa fa-star"></i> Clientes A
@@ -75,7 +76,7 @@
                     <div class="col-md-8">
                       <canvas id="chart-area3" width="900" height="900"></canvas>
                       <div class="text-center">
-                        <button class="btn btn-primary">Agregar nuevo mercado</button>
+                        <button class="btn btn-primary" id="btn_school" name="btn_school">Agregar nuevo mercado</button>
                       </div>
                     </div>
                   </div>
@@ -83,7 +84,7 @@
                     <div class="col-md-8">
                       <canvas id="chart-area4" width="400" height="400"></canvas>
                       <div class="text-center">
-                        <button class="btn btn-primary">Agregar nuevo mercado</button>
+                        <button class="btn btn-primary" id="btn_school" name="btn_school">Agregar nuevo mercado</button>
                       </div>
                     </div>
                     <div class="col-md-4">
@@ -94,6 +95,14 @@
                         <li><i class="fa fa-circle-o text-green"></i> Divorciado (a)</li>
                         <li><i class="fa fa-circle-o text-purple"></i> Viudo (a)</li>
                       </ul>
+                    </div>
+                  </div>
+                  <div class="row" id="grafica5">
+                    <div class="col-md-8">
+                      <canvas id="chart-area5" width="400" height="400"></canvas>
+                      <div class="text-center">
+                        <button class="btn btn-primary" id="btn_school" name="btn_school">Agregar nuevo mercado</button>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -131,8 +140,8 @@
 
                     </select>
                   </div>
-                  <input type="text" id="type" name="type">
-                  <input type="text" id="status" name="status">
+                  <input type="hidden" id="type" name="type">
+                  <input type="hidden" id="status" name="status">
               </div>
             </div>
           </div>
@@ -155,12 +164,14 @@
       $('#grafica2').hide();
       $('#grafica3').hide();
       $('#grafica4').hide();
+      $('#grafica5').hide();
 
       $('#gender').click(function(event) {
         $('#grafica1').show();
         $('#grafica2').hide();
         $('#grafica3').hide();
         $('#grafica4').hide();
+        $('#grafica5').hide();
       });
 
       $('#school').click(function(event) {
@@ -168,6 +179,7 @@
         $('#grafica2').show();
         $('#grafica3').hide();
         $('#grafica4').hide();
+        $('#grafica5').hide();
       });
 
       $('#job').click(function(event) {
@@ -175,6 +187,7 @@
         $('#grafica2').hide();
         $('#grafica3').show();
         $('#grafica4').hide();
+        $('#grafica5').hide();
       });
 
       $('#status_civil').click(function(event) {
@@ -182,7 +195,17 @@
         $('#grafica2').hide();
         $('#grafica3').hide();
         $('#grafica4').show();
+        $('#grafica5').hide();
       });
+
+      $('#age').click(function(event) {
+        $('#grafica1').hide();
+        $('#grafica2').hide();
+        $('#grafica3').hide();
+        $('#grafica4').hide();
+        $('#grafica5').show();
+      });
+
 
       $('#btn_gender').click(function(event) {
         $('#market').modal();
@@ -320,13 +343,49 @@
 
   ];
 
+  var polarData = [
+        {
+          value: {{ ages.ninez|e('js') }},
+          color:"#F7464A",
+          highlight: "#FF5A5E",
+          label: "Niños"
+        },
+        {
+          value: {{ ages.jovenes|e('js') }},
+          color: "#46BFBD",
+          highlight: "#5AD3D1",
+          label: "Jovenés"
+        },
+        {
+          value: {{ ages.jovenes_adultos|e('js') }},
+          color: "#FDB45C",
+          highlight: "#FFC870",
+          label: "Jovenés Adultos"
+        },
+        {
+          value: {{ ages.adultos|e('js') }},
+          color: "#949FB1",
+          highlight: "#A8B3C5",
+          label: "Adultos"
+        },
+        {
+          value: {{ ages.vejez|e('js') }},
+          color: "#4D5360",
+          highlight: "#616774",
+          label: "3ra Edad"
+        }
+
+      ];
+
 var ctx = document.getElementById("chart-area").getContext("2d");
 var ctx2 = document.getElementById("chart-area2").getContext("2d");
 var ctx3 = document.getElementById("chart-area3").getContext("2d");
 var ctx4 = document.getElementById("chart-area4").getContext("2d");
+var ctx5 = document.getElementById("chart-area5").getContext("2d");
 window.myPie = new Chart(ctx).Pie(pieData);
 window.myPie = new Chart(ctx2).Bar(barChartData, {responsive:true});
 window.myPie = new Chart(ctx3).Line(lineChartData, {responsive:true});
 window.myPie = new Chart(ctx4).Doughnut(donaData);
+window.myPie = new Chart(ctx5).PolarArea(polarData);
   </script>
 {% endblock %}

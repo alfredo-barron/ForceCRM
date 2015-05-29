@@ -137,8 +137,8 @@ FROM(
     FROM
       customers
 ) t1
-  ORDER BY
-    t1.age DESC;
+  WHERE
+    id = 32;
 
 --Obtener las edades /PGSQL
 SELECT
@@ -151,8 +151,8 @@ FROM(
     FROM
       customers
 ) t1
-  ORDER BY
-    t1.age DESC;
+  WHERE
+    id = 32;
 
 --Obtener la segmetación por edad /MYSQL
 SELECT
@@ -184,3 +184,69 @@ FROM(
     FROM
       customers
 ) t1;
+
+--Obtener los mercados activos
+SELECT *
+FROM(
+  SELECT
+      COUNT(CASE gender_customer WHEN 'H' THEN 'H' END) as count_gender
+    FROM(
+      SELECT
+        customers.id AS id_customer,
+        customers.gender AS gender_customer
+      FROM
+        customers
+      ) teams
+) t2;
+
+SELECT
+  id,
+  COUNT(CASE gender_customer WHEN 'H' THEN 'H' AND job_customer WHEN 1 THEN 1 END) AS total
+FROM(
+      SELECT
+        customers.id AS id_customer,
+      FROM
+        customers,
+        teams
+    ) t1
+GROUP BY
+  id;
+
+--Obtener ultimas ventas hechas
+SELECT sales.id AS id, customers.name AS name, products.name AS product, categories.name AS category FROM sales,customers,products,times,categories WHERE sales.id_customer = customers.id AND sales.id_product = products.id AND products.category = categories.id AND sales.id_time = times.id ORDER BY sales.id DESC LIMIT 4;
+
+SELECT id FROM customers WHERE gender = 'H' AND status_civil = 1 AND type = 'C' AND status = 'Actual';
+
+SELECT id FROM customers WHERE job = 1 AND type = 'C' AND status = 'Actual';
+
+INSERT INTO customer_team (team_id,customer_id) VALUES (2,8);
+INSERT INTO customer_team (team_id,customer_id) VALUES (2,10);
+INSERT INTO customer_team (team_id,customer_id) VALUES (2,16);
+INSERT INTO customer_team (team_id,customer_id) VALUES (2,18);
+INSERT INTO customer_team (team_id,customer_id) VALUES (2,20);
+INSERT INTO customer_team (team_id,customer_id) VALUES (2,21);
+INSERT INTO customer_team (team_id,customer_id) VALUES (2,22);
+INSERT INTO customer_team (team_id,customer_id) VALUES (2,23);
+INSERT INTO customer_team (team_id,customer_id) VALUES (2,28);
+INSERT INTO customer_team (team_id,customer_id) VALUES (2,30);
+
+
+SELECT
+    id,
+    name,
+    description,
+    COUNT(team) AS total,
+    date_created
+  FROM(
+    SELECT
+      teams.id,
+      teams.name,
+      teams.description,
+      customer_team.team_id AS team,
+      teams.date_created
+    FROM
+      teams,customer_team
+    WHERE
+      customer_team.team_id = teams.id
+    ) t1
+      GROUP BY id;
