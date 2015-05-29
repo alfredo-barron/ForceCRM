@@ -17,7 +17,7 @@ function checkCampaings() {
 
 function envios() {
   $.ajax({
-    url: "checkcampaing",
+    url: "envioemails",
     type: "POST",
     dataType: "html",
     data: "",
